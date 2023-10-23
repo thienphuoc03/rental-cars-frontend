@@ -1,8 +1,4 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import './globals.scss';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   metadataBase: new URL('http://localhost:3000'),
@@ -13,14 +9,10 @@ export const metadata: Metadata = {
   description: 'Self-driving car rental application.',
 };
 
-export default function RootLayout({
+export default function HomeLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
-  );
+  return <main>{children}</main>;
 }

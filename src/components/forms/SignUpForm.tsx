@@ -27,9 +27,23 @@ export function SignUpFrom() {
     resolver: zodResolver(signUpSchema),
   });
 
-  // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof signUpSchema>) {
-    console.log(values);
+    /// Check if passwords match here and set error if they don't
+    if (values.password !== values.confirmPassword) {
+      form.setError('confirmPassword', {
+        type: 'manual',
+        message: 'Mật khẩu không khớp',
+      });
+
+      form.setError('password', {
+        type: 'manual',
+        message: 'Mật khẩu không khớp',
+      });
+    } else {
+      // Remove confirmPassword field from the data
+      const { confirmPassword, ...formData } = values;
+      console.log('Form submitted', formData);
+    }
   }
 
   return (

@@ -20,7 +20,7 @@ import { Input } from '@/components/ui/input';
 import { signInSchema } from '@/schemas';
 
 export function SignInFrom() {
-  const [showPassword, setShowPassword] = useState<Boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),

@@ -19,9 +19,9 @@ import { Input } from '@/components/ui/input';
 import { signUpSchema } from '@/schemas';
 
 export function SignUpFrom() {
-  const [showPassword, setShowPassword] = useState<Boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] =
-    useState<Boolean>(false);
+    useState<boolean>(false);
 
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
@@ -41,8 +41,9 @@ export function SignUpFrom() {
       });
     } else {
       // Remove confirmPassword field from the data
-      const { confirmPassword, ...formData } = values;
-      console.log('Form submitted', formData);
+      // const { confirmPassword, ...formData } = values;
+      // console.log('Form submitted', formData);
+      console.log('Form submitted');
     }
   }
 

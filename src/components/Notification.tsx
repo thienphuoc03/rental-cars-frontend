@@ -55,10 +55,10 @@ const Notification = () => {
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="relative flex justify-center items-center p-2 h-auto w-auto rounded-full hover:bg-white/20 focus:bg-transparent focus:ring-0 focus:border-none focus:ring-offset-0"
+          className="relative flex h-auto w-auto items-center justify-center rounded-full p-2 hover:bg-white/20 focus:border-none focus:bg-transparent focus:ring-0 focus:ring-offset-0"
         >
           <Bell size={20} className="text-white" />
-          <div className="absolute w-2 h-2 bg-red-500 rounded-full top-1 right-1" />
+          <div className="absolute right-1 top-1 h-2 w-2 rounded-full bg-red-500" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-96">
@@ -71,7 +71,7 @@ const Notification = () => {
             <div className="px-4">
               {notificationList.map(({ title, description, timer }, index) => (
                 <Link href="/" key={index}>
-                  <DropdownMenuItem className="flex flex-col justify-center items-start cursor-pointer">
+                  <DropdownMenuItem className="flex cursor-pointer flex-col items-start justify-center">
                     <h2 className="text-base font-medium">{title}</h2>
                     <span className="text-sm text-black">{description}</span>
                     <span className="text-xs text-gray-400">{timer}</span>

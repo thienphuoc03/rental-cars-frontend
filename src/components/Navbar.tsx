@@ -18,7 +18,7 @@ const menuItems: { title: string; href: string }[] = [
 
 const Navbar = () => {
   return (
-    <ul className="flex justify-center items-center gap-6 md:hidden">
+    <ul className="flex items-center justify-center gap-6 md:hidden">
       {menuItems.map(({ title, href }, index) => (
         <li
           key={index}

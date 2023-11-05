@@ -9,8 +9,8 @@ import { cn } from '@/lib/utils';
 
 const Username = ({ className }: { className?: ClassValue }) => {
   return (
-    <div className="flex justify-center items-center gap-2">
-      <Avatar className="w-6 h-6">
+    <div className="flex items-center justify-center gap-2">
+      <Avatar className="h-6 w-6">
         <AvatarImage src="https://github.com/shadcn.png" alt="Avatar" />
         <AvatarFallback>
           <Skeleton className="h-6 w-6 rounded-full" />

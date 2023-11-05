@@ -89,7 +89,7 @@ export function SignUpFrom() {
             <FormItem>
               <FormLabel>Mật khẩu</FormLabel>
               <FormControl>
-                <div className="flex justify-between items-center relative">
+                <div className="relative flex items-center justify-between">
                   <Input
                     type={showPassword ? 'text' : 'password'}
                     placeholder="Mật khẩu..."
@@ -99,14 +99,14 @@ export function SignUpFrom() {
                   {showPassword ? (
                     <a
                       onClick={() => setShowPassword(!showPassword)}
-                      className="cursor-pointer absolute right-2"
+                      className="absolute right-2 cursor-pointer"
                     >
                       <Eye size={18} />
                     </a>
                   ) : (
                     <a
                       onClick={() => setShowPassword(!showPassword)}
-                      className="cursor-pointer absolute right-2"
+                      className="absolute right-2 cursor-pointer"
                     >
                       <EyeOff size={18} />
                     </a>
@@ -128,7 +128,7 @@ export function SignUpFrom() {
             <FormItem>
               <FormLabel>Xác nhận mật khẩu</FormLabel>
               <FormControl>
-                <div className="flex justify-between items-center relative">
+                <div className="relative flex items-center justify-between">
                   <Input
                     type={showConfirmPassword ? 'text' : 'password'}
                     placeholder="Mật khẩu..."
@@ -140,7 +140,7 @@ export function SignUpFrom() {
                       onClick={() =>
                         setShowConfirmPassword(!showConfirmPassword)
                       }
-                      className="cursor-pointer absolute right-2"
+                      className="absolute right-2 cursor-pointer"
                     >
                       <Eye size={18} />
                     </a>
@@ -149,7 +149,7 @@ export function SignUpFrom() {
                       onClick={() =>
                         setShowConfirmPassword(!showConfirmPassword)
                       }
-                      className="cursor-pointer absolute right-2"
+                      className="absolute right-2 cursor-pointer"
                     >
                       <EyeOff size={18} />
                     </a>

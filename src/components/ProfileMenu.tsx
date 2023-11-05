@@ -41,7 +41,7 @@ const ProfileMenu = () => {
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="p-0 pr-2 rounded-full hover:bg-white/20 focus:bg-transparent focus:ring-0 focus:border-none focus:ring-offset-0"
+            className="rounded-full p-0 pr-2 hover:bg-white/20 focus:border-none focus:bg-transparent focus:ring-0 focus:ring-offset-0"
           >
             <Username />
           </Button>

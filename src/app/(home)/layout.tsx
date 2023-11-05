@@ -20,7 +20,7 @@ export default function HomeLayout({
   return (
     <>
       <Header />
-      <main className="w-screen h-[633px] flex justify-center">
+      <main className="flex h-[633px] w-screen justify-center">
         <section className="w-full px-32 lg:px-8">{children}</section>
       </main>
     </>

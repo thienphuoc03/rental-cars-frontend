@@ -48,13 +48,13 @@ const MobileMenu = () => {
   }, [isOpen]);
 
   return (
-    <div className="hidden relative lg:block">
+    <div className="relative hidden lg:block">
       <Button variant="ghost" size="icon" className="" onClick={toggleMenu}>
         <Menu size={20} />
       </Button>
 
       {isOpen && (
-        <div className="fixed top-0 left-0 w-full h-full bg-[#f6f7f9]">
+        <div className="fixed left-0 top-0 h-full w-full bg-[#f6f7f9]">
           <Button
             variant="outline"
             className="absolute right-4 top-4 rounded-full"
@@ -64,14 +64,14 @@ const MobileMenu = () => {
             <X size={20} />
           </Button>
 
-          <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/4 bg-white p-4 rounded-lg">
+          <div className="absolute left-1/2 top-1/4 -translate-x-1/2 -translate-y-1/4 transform rounded-lg bg-white p-4">
             <Link href="/">
-              <Username className="text-black text-base font-medium" />
+              <Username className="text-base font-medium text-black" />
             </Link>
 
-            <hr className="my-4 border border-solid border-gray-300/50 w-full" />
+            <hr className="my-4 w-full border border-solid border-gray-300/50" />
 
-            <ul className="flex flex-col justify-center items-center">
+            <ul className="flex flex-col items-center justify-center">
               {mobileMenuItems.map(({ title, href }, index) => (
                 <li
                   key={index}
@@ -79,7 +79,7 @@ const MobileMenu = () => {
                 >
                   <Link
                     href={href}
-                    className="text-base font-medium flex justify-center items-center px-32 py-4 whitespace-nowrap"
+                    className="flex items-center justify-center whitespace-nowrap px-32 py-4 text-base font-medium"
                   >
                     {title}
                   </Link>
@@ -87,30 +87,30 @@ const MobileMenu = () => {
               ))}
             </ul>
 
-            <hr className="my-4 border border-solid border-gray-300/50 w-full" />
+            <hr className="my-4 w-full border border-solid border-gray-300/50" />
 
             {/* check login */}
             {isLogged ? (
               <Button
                 variant="ghost"
-                className="w-full hover:underline text-base font-medium"
+                className="w-full text-base font-medium hover:underline"
                 onClick={() => setIsLogged(false)}
               >
-                <LogOut size={18} className="rotate-180 mr-3" />
+                <LogOut size={18} className="mr-3 rotate-180" />
                 Đăng xuất
               </Button>
             ) : (
-              <div className="flex justify-center items-center gap-4">
+              <div className="flex items-center justify-center gap-4">
                 <Link
                   href="/signup"
-                  className="p-2 rounded-md min-w-[110px] flex justify-center items-center hover:underline border border-solid border-gray-200 text-base font-medium"
+                  className="flex min-w-[110px] items-center justify-center rounded-md border border-solid border-gray-200 p-2 text-base font-medium hover:underline"
                 >
                   Đăng ký
                 </Link>
 
                 <Link
                   href="/signin"
-                  className="p-2 rounded-md min-w-[110px] flex justify-center items-center hover:underline border border-solid border-gray-200 text-base font-medium bg-primary text-white"
+                  className="flex min-w-[110px] items-center justify-center rounded-md border border-solid border-gray-200 bg-primary p-2 text-base font-medium text-white hover:underline"
                 >
                   Đăng nhập
                 </Link>

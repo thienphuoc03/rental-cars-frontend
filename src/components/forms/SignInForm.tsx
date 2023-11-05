@@ -32,7 +32,7 @@ export function SignInFrom() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-1 w-full">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-1">
         <FormField
           control={form.control}
           name="username"
@@ -56,7 +56,7 @@ export function SignInFrom() {
             <FormItem>
               <FormLabel>Mật khẩu</FormLabel>
               <FormControl>
-                <div className="flex justify-between items-center relative">
+                <div className="relative flex items-center justify-between">
                   <Input
                     type={showPassword ? 'text' : 'password'}
                     placeholder="Mật khẩu..."
@@ -66,14 +66,14 @@ export function SignInFrom() {
                   {showPassword ? (
                     <a
                       onClick={() => setShowPassword(!showPassword)}
-                      className="cursor-pointer absolute right-2"
+                      className="absolute right-2 cursor-pointer"
                     >
                       <Eye size={18} />
                     </a>
                   ) : (
                     <a
                       onClick={() => setShowPassword(!showPassword)}
-                      className="cursor-pointer absolute right-2"
+                      className="absolute right-2 cursor-pointer"
                     >
                       <EyeOff size={18} />
                     </a>

@@ -17,7 +17,7 @@ export default function DashboardLayout({
 }) {
   return (
     <>
-      <main className="w-full px-6 flex justify-center">
+      <main className="flex w-full justify-center px-6">
         <section className="w-[1280px] max-w-[1280px]">{children}</section>
       </main>
     </>

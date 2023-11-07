@@ -1,10 +1,5 @@
 {
-  "extends": [
-    "next/core-web-vitals",
-    "eslint:recommended",
-    "prettier",
-    "next/babel"
-  ],
+  "extends": ["next/core-web-vitals", "eslint:recommended", "prettier"],
   "plugins": ["import", "unused-imports"],
   "rules": {
     "react/no-unescaped-entities": "off",

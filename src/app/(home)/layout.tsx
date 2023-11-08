@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import React from 'react';
 
+import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 
 export const metadata: Metadata = {
@@ -20,9 +21,10 @@ export default function HomeLayout({
   return (
     <>
       <Header />
-      <main className="flex h-[633px] w-screen justify-center">
-        <section className="w-full px-32 lg:px-8">{children}</section>
+      <main className="flex w-screen justify-center">
+        <div className="w-full px-32 py-4 lg:px-8">{children}</div>
       </main>
+      <Footer />
     </>
   );
 }

@@ -7,29 +7,29 @@ import TooltipCustom from '@/components/ui/tooltip-custom';
 
 const SignInPage = () => {
   return (
-    <div className="flex justify-center items-center w-full h-full">
-      <div className="bg-white p-12 rounded-lg shadow-2xl">
+    <div className="flex h-full w-full items-center justify-center">
+      <div className="rounded-lg bg-white p-12 shadow-2xl">
         <TooltipCustom content="Trang chủ">
           <Link
             href="/"
-            className="inline-flex justify-center items-center rounded-full p-2 border border-solid border-slate-200"
+            className="inline-flex items-center justify-center rounded-full border border-solid border-slate-200 p-2"
           >
             <Home size={16} className="hover:scale-125" />
           </Link>
         </TooltipCustom>
 
         <div className="w-96 max-w-sm">
-          <h1 className="text-center text-3xl font-bold mb-5 text-blue-800">
+          <h1 className="mb-5 text-center text-3xl font-bold text-blue-800">
             Đăng nhập
           </h1>
           <SignInFrom />
         </div>
 
-        <div className="flex justify-center items-center gap-2 mt-8">
+        <div className="mt-8 flex items-center justify-center gap-2">
           <p className="text-base">Bạn chưa có tài khoản?</p>
           <Link
             href="/signup"
-            className="text-primary text-base hover:underline"
+            className="text-base text-primary hover:underline"
           >
             Đăng ký
           </Link>

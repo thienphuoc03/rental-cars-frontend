@@ -43,7 +43,7 @@ export function SignUpFrom() {
       // Remove confirmPassword field from the data
       // const { confirmPassword, ...formData } = values;
       // console.log('Form submitted', formData);
-      console.log('Form submitted');
+      console.log(values);
     }
   }
 

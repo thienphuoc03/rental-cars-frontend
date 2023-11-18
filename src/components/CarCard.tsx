@@ -27,7 +27,7 @@ const CarCard = ({
   return (
     <Link
       href={slug}
-      className="flex min-w-[180px] flex-col items-stretch justify-center gap-6 rounded-lg bg-white p-4"
+      className="flex min-w-[180px] flex-col items-stretch justify-center gap-6 rounded-lg bg-white p-4 hover:scale-105"
     >
       <div className="overflow-hidden rounded-lg">
         <Image src={image} alt="car" width={272} height={204} />
@@ -72,7 +72,12 @@ const CarCard = ({
               {trip} chuyến đi
             </span>
           </div>
-          <span className="text-base font-semibold text-primary">{price}K</span>
+          <span className="text-base font-semibold text-primary">
+            {price}K
+            <p className="ml-1 inline-block text-xs font-normal text-gray-500">
+              / ngày
+            </p>
+          </span>
         </div>
       </div>
     </Link>

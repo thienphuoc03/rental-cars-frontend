@@ -18,6 +18,7 @@ const bannerImgList: string[] = [
 
 const HomePage = () => {
   const [bannerImg, setBannerImg] = useState<string>(bannerImgList[0]);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setBannerImg(
@@ -28,14 +29,14 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className="">
+    <div className="mt-6">
       {/* Banner */}
       <div className="relative flex h-auto max-h-[600px] w-auto items-center justify-center overflow-hidden rounded-xl bg-transparent">
         <Image
           src={bannerImg}
           width={1280}
           height={600}
-          alt="banner-img"
+          alt="banner"
           style={{ objectFit: 'cover' }}
         />
         <div className="absolute flex flex-col items-center justify-center">

@@ -2,6 +2,7 @@
 
 import { addDays, format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import { DateRange } from 'react-day-picker';
 
@@ -12,6 +13,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { cn } from '@/lib/utils';
 
 const SearchBox = () => {
+  const router = useRouter();
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: new Date(Date.now()),
     to: addDays(new Date(Date.now()), 1),
@@ -23,6 +25,11 @@ const SearchBox = () => {
     const endDate = date?.to?.toISOString();
 
     console.log({ startDate, endDate });
+
+    // link to search page
+    router.push(`/search?startDate=${startDate}&endDate=${endDate}`, {
+      scroll: false,
+    });
   };
   return (
     <div className="absolute -mt-6 flex w-full items-center justify-center ">
@@ -37,7 +44,7 @@ const SearchBox = () => {
                 !date && 'text-muted-foreground',
               )}
             >
-              <span className="text-2xl font-normal text-black">
+              <span className="text-xl font-normal text-black">
                 <span className="flex items-center justify-start text-base font-normal text-gray-500">
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   Bắt đầu
@@ -51,7 +58,7 @@ const SearchBox = () => {
 
               <hr className="mx-10 my-4 h-3/5 w-[1px] bg-gray-200" />
 
-              <span className="text-2xl font-normal text-black">
+              <span className="text-xl font-normal text-black">
                 <span className="flex items-center justify-start text-base font-normal text-gray-500">
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   kết thúc

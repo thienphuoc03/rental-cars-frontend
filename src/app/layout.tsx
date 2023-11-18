@@ -3,6 +3,7 @@ import { Roboto } from 'next/font/google';
 import React from 'react';
 
 import './globals.scss';
+import Providers from '@/stores/Providers';
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -27,7 +28,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${roboto.variable}`}>{children}</body>
+      <body className={`${roboto.variable}`}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

@@ -28,7 +28,7 @@ const Explorer = () => {
             </p>
 
             <div className="flex items-center justify-center gap-6">
-              <Link href="#">
+              <Link href="/howitwork">
                 <Button
                   variant="outline"
                   size="lg"

@@ -1,8 +1,10 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
 import { Eye, EyeOff } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -21,14 +23,38 @@ import { signInSchema } from '@/schemas';
 
 export function SignInFrom() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  // const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
   });
 
-  function onSubmit(values: z.infer<typeof signInSchema>) {
-    console.log(values);
-  }
+  const onSubmit = async (values: z.infer<typeof signInSchema>) => {
+    setIsLoading(true);
+    try {
+      // const { data } = await SignInAPI(values);
+      // console.log(values, data);
+      const { data } = await axios.post(
+        'http://localhost:8080/api/v1/auth/signin',
+        values,
+      );
+      console.log(data);
+      setIsLoading(false);
+      // LocalStorage.add('user', JSON.stringify(data?.data?.user));
+      // CookiesStorage.setCookieData('token', data?.data?.accessToken);
+      // eslint-disable-next-line no-constant-condition
+      if (data?.user.role === 'CUSTOMER' || 'CAROWNER') router.push('/');
+      if (data?.user.role === 'ADMIN') router.push('/dashboard');
+    } catch (e: any) {
+      // dispatch(statusApiReducer.actions.setMessageError('Đăng nhập thất bại!'));
+      console.log('that bai');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Form {...form}>
@@ -92,7 +118,7 @@ export function SignInFrom() {
           <Link href="#">Quên mật khẩu?</Link>
         </div>
 
-        <Button type="submit" className="w-full">
+        <Button type="submit" className="w-full" isLoading={isLoading}>
           Đăng nhập
         </Button>
       </form>

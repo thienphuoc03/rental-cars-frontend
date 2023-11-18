@@ -22,7 +22,7 @@ export default function HomeLayout({
     <>
       <Header />
       <main className="flex w-screen justify-center">
-        <div className="w-full px-32 py-4 lg:px-8">{children}</div>
+        <div className="w-full px-32 lg:px-8">{children}</div>
       </main>
       <Footer />
     </>

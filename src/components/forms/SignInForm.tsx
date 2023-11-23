@@ -3,8 +3,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Eye, EyeOff } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { toast } from 'sonner';
 import * as z from 'zod';
 
 import { Button } from '@/components/ui/button';
@@ -17,22 +20,58 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { CookiesStorage } from '@/config/cookie';
+import { AUTH_SIGNIN } from '@/lib/api-constants';
 import { signInSchema } from '@/schemas';
+import { setTokens, setUser } from '@/stores/slices/authSlice';
+
+import { API } from '../../services';
 
 export function SignInFrom() {
-  const [showPassword, setShowPassword] = useState<Boolean>(false);
+  const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  // const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
   });
 
-  function onSubmit(values: z.infer<typeof signInSchema>) {
-    console.log(values);
-  }
+  const onSubmit = async (values: z.infer<typeof signInSchema>) => {
+    setIsLoading(true);
+    try {
+      const { data } = await API.post(AUTH_SIGNIN, values);
+
+      dispatch(setUser(data?.user));
+      dispatch(setTokens(data?.tokens.accessToken));
+
+      localStorage.setItem('user', JSON.stringify(data?.user));
+
+      // set token to cookie storage
+      CookiesStorage.setCookieData('accessToken', data?.tokens.accessToken);
+
+      if (data?.user.role === 'TRAVELER' || data?.user.role === 'CAROWNER') {
+        router.push('/');
+        toast.success('Đăng nhập thành công!!!');
+      } else if (data?.user.role === 'ADMIN') {
+        router.push('/admin/dashboard');
+        toast.success('Đăng nhập thành công!!!');
+      } else {
+        toast.error('Có lỗi đã xảy ra!!');
+      }
+      setIsLoading(false);
+    } catch (e: any) {
+      toast.error('Đăng nhập thất bại!!!');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-1 w-full">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-1">
         <FormField
           control={form.control}
           name="username"
@@ -56,7 +95,7 @@ export function SignInFrom() {
             <FormItem>
               <FormLabel>Mật khẩu</FormLabel>
               <FormControl>
-                <div className="flex justify-between items-center relative">
+                <div className="relative flex items-center justify-between">
                   <Input
                     type={showPassword ? 'text' : 'password'}
                     placeholder="Mật khẩu..."
@@ -66,14 +105,14 @@ export function SignInFrom() {
                   {showPassword ? (
                     <a
                       onClick={() => setShowPassword(!showPassword)}
-                      className="cursor-pointer absolute right-2"
+                      className="absolute right-2 cursor-pointer"
                     >
                       <Eye size={18} />
                     </a>
                   ) : (
                     <a
                       onClick={() => setShowPassword(!showPassword)}
-                      className="cursor-pointer absolute right-2"
+                      className="absolute right-2 cursor-pointer"
                     >
                       <EyeOff size={18} />
                     </a>
@@ -92,7 +131,7 @@ export function SignInFrom() {
           <Link href="#">Quên mật khẩu?</Link>
         </div>
 
-        <Button type="submit" className="w-full">
+        <Button type="submit" className="w-full" isLoading={isLoading}>
           Đăng nhập
         </Button>
       </form>

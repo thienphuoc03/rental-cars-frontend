@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import React from 'react';
 
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
+
 export const metadata: Metadata = {
   metadataBase: new URL('http://localhost:3000'),
   title: {
@@ -15,5 +18,13 @@ export default function HomeLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <main>{children}</main>;
+  return (
+    <>
+      <Header />
+      <main className="flex w-screen justify-center">
+        <div className="w-full px-32 lg:px-8">{children}</div>
+      </main>
+      <Footer />
+    </>
+  );
 }

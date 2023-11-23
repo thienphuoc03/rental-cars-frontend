@@ -1,9 +1,15 @@
 {
-  "extends": ["next/core-web-vitals", "eslint:recommended", "prettier"],
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "prettier",
+    "plugin:@typescript-eslint/recommended"
+  ],
   "plugins": ["import", "unused-imports"],
   "rules": {
     "react/no-unescaped-entities": "off",
     "@next/next/no-page-custom-font": "off",
+    "@typescript-eslint/no-explicit-any": "off",
 
     // sorting and group imports
     "import/order": [
@@ -43,7 +49,8 @@
         "args": "after-used",
         "argsIgnorePattern": "^_"
       }
-    ]
+    ],
+    "no-constant-condition": "off"
   },
   "settings": {
     "import/resolver": {

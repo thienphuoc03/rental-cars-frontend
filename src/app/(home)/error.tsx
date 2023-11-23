@@ -14,7 +14,7 @@ export default function HomeError({
   }, [error]);
 
   return (
-    <div className="w-full h-full flex flex-col justify-center items-center">
+    <div className="flex h-full w-full flex-col items-center justify-center">
       <h2 className="text-3xl font-medium">Something went wrong!</h2>
       <button onClick={() => reset()}>Try again</button>
     </div>

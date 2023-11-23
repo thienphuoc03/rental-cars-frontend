@@ -1,17 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { setupListeners } from "@reduxjs/toolkit/dist/query";
-import { combineReducers } from "redux";
+import { setupListeners } from '@reduxjs/toolkit/dist/query';
+import { combineReducers } from 'redux';
 
-import breadCrumbReducer from "./reducers/breadCrumb";
-import statusApiReducer from "./reducers/statusAPI";
-import tabReducer from "./reducers/tab";
-import usersReducer from "./reducers/user";
+import authReducer from './slices/authSlice';
 
 const rootReducer = combineReducers({
-  statusApi: statusApiReducer,
-  users: usersReducer,
-  tab: tabReducer,
-  breadCrumb: breadCrumbReducer,
+  auth: authReducer,
 });
 
 export const store = configureStore({

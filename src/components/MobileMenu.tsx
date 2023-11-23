@@ -3,6 +3,11 @@
 import { LogOut, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { toast } from 'sonner';
+
+import { CookiesStorage } from '@/config/cookie';
+import { logout } from '@/stores/slices/authSlice';
 
 import { Button } from './ui/button';
 import Username from './Username';
@@ -23,6 +28,7 @@ const mobileMenuItems: { title: string; href: string }[] = [
 ];
 
 const MobileMenu = () => {
+  const dispatch = useDispatch();
   const [isLogged, setIsLogged] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -45,10 +51,37 @@ const MobileMenu = () => {
     return () => {
       window.removeEventListener('resize', closeMenu);
     };
-  }, [isOpen]);
+  }, [closeMenu, isOpen]);
+
+  // check login and logout
+  useEffect(() => {
+    const isLogged = CookiesStorage.getCookieData('accessToken');
+
+    if (isLogged) {
+      setIsLogged(true);
+    } else {
+      setIsLogged(false);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    // clear local storage
+    localStorage.removeItem('user');
+
+    // clear redux store
+    dispatch(logout());
+
+    // clear cookie storage
+    CookiesStorage.clearCookieData('accessToken');
+
+    setIsLogged(false);
+    toast.info('Đã đăng xuất!!!');
+    // redirect to home page
+    window.location.reload();
+  };
 
   return (
-    <div className="relative hidden lg:block">
+    <div className="relative z-50 hidden lg:block">
       <Button variant="ghost" size="icon" className="" onClick={toggleMenu}>
         <Menu size={20} />
       </Button>
@@ -65,9 +98,11 @@ const MobileMenu = () => {
           </Button>
 
           <div className="absolute left-1/2 top-1/4 -translate-x-1/2 -translate-y-1/4 transform rounded-lg bg-white p-4">
-            <Link href="/">
-              <Username className="text-base font-medium text-black" />
-            </Link>
+            {isLogged && (
+              <Link href="/">
+                <Username className="text-base font-medium text-black" />
+              </Link>
+            )}
 
             <hr className="my-4 w-full border border-solid border-gray-300/50" />
 
@@ -94,7 +129,7 @@ const MobileMenu = () => {
               <Button
                 variant="ghost"
                 className="w-full text-base font-medium hover:underline"
-                onClick={() => setIsLogged(false)}
+                onClick={handleLogout}
               >
                 <LogOut size={18} className="mr-3 rotate-180" />
                 Đăng xuất

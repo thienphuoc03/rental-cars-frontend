@@ -3,16 +3,17 @@
 import { addDays, format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useState } from 'react';
 import { DateRange } from 'react-day-picker';
+
+import { cn } from '@/lib/utils';
 
 import { Button } from '../ui/button';
 import { Calendar } from '../ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 
-import { cn } from '@/lib/utils';
-
 const SearchBox = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: new Date(Date.now()),
@@ -20,16 +21,17 @@ const SearchBox = () => {
   });
 
   const submit = () => {
+    setIsLoading(true);
     // format date to ISO string
     const startDate = date?.from?.toISOString();
     const endDate = date?.to?.toISOString();
-
-    console.log({ startDate, endDate });
 
     // link to search page
     router.push(`/search?startDate=${startDate}&endDate=${endDate}`, {
       scroll: false,
     });
+
+    setIsLoading(false);
   };
   return (
     <div className="absolute -mt-6 flex w-full items-center justify-center ">
@@ -88,6 +90,7 @@ const SearchBox = () => {
           onClick={submit}
           className="text-lg"
           size="lg"
+          isLoading={isLoading}
           disabled={!date?.from || !date?.to}
         >
           Tìm xe

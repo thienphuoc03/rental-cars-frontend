@@ -1,19 +1,32 @@
 'use client';
 
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
+import Username from '@/components/Username';
+import { CookiesStorage } from '@/config/cookie';
 
 import Logo from './Logo';
 import MobileMenu from './MobileMenu';
 import Navbar from './Navbar';
 import Notification from './Notification';
-import ProfileMenu from './ProfileMenu';
 
 const Header = () => {
-  const isLogged = false;
+  const [isLogged, setIsLogged] = useState<boolean>(false);
+
+  // check login and logout
+  useEffect(() => {
+    const isLogged = CookiesStorage.getCookieData('accessToken');
+
+    if (isLogged) {
+      setIsLogged(true);
+    } else {
+      setIsLogged(false);
+    }
+  }, []);
 
   return (
-    <header className="max-h-[80.438px] min-h-max w-full bg-primary">
+    <header className="bg-primary max-h-[80.438px] min-h-max w-full">
       <div className="flex items-center justify-center py-4">
         <div className="flex w-full items-center justify-between px-32 lg:px-8">
           <Logo />
@@ -28,7 +41,7 @@ const Header = () => {
               <>
                 <Notification />
 
-                <ProfileMenu />
+                <Username />
               </>
             ) : (
               <div className="flex items-center justify-center gap-4 lg:hidden">

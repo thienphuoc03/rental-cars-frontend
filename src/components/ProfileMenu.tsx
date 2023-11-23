@@ -3,6 +3,11 @@
 import { LogOut, User } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { toast } from 'sonner';
+
+import { CookiesStorage } from '@/config/cookie';
+import { logout } from '@/stores/slices/authSlice';
 
 import { Button } from './ui/button';
 import {
@@ -35,6 +40,23 @@ const profileMenuItems: { icon: any; title: string; href: string }[] = [
 ];
 
 const ProfileMenu = () => {
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    // clear local storage
+    localStorage.removeItem('user');
+
+    // clear redux store
+    dispatch(logout());
+
+    // clear cookie storage
+    CookiesStorage.clearCookieData('accessToken');
+
+    toast.info('Đã đăng xuất !!!');
+    // redirect to home page
+    window.location.reload();
+  };
+
   return (
     <div className="block lg:hidden">
       <DropdownMenu modal={false}>
@@ -64,12 +86,12 @@ const ProfileMenu = () => {
 
           <DropdownMenuSeparator />
 
-          <Link href="/logout">
+          <Button variant="ghost" onClick={handleLogout} className="w-full">
             <DropdownMenuItem className="cursor-pointer">
               <LogOut className="mr-2 h-4 w-4" />
               <span>Log out</span>
             </DropdownMenuItem>
-          </Link>
+          </Button>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

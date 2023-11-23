@@ -49,7 +49,8 @@
         "args": "after-used",
         "argsIgnorePattern": "^_"
       }
-    ]
+    ],
+    "no-constant-condition": "off"
   },
   "settings": {
     "import/resolver": {

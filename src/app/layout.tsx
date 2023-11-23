@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import React from 'react';
+import './globals.css';
+import { Toaster } from 'sonner';
 
-import './globals.scss';
 import Providers from '@/stores/Providers';
 
 const roboto = Roboto({
@@ -30,6 +31,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${roboto.variable}`}>
         <Providers>{children}</Providers>
+        <Toaster position="bottom-right" richColors={true} closeButton={true} />
       </body>
     </html>
   );

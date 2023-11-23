@@ -1,12 +1,13 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
 import { Eye, EyeOff } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { toast } from 'sonner';
 import * as z from 'zod';
 
 import { Button } from '@/components/ui/button';
@@ -19,9 +20,15 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { CookiesStorage } from '@/config/cookie';
+import { AUTH_SIGNIN } from '@/lib/api-constants';
 import { signInSchema } from '@/schemas';
+import { setTokens, setUser } from '@/stores/slices/authSlice';
+
+import { API } from '../../services';
 
 export function SignInFrom() {
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -35,22 +42,28 @@ export function SignInFrom() {
   const onSubmit = async (values: z.infer<typeof signInSchema>) => {
     setIsLoading(true);
     try {
-      // const { data } = await SignInAPI(values);
-      // console.log(values, data);
-      const { data } = await axios.post(
-        'http://localhost:8080/api/v1/auth/signin',
-        values,
-      );
-      console.log(data);
+      const { data } = await API.post(AUTH_SIGNIN, values);
+
+      dispatch(setUser(data?.user));
+      dispatch(setTokens(data?.tokens.accessToken));
+
+      localStorage.setItem('user', JSON.stringify(data?.user));
+
+      // set token to cookie storage
+      CookiesStorage.setCookieData('accessToken', data?.tokens.accessToken);
+
+      if (data?.user.role === 'TRAVELER' || data?.user.role === 'CAROWNER') {
+        router.push('/');
+        toast.success('Đăng nhập thành công!!!');
+      } else if (data?.user.role === 'ADMIN') {
+        router.push('/admin/dashboard');
+        toast.success('Đăng nhập thành công!!!');
+      } else {
+        toast.error('Có lỗi đã xảy ra!!');
+      }
       setIsLoading(false);
-      // LocalStorage.add('user', JSON.stringify(data?.data?.user));
-      // CookiesStorage.setCookieData('token', data?.data?.accessToken);
-      // eslint-disable-next-line no-constant-condition
-      if (data?.user.role === 'CUSTOMER' || 'CAROWNER') router.push('/');
-      if (data?.user.role === 'ADMIN') router.push('/dashboard');
     } catch (e: any) {
-      // dispatch(statusApiReducer.actions.setMessageError('Đăng nhập thất bại!'));
-      console.log('that bai');
+      toast.error('Đăng nhập thất bại!!!');
     } finally {
       setIsLoading(false);
     }

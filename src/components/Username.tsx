@@ -1,5 +1,4 @@
 import { ClassValue } from 'clsx';
-import { ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
@@ -32,7 +31,6 @@ const Username = ({ className }: { className?: ClassValue }) => {
         </AvatarFallback>
       </Avatar>
       <p className={cn('text-base text-white', className)}>{username}</p>
-      <ChevronDown size={16} className={cn('text-white', className)} />
     </Link>
   );
 };

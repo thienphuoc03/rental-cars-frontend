@@ -26,8 +26,8 @@ const CarCard = ({
 }: CarCardProps) => {
   return (
     <Link
-      href={slug}
-      className="flex min-w-[180px] flex-col items-stretch justify-center gap-6 rounded-lg bg-white p-4 hover:scale-105"
+      href={`car/${slug}`}
+      className="flex min-w-[180px] flex-col items-stretch justify-center gap-6 rounded-lg border border-gray-100 bg-white p-4 shadow-xl hover:scale-105"
     >
       <div className="overflow-hidden rounded-lg">
         <Image src={image} alt="car" width={272} height={204} />

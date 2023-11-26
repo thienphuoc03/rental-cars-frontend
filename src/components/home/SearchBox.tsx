@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { DateRange } from 'react-day-picker';
 
-import { cn } from '@/lib/utils';
+import { cn, formatDate } from '@/lib/utils';
 
 import { Button } from '../ui/button';
 import { Calendar } from '../ui/calendar';
@@ -15,16 +15,17 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 const SearchBox = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
-  const [date, setDate] = React.useState<DateRange | undefined>({
+  const [date, setDate] = useState<DateRange | undefined>({
     from: new Date(Date.now()),
     to: addDays(new Date(Date.now()), 1),
   });
 
   const submit = () => {
     setIsLoading(true);
+
     // format date to ISO string
-    const startDate = date?.from?.toISOString();
-    const endDate = date?.to?.toISOString();
+    const startDate = formatDate(date?.from as Date);
+    const endDate = formatDate(date?.to as Date);
 
     // link to search page
     router.push(`/search?startDate=${startDate}&endDate=${endDate}`, {

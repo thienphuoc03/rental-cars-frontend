@@ -44,6 +44,8 @@ export function SignInFrom() {
     try {
       const { data } = await API.post(AUTH_SIGNIN, values);
 
+      console.log(data);
+
       dispatch(setUser(data?.user));
       dispatch(setTokens(data?.tokens.accessToken));
 
@@ -62,8 +64,14 @@ export function SignInFrom() {
         toast.error('Có lỗi đã xảy ra!!');
       }
       setIsLoading(false);
-    } catch (e: any) {
-      toast.error('Đăng nhập thất bại!!!');
+    } catch (error: any) {
+      if (error?.statusCode === 401) {
+        toast.error(error?.error, {
+          description: 'Tài khoản hoặc mật khẩu không chính xác!!!',
+        });
+      } else {
+        toast.error('Đăng nhập thất bại!!!');
+      }
     } finally {
       setIsLoading(false);
     }

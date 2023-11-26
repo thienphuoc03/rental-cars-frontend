@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { get } from 'lodash';
 
+import { CookiesStorage } from '@/config/cookie';
+
 const BE_HOSTNAME = process.env.NEXT_PUBLIC_BACKEND_HOSTNAME;
 const BE_PORT = process.env.NEXT_PUBLIC_BACKEND_PORT;
 const baseURL = `http://${BE_HOSTNAME}:${BE_PORT}/api/v1/`;
@@ -19,25 +21,26 @@ const defaultOptions = {
   },
 };
 
-const _get = (url: string, params = {}) => {
+const _get = (url: string, params = {}, options = {}) => {
   return instance.get(baseURL + url, {
     ...defaultOptions,
+    options,
     ...{ params },
   });
 };
 
-const post = (url: string, body = {}) =>
-  instance.post(baseURL + url, body, { ...defaultOptions });
+const post = (url: string, body = {}, options = {}) =>
+  instance.post(baseURL + url, body, { ...defaultOptions, options });
 
-const put = (url: string, body = {}) =>
-  instance.put(baseURL + url, body, { ...defaultOptions });
-const patch = (url: string, body = {}) =>
-  instance.patch(baseURL + url, body, { ...defaultOptions });
-const _delete = (url: string) =>
-  instance.delete(baseURL + url, { ...defaultOptions });
+const put = (url: string, body = {}, options = {}) =>
+  instance.put(baseURL + url, body, { ...defaultOptions, options });
+const patch = (url: string, body = {}, options = {}) =>
+  instance.patch(baseURL + url, body, { ...defaultOptions, options });
+const _delete = (url: string, options = {}) =>
+  instance.delete(baseURL + url, { ...defaultOptions, options });
 
 const interceptorHandleRequest = (config: any) => {
-  const accessToken = sessionStorage.getItem('accessToken');
+  const accessToken = CookiesStorage.getCookieData('accessToken');
 
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
@@ -49,12 +52,10 @@ const interceptorHandleRequest = (config: any) => {
 const interceptorHandleResponse = (response: any) => response;
 const handleError = (error: any) => {
   const errorJson = JSON.parse(JSON.stringify(error));
-  if (errorJson?.status === 401) {
-    console.log('401');
-  }
-  return Promise.reject(
-    get(error, 'response.data.message') || errorJson?.message,
-  );
+  // if (errorJson?.status === 401) {
+  //   toast.error(errorJson?.error, { description: errorJson?.message });
+  // }
+  return Promise.reject(get(error, 'response.data') || errorJson);
 };
 
 instance.interceptors.request.use(interceptorHandleRequest, handleError);

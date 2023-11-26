@@ -1,5 +1,6 @@
+import editProfileSchema from './editProfileSchema';
 import SearchSchema from './searchSchema';
 import signInSchema from './signInSchema';
 import signUpSchema from './signUpSchema';
 
-export { signInSchema, signUpSchema, SearchSchema };
+export { SearchSchema, signInSchema, signUpSchema, editProfileSchema };

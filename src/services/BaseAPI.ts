@@ -21,23 +21,22 @@ const defaultOptions = {
   },
 };
 
-const _get = (url: string, params = {}, options = {}) => {
+const _get = (url: string, params = {}) => {
   return instance.get(baseURL + url, {
     ...defaultOptions,
-    options,
     ...{ params },
   });
 };
 
-const post = (url: string, body = {}, options = {}) =>
-  instance.post(baseURL + url, body, { ...defaultOptions, options });
+const post = (url: string, body = {}) =>
+  instance.post(baseURL + url, body, { ...defaultOptions });
 
-const put = (url: string, body = {}, options = {}) =>
-  instance.put(baseURL + url, body, { ...defaultOptions, options });
-const patch = (url: string, body = {}, options = {}) =>
-  instance.patch(baseURL + url, body, { ...defaultOptions, options });
-const _delete = (url: string, options = {}) =>
-  instance.delete(baseURL + url, { ...defaultOptions, options });
+const put = (url: string, body = {}) =>
+  instance.put(baseURL + url, body, { ...defaultOptions });
+const patch = (url: string, body = {}) =>
+  instance.patch(baseURL + url, body, { ...defaultOptions });
+const _delete = (url: string) =>
+  instance.delete(baseURL + url, { ...defaultOptions });
 
 const interceptorHandleRequest = (config: any) => {
   const accessToken = CookiesStorage.getCookieData('accessToken');

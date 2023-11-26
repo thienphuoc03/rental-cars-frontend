@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 
 import { CookiesStorage } from '@/config/cookie';
-import { logout } from '@/stores/slices/authSlice';
+import { logout } from '@/stores/reducers/authReducer';
 
 import { Button } from './ui/button';
 import {

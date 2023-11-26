@@ -23,7 +23,7 @@ import { Input } from '@/components/ui/input';
 import { CookiesStorage } from '@/config/cookie';
 import { AUTH_SIGNIN } from '@/lib/api-constants';
 import { signInSchema } from '@/schemas';
-import { setTokens, setUser } from '@/stores/slices/authSlice';
+import { setTokens, setUser } from '@/stores/reducers/authReducer';
 
 import { API } from '../../services';
 
@@ -43,8 +43,6 @@ export function SignInFrom() {
     setIsLoading(true);
     try {
       const { data } = await API.post(AUTH_SIGNIN, values);
-
-      console.log(data);
 
       dispatch(setUser(data?.user));
       dispatch(setTokens(data?.tokens.accessToken));

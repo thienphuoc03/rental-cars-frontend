@@ -10,7 +10,7 @@ import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { CookiesStorage } from '@/config/cookie';
 import { cn } from '@/lib/utils';
-import { logout } from '@/stores/slices/authSlice';
+import { logout } from '@/stores/reducers/authReducer';
 
 const ProfileMenu: { icon: ReactElement; href: string; label: string }[] = [
   {

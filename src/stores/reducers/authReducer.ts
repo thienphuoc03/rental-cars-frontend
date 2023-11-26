@@ -25,7 +25,7 @@ interface AuthState {
   success: boolean;
 }
 
-const authSlice = createSlice({
+const authReducer = createSlice({
   name: 'auth',
   initialState: {
     user: {},
@@ -53,6 +53,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { setUser, setTokens, logout } = authSlice.actions;
+export const { setUser, setTokens, logout } = authReducer.actions;
 
-export default authSlice.reducer;
+export default authReducer.reducer;

@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 
 import { CookiesStorage } from '@/config/cookie';
-import { logout } from '@/stores/slices/authSlice';
+import { logout } from '@/stores/reducers/authReducer';
 
 import { Button } from './ui/button';
 import Username from './Username';
@@ -37,6 +37,7 @@ const MobileMenu = () => {
   };
 
   // Function to close the mobile menu when the screen size is larger than 1024px
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const closeMenu = () => {
     if (window.innerWidth >= 1024 && isOpen) {
       setIsOpen(false);

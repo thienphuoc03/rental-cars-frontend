@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { combineReducers } from 'redux';
 
-import authReducer from './slices/authSlice';
+import authReducer from './reducers/authReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,

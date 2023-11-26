@@ -26,7 +26,7 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="bg-primary max-h-[80.438px] min-h-max w-full">
+    <header className="max-h-[80.438px] min-h-max w-full bg-primary">
       <div className="flex items-center justify-center py-4">
         <div className="flex w-full items-center justify-between px-32 lg:px-8">
           <Logo />

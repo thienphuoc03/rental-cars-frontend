@@ -28,7 +28,7 @@ const AvatarDialog = ({
 
   useEffect(() => {
     setAvatarUrl(src);
-  }, []);
+  }, [src]);
 
   function handleFileChange(e: any) {
     const file = e.target.files[0];

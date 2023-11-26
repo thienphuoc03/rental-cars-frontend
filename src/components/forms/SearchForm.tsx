@@ -5,11 +5,11 @@ import { CalendarIcon } from 'lucide-react';
 import React from 'react';
 import { DateRange } from 'react-day-picker';
 
+import { cn } from '@/lib/utils';
+
 import { Button } from '../ui/button';
 import { Calendar } from '../ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-
-import { cn } from '@/lib/utils';
 
 const SearchForm = ({ className }: React.HTMLAttributes<HTMLDivElement>) => {
   const [date, setDate] = React.useState<DateRange | undefined>({

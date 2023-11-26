@@ -5,12 +5,14 @@
     "prettier",
     "plugin:@typescript-eslint/recommended"
   ],
-  "plugins": ["import", "unused-imports"],
+  "plugins": [
+    "import",
+    "unused-imports"
+  ],
   "rules": {
     "react/no-unescaped-entities": "off",
     "@next/next/no-page-custom-font": "off",
     "@typescript-eslint/no-explicit-any": "off",
-
     // sorting and group imports
     "import/order": [
       "error",
@@ -19,28 +21,35 @@
           "builtin",
           "external",
           "internal",
-          ["parent", "sibling"],
+          [
+            "parent",
+            "sibling"
+          ],
           "index"
         ],
         "newlines-between": "always",
-        "alphabetize": { "order": "asc", "caseInsensitive": true }
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
       }
     ],
-
     "no-multiple-empty-lines": [
       "error",
       {
         "max": 1
       }
     ],
-    "object-curly-spacing": ["error", "always"],
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ],
     "no-multi-spaces": "error",
     "keyword-spacing": "error",
     "import/export": 0,
-
     // remove unused imports
-    "no-unused-vars": "off",
-    "unused-imports/no-unused-imports": "error",
+    "no-unused-vars": "warn",
+    "unused-imports/no-unused-imports": "warn",
     "unused-imports/no-unused-vars": [
       "warn",
       {
@@ -55,7 +64,12 @@
   "settings": {
     "import/resolver": {
       "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
       }
     }
   }

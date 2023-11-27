@@ -62,4 +62,4 @@ const handleError = (error: any) => {
 instance.interceptors.request.use(interceptorHandleRequest, handleError);
 instance.interceptors.response.use(interceptorHandleResponse, handleError);
 
-export { _get as get, post, put, patch, _delete as delete };
+export { _get as get, post, put, patch, _delete as destroy };

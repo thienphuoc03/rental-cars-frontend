@@ -9,15 +9,20 @@ const nextConfig = {
     includePaths: [path.join(__dirname, 'styles')],
   },
   images: {
-    domains: ['res.cloudinary.com'],
-    // remotePatterns: [
-    //   {
-    //     protocol: 'https',
-    //     hostname: 'res.cloudinary.com',
-    //     port: '',
-    //     pathname: 'dj1v6wmjv/image/upload/**',
-    //   },
-    // ],
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'res.cloudinary.com',
+        port: '',
+        pathname: '/dj1v6wmjv/image/upload/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        port: '',
+        pathname: '/dj1v6wmjv/image/upload/**',
+      },
+    ],
   },
 };
 

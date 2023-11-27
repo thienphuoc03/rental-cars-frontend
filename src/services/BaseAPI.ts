@@ -9,8 +9,8 @@ const BE_PORT = process.env.NEXT_PUBLIC_BACKEND_PORT;
 const baseURL = `http://${BE_HOSTNAME}:${BE_PORT}/api/v1/`;
 
 const instance = axios.create({
-  timeout: 10 * 1000,
-  maxContentLength: 10 * 1000,
+  timeout: 60 * 1000 * 3,
+  maxContentLength: 60 * 1000 * 3,
 });
 
 const defaultOptions = {

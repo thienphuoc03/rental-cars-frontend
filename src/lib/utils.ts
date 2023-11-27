@@ -5,7 +5,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-// format date to locale string vietnam
 export function formatDate(date: Date) {
   return new Date(date).toLocaleDateString('vi-VN', {
     day: 'numeric',
@@ -28,4 +27,19 @@ export const countDays = (
   if (!from || !to) return 0;
 
   return Math.ceil((to.getTime() - from.getTime()) / (1000 * 3600 * 24));
+};
+
+export const convertBase64 = (file: any) => {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+
+    fileReader.onload = () => {
+      resolve(fileReader.result);
+    };
+
+    fileReader.onerror = (error) => {
+      reject(error);
+    };
+  });
 };

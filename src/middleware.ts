@@ -12,6 +12,11 @@ export function middleware(request: NextRequest) {
     // Check admin routes for admin role
     if (pathname.startsWith('/admin') && role !== 'ADMIN') {
       return NextResponse.redirect(new URL('/', request.url));
+    } else if (
+      role === 'ADMIN' &&
+      (!pathname.startsWith('/admin') || pathname === '/admin')
+    ) {
+      return NextResponse.redirect(new URL('/admin/dashboard', request.url));
     }
 
     // Allow access to non-admin routes and admin routes for admin users
@@ -26,3 +31,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 }
+
+export const config = {
+  matcher: ['/((?!_next|api/auth).*)(.+)'],
+};

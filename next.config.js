@@ -9,15 +9,15 @@ const nextConfig = {
     includePaths: [path.join(__dirname, 'styles')],
   },
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'res.cloudinary.com',
-        port: '',
-        pathname:
-          '/dj1v6wmjv/image/upload/v1700748175/rental-cars-cloudinary/**',
-      },
-    ],
+    domains: ['res.cloudinary.com'],
+    // remotePatterns: [
+    //   {
+    //     protocol: 'https',
+    //     hostname: 'res.cloudinary.com',
+    //     port: '',
+    //     pathname: 'dj1v6wmjv/image/upload/**',
+    //   },
+    // ],
   },
 };
 

@@ -51,6 +51,7 @@ export function SignInFrom() {
 
       // set token to cookie storage
       CookiesStorage.setCookieData('accessToken', data?.tokens.accessToken);
+      CookiesStorage.setCookieData('role', data?.user?.role);
 
       if (data?.user.role === 'TRAVELER' || data?.user.role === 'CAROWNER') {
         router.push('/');

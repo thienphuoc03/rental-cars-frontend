@@ -63,7 +63,7 @@ const AboutPage = () => {
         alt=""
         width={1280}
         height={519}
-        className="mt-10 animation-[slideInFromLeft] duration-1000 ease-out"
+        className="animation-[slideInFromLeft] mt-10 duration-1000 ease-out"
       />
 
       <div className="mt-10 text-center">

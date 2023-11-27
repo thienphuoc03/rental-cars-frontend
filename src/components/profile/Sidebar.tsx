@@ -20,22 +20,22 @@ const ProfileMenu: { icon: ReactElement; href: string; label: string }[] = [
   },
   {
     icon: <Heart size={24} />,
-    href: '/myfavs',
+    href: 'myfavs',
     label: 'Xe yêu thích',
   },
   {
     icon: <CarFront size={24} />,
-    href: '/mycars',
+    href: 'mycars',
     label: 'Xe của tôi',
   },
   {
     icon: <Map size={24} />,
-    href: '/mytrips',
+    href: 'mytrips',
     label: 'Chuyến đi của tôi',
   },
   {
     icon: <LockKeyhole size={24} />,
-    href: '/resetpw',
+    href: 'resetpw',
     label: 'Đổi mật khẩu',
   },
 ];
@@ -62,7 +62,7 @@ const Sidebar = () => {
     dispatch(logout());
 
     // clear cookie storage
-    CookiesStorage.clearCookieData('accessToken');
+    CookiesStorage.clearAllCookies();
 
     setIsLogged(false);
 

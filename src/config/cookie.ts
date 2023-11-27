@@ -16,4 +16,13 @@ export const CookiesStorage = {
   clearCookieData(name: string) {
     cookies.remove(name, { path: '/' });
   },
+  getAllCookies() {
+    return cookies.getAll();
+  },
+  clearAllCookies() {
+    const cookies = this.getAllCookies();
+    Object.keys(cookies).forEach((key) => {
+      this.clearCookieData(key);
+    });
+  },
 };

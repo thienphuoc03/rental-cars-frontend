@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react';
 
 import Username from '@/components/Username';
 import { CookiesStorage } from '@/config/cookie';
+import { useAppSelector } from '@/stores/hooks';
+import { selectDep } from '@/stores/reducers/depReducer';
 
 import Logo from './Logo';
 import MobileMenu from './MobileMenu';
@@ -13,6 +15,7 @@ import Notification from './Notification';
 
 const Header = () => {
   const [isLogged, setIsLogged] = useState<boolean>(false);
+  const dep = useAppSelector(selectDep);
 
   // check login and logout
   useEffect(() => {
@@ -23,7 +26,7 @@ const Header = () => {
     } else {
       setIsLogged(false);
     }
-  }, []);
+  }, [dep]);
 
   return (
     <header className="max-h-[80.438px] min-h-max w-full bg-primary">

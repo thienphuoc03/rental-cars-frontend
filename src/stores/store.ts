@@ -3,9 +3,11 @@ import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { combineReducers } from 'redux';
 
 import authReducer from './reducers/authReducer';
+import depReducer from './reducers/depReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  dep: depReducer,
 });
 
 export const store = configureStore({

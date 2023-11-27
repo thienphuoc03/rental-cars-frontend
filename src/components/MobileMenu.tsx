@@ -7,7 +7,9 @@ import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 
 import { CookiesStorage } from '@/config/cookie';
+import { useAppSelector } from '@/stores/hooks';
 import { logout } from '@/stores/reducers/authReducer';
+import { selectDep } from '@/stores/reducers/depReducer';
 
 import { Button } from './ui/button';
 import Username from './Username';
@@ -29,6 +31,7 @@ const mobileMenuItems: { title: string; href: string }[] = [
 
 const MobileMenu = () => {
   const dispatch = useDispatch();
+  const dep = useAppSelector(selectDep);
   const [isLogged, setIsLogged] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -63,7 +66,7 @@ const MobileMenu = () => {
     } else {
       setIsLogged(false);
     }
-  }, []);
+  }, [dep]);
 
   const handleLogout = () => {
     // clear local storage
@@ -73,7 +76,7 @@ const MobileMenu = () => {
     dispatch(logout());
 
     // clear cookie storage
-    CookiesStorage.clearCookieData('accessToken');
+    CookiesStorage.clearAllCookies();
 
     setIsLogged(false);
     toast.info('Đã đăng xuất!!!');

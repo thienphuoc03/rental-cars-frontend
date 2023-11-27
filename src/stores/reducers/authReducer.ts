@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { RootState } from '@/stores/store';
+
 interface User {
   id: number;
   name: string;
@@ -20,6 +22,7 @@ interface AuthState {
     accessToken: string;
     refreshToken: string;
   };
+  dep?: any;
   loading: boolean;
   error?: null;
   success: boolean;
@@ -33,11 +36,15 @@ const authReducer = createSlice({
       accessToken: '',
       refreshToken: '',
     },
+    dep: '',
     loading: false,
     error: null,
     success: false,
   } as AuthState,
   reducers: {
+    setStatus: (state) => {
+      state.dep = Math.random();
+    },
     setUser(state, action) {
       state.user = action.payload;
     },
@@ -49,6 +56,7 @@ const authReducer = createSlice({
       state.user = {};
       state.tokens.accessToken = '';
       state.tokens.refreshToken = '';
+      state.dep = Math.random();
     },
   },
 });
@@ -56,3 +64,6 @@ const authReducer = createSlice({
 export const { setUser, setTokens, logout } = authReducer.actions;
 
 export default authReducer.reducer;
+
+export const selectUsers = () => (state: RootState) => state.auth.user;
+export const selectStatus = () => (state: RootState) => state.auth.dep;

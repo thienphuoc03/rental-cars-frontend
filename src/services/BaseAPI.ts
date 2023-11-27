@@ -5,6 +5,7 @@ import { CookiesStorage } from '@/config/cookie';
 
 const BE_HOSTNAME = process.env.NEXT_PUBLIC_BACKEND_HOSTNAME;
 const BE_PORT = process.env.NEXT_PUBLIC_BACKEND_PORT;
+
 const baseURL = `http://${BE_HOSTNAME}:${BE_PORT}/api/v1/`;
 
 const instance = axios.create({
@@ -21,22 +22,23 @@ const defaultOptions = {
   },
 };
 
-const _get = (url: string, params = {}) => {
+const _get = (url: string, params = {}, options: any = {}) => {
   return instance.get(baseURL + url, {
     ...defaultOptions,
+    ...options,
     ...{ params },
   });
 };
 
-const post = (url: string, body = {}) =>
-  instance.post(baseURL + url, body, { ...defaultOptions });
+const post = (url: string, body = {}, options: any = {}) =>
+  instance.post(baseURL + url, body, { ...defaultOptions, ...options });
 
-const put = (url: string, body = {}) =>
-  instance.put(baseURL + url, body, { ...defaultOptions });
-const patch = (url: string, body = {}) =>
-  instance.patch(baseURL + url, body, { ...defaultOptions });
-const _delete = (url: string) =>
-  instance.delete(baseURL + url, { ...defaultOptions });
+const put = (url: string, body = {}, options: any = {}) =>
+  instance.put(baseURL + url, body, { ...defaultOptions, ...options });
+const patch = (url: string, body = {}, options: any = {}) =>
+  instance.patch(baseURL + url, body, { ...defaultOptions, ...options });
+const _delete = (url: string, options: any = {}) =>
+  instance.delete(baseURL + url, { ...defaultOptions, ...options });
 
 const interceptorHandleRequest = (config: any) => {
   const accessToken = CookiesStorage.getCookieData('accessToken');

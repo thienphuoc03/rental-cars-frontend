@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { DateRange } from 'react-day-picker';
 
-import { cn, formatDateToDMY } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 
 import { Button } from '../ui/button';
 import { Calendar } from '../ui/calendar';
@@ -24,15 +24,16 @@ const SearchBox = () => {
     setIsLoading(true);
 
     // format date to ISO string
-    const startDate = formatDateToDMY(date?.from as Date);
-    const endDate = formatDateToDMY(date?.to as Date);
+    // const startDate = formatDateToDMY(date?.from as Date);
+    // const endDate = formatDateToDMY(date?.to as Date);
 
-    console.log(startDate, endDate);
+    const startDate = date?.from?.toISOString();
+    const endDate = date?.to?.toISOString();
 
     if (!date?.from || !date?.to) return;
 
     // link to search page
-    router.push(`/search?startDate=${startDate}&endDate=${endDate}`, {
+    router.push(`/search?startDate=${date.from}&endDate=${date.to}`, {
       scroll: false,
     });
 

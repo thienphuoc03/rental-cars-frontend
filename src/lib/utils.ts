@@ -63,3 +63,9 @@ export const formatDateToISO = (date: any) => {
 
   return `${year}-${month}-${day}`;
 };
+
+export const formatIsoToDate = (date: any) => {
+  const [year, month, day] = date.split('-');
+
+  return `${day}/${month}/${year}`;
+};

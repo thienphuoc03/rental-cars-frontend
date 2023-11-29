@@ -27,6 +27,10 @@ export function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL('/signin', request.url));
     }
 
+    if (pathname === '/signin' || pathname === '/signup') {
+      return NextResponse.redirect(new URL('/', request.url));
+    }
+
     // Allow access to public routes when the user is not logged in
     return NextResponse.next();
   }

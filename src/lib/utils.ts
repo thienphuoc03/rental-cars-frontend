@@ -43,3 +43,16 @@ export const convertBase64 = (file: any) => {
     };
   });
 };
+
+export const formatNumberToCurrency = (value: number) => {
+  const number = value / 1000;
+
+  return new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+  })
+    .format(number)
+    .replace(/,00/g, '')
+    .replace(/\./g, '.')
+    .replace(/₫/g, 'K');
+};

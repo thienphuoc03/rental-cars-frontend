@@ -24,7 +24,7 @@ const HomePage = () => {
       setBannerImg(
         bannerImgList[Math.floor(Math.random() * bannerImgList.length)],
       );
-    }, 10000);
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
 

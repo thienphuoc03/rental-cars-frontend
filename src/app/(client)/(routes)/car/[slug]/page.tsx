@@ -21,108 +21,16 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import StarRating from '@/components/ui/star-rating';
+import { GET_CAR_BY_SLUG } from '@/lib/api-constants';
 import { countDays, formatCurrency, formatDate } from '@/lib/utils';
-
-const dataCar = {
-  id: 1,
-  name: 'Toyota Camry 2020',
-  slug: 'toyota-camry-2020',
-  licensePlates: '29A-12345',
-  seats: 4,
-  yearOfManufacture: 2020,
-  transmission: 'Tự động',
-  fuel: 'Xăng',
-  description:
-    'Xe nhà sạch sẽ,có luôn màn hình Android hỗ trợ cảnh báo tốc độ ,camera phạt nguội ,cam hành trình đầy đủ,xe đi' +
-    ' rất tiết kiệm xăng,full đen LED .....co luôn cảm biến áp suất lốp nên đi xa rất yên tâm...co kèm bơm lốp trên xe đặc biệt cốp rất rộng rãi đểđồ thoải mái...LƯU Y ..xe mình co bảo hiểm nên mọi người yên tâm...',
-  address: 'Quận Hải Châu, Đà Nẵng',
-  pricePerDay: 480000.0,
-  model: 'Toyota Camry',
-  CarFeature: [
-    'Bản đồ',
-    'Bluetooth',
-    'Camera hành trình',
-    'Cảm biến lùi',
-    'Cruise Control',
-    'Điều hòa',
-    'DVD',
-    'Kính chỉnh điện',
-  ],
-  rating: 4.5,
-  trips: 4,
-  images: [
-    {
-      id: 1,
-      url: '/images/car-img-1.jpg',
-    },
-    {
-      id: 2,
-      url: '/images/car-img-2.jpg',
-    },
-    {
-      id: 3,
-      url: '/images/car-img-3.jpg',
-    },
-    {
-      id: 4,
-      url: '/images/car-img-4.jpg',
-    },
-  ],
-  user: {
-    id: 1,
-    name: 'Nguyễn Văn A',
-    avatarUrl:
-      'https://res.cloudinary.com/dj1v6wmjv/image/upload/v1700748175/rental-cars-cloudinary/sua7izt00p9yxf42b3k4.jpg',
-    trips: 6,
-  },
-  review: {
-    meta: {
-      total: 11,
-      average: 5.0,
-    },
-    data: [
-      {
-        id: 1,
-        rating: 4,
-        content:
-          'Xe đẹp, chủ xe nhiệt tình, dễ thương. Mình sẽ ủng hộ lần sau nữa.',
-        user: {
-          id: 1,
-          name: 'Nguyễn Văn A',
-          avatarUrl:
-            'https://res.cloudinary.com/dj1v6wmjv/image/upload/v1700748175/rental-cars-cloudinary/sua7izt00p9yxf42b3k4.jpg',
-        },
-        createAt: '2023-11-21 14:10:36.161',
-      },
-      {
-        id: 2,
-        rating: 5,
-        content: 'Xe đẹp, chủ xe nhiệt tình, dễ thương.',
-        user: {
-          id: 1,
-          name: 'Nguyễn Văn B',
-          avatarUrl:
-            'https://res.cloudinary.com/dj1v6wmjv/image/upload/v1700748175/rental-cars-cloudinary/sua7izt00p9yxf42b3k4.jpg',
-        },
-        createAt: '2023-11-5 14:10:36.161',
-      },
-      {
-        id: 3,
-        rating: 4.5,
-        content: 'Xe đẹp, chủ xe nhiệt tình, dễ thương.',
-        user: {
-          id: 1,
-          name: 'Nguyễn Văn C',
-          avatarUrl:
-            'https://res.cloudinary.com/dj1v6wmjv/image/upload/v1700748175/rental-cars-cloudinary/sua7izt00p9yxf42b3k4.jpg',
-        },
-        createAt: '2023-10-10 14:10:36.161',
-      },
-    ],
-  },
-};
+import { API } from '@/services';
+import { FeatureNameEnum, FuelEnum, TransmissionEnum } from '@/types/enums';
 
 const menuItems = [
+  {
+    name: 'Hình ảnh',
+    href: '#hinh-anh',
+  },
   {
     name: 'Đặc điểm',
     href: '#dac-diem',
@@ -164,7 +72,7 @@ const surcharges: { name: string; price: string; description: string }[] = [
   },
 ];
 
-const CarPage = () => {
+const CarPage = ({ params }: { params: { slug: string } }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [date, setDate] = useState<DateRange | undefined>({
     from: new Date(Date.now()),
@@ -172,8 +80,16 @@ const CarPage = () => {
   });
   const [car, setCar] = useState<any>(null);
 
+  const getCar = async () => {
+    const slug = params.slug;
+
+    const response = await API.get(GET_CAR_BY_SLUG + `/${slug}`);
+
+    setCar(response.data);
+  };
+
   useEffect(() => {
-    setCar(dataCar);
+    getCar();
   }, []);
 
   // set date from calendar
@@ -197,9 +113,9 @@ const CarPage = () => {
   };
 
   return (
-    <div className="my-20">
+    <div className="my-4">
       {/*stick menu*/}
-      <nav className="sticky top-2 z-30 w-full rounded-lg border border-gray-200 bg-white shadow">
+      <nav className="sticky top-2 z-30 mb-14 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div className="flex items-center justify-start pl-8">
           {menuItems.map((item, index) => (
             <a
@@ -214,10 +130,13 @@ const CarPage = () => {
       </nav>
 
       {/* images */}
-      <div className="mt-4 flex items-center justify-between gap-3">
+      <div
+        className="mt-4 flex items-center justify-between gap-3"
+        id="hinh-anh"
+      >
         <div className="h-full overflow-hidden rounded-xl">
           <Image
-            src={car?.images[0]?.url}
+            src={car?.images[0]}
             alt=""
             width={854}
             height={0}
@@ -237,7 +156,7 @@ const CarPage = () => {
                 key={index}
               >
                 <Image
-                  src={image?.url}
+                  src={image}
                   alt=""
                   width={410}
                   height={190}
@@ -286,7 +205,7 @@ const CarPage = () => {
             </div>
           </div>
 
-          <div className="my-6 h-[1px] w-full bg-gray-400" />
+          <div className="my-6 h-[1px] w-full bg-gray-300" />
 
           {/* characteristics */}
           <div className="" id="dac-diem">
@@ -304,7 +223,9 @@ const CarPage = () => {
                 <Settings2 className="h-8 w-8 text-primary" />
                 <div className="flex flex-col items-center justify-between text-base">
                   <span className="text-gray-500">Truyền động</span>
-                  <span className="font-medium">{car?.transmission}</span>
+                  <span className="font-medium">
+                    {TransmissionEnum[car?.transmission]}
+                  </span>
                 </div>
               </div>
 
@@ -312,13 +233,13 @@ const CarPage = () => {
                 <Fuel className="h-8 w-8 text-primary" />
                 <div className="flex flex-col items-center justify-between text-base">
                   <span className="text-gray-500">Nhiên liệu</span>
-                  <span className="font-medium">{car?.fuel}</span>
+                  <span className="font-medium">{FuelEnum[car?.fuel]}</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="my-6 h-[1px] w-full bg-gray-400" />
+          <div className="my-6 h-[1px] w-full bg-gray-300" />
 
           {/* description */}
           <div className="">
@@ -330,7 +251,7 @@ const CarPage = () => {
             </div>
           </div>
 
-          <div className="my-6 h-[1px] w-full bg-gray-400" />
+          <div className="my-6 h-[1px] w-full bg-gray-300" />
 
           {/* features */}
           <div className="">
@@ -338,16 +259,18 @@ const CarPage = () => {
             <div className="grid grid-cols-4 gap-3">
               {car?.CarFeature.map((feature: string, index: number) => (
                 <span
-                  className="col-span-1 rounded-lg border border-gray-300 px-3 py-2"
+                  className="col-span-1 cursor-pointer rounded border border-gray-300 px-3 py-2 text-center shadow hover:scale-105"
                   key={index}
                 >
-                  <p className="text-base text-gray-600">{feature}</p>
+                  <p className="text-base text-gray-600">
+                    {FeatureNameEnum[feature]}
+                  </p>
                 </span>
               ))}
             </div>
           </div>
 
-          <div className="my-6 h-[1px] w-full bg-gray-400" />
+          <div className="my-6 h-[1px] w-full bg-gray-300" />
 
           {/* Giấy tờ thuê xe */}
           <div className="" id="giay-to-thue-xe">
@@ -388,7 +311,7 @@ const CarPage = () => {
             </div>
           </div>
 
-          <div className="my-6 h-[1px] w-full bg-gray-400" />
+          <div className="my-6 h-[1px] w-full bg-gray-300" />
 
           {/* Tài sản thế chấp */}
           <div className="">
@@ -403,7 +326,7 @@ const CarPage = () => {
             </div>
           </div>
 
-          <div className="my-6 h-[1px] w-full bg-gray-400" />
+          <div className="my-6 h-[1px] w-full bg-gray-300" />
 
           {/* Điều khoản */}
           <div className="">
@@ -440,7 +363,7 @@ const CarPage = () => {
             </div>
           </div>
 
-          <div className="my-6 h-[1px] w-full bg-gray-400" />
+          <div className="my-6 h-[1px] w-full bg-gray-300" />
 
           {/* chu xe */}
           <div className="" id="chu-xe">
@@ -450,75 +373,84 @@ const CarPage = () => {
               {/* info chu xe */}
               <div className="flex items-center justify-start gap-3">
                 <Avatar className="h-20 w-20">
-                  <AvatarImage src={car?.user?.avatarUrl} alt="avatar" />
+                  <AvatarImage src={car?.owner?.avatarUrl} alt="avatar" />
                   <AvatarFallback>Avatar</AvatarFallback>
                 </Avatar>
 
                 <div className="flex flex-col items-start justify-center">
-                  <h4 className="text-2xl font-bold">{car?.user?.name}</h4>
-                  <span className="flex items-center justify-center gap-1">
-                    <Image
-                      src="/icons/suitcase-icon.svg"
-                      alt=""
-                      width={16}
-                      height={17}
-                    />
-                    <p className="ml-1 text-sm">{car?.user?.trips} chuyến</p>
-                  </span>
+                  <h4 className="text-2xl font-bold">{car?.owner?.name}</h4>
                 </div>
               </div>
 
               {/* danh gia */}
-              <div className="mt-4">
-                <div className="flex items-center justify-start gap-2">
-                  <span className="flex items-center justify-start gap-1">
-                    <Image
-                      src="/icons/star-rating-icon.svg"
-                      alt=""
-                      width={16}
-                      height={17}
-                    />
-                    <p>{car?.review?.meta?.average}</p>
-                  </span>
+              {car?.reviews?.meta?.totalReviews === 0 ? (
+                <div className="flex w-full flex-col items-center justify-between">
+                  <Image
+                    src="/images/empty-review.svg"
+                    alt="empty-review"
+                    width={340}
+                    height={340}
+                  />
 
-                  <div className="h-1 w-1 rounded-full bg-black" />
-
-                  <span className="text-gray-700">
-                    {car?.review?.meta?.total} đánh giá
-                  </span>
+                  <div className="flex flex-col items-center justify-center gap-2">
+                    <p className="text-xl font-medium">Chưa có đánh giá</p>
+                    <p className="text-gray-500">
+                      Hãy là người đầu tiên đánh giá chủ xe
+                    </p>
+                  </div>
                 </div>
-
-                {/* review */}
+              ) : (
                 <div className="mt-4">
-                  {car?.review?.data.map((review: any, index: number) => (
-                    <div
-                      className="mt-4 flex items-center justify-between rounded-lg border border-gray-300 px-8 py-6"
-                      key={index}
-                    >
-                      <div className="flex items-center justify-start gap-3">
-                        <Avatar className="h-20 w-20">
-                          <AvatarImage
-                            src={review.user.avatarUrl}
-                            alt="avatar"
-                          />
-                          <AvatarFallback>Avatar</AvatarFallback>
-                        </Avatar>
+                  <div className="flex items-center justify-start gap-2">
+                    <span className="flex items-center justify-start gap-1">
+                      <Image
+                        src="/icons/star-rating-icon.svg"
+                        alt=""
+                        width={16}
+                        height={17}
+                      />
+                      <p>{car?.reviews?.meta?.average}</p>
+                    </span>
 
-                        <div className="flex flex-col items-start justify-center">
-                          <h4 className="text-2xl font-bold">
-                            {review.user.name}
-                          </h4>
-                          <span className="flex items-center justify-center gap-1">
-                            <StarRating rating={review?.rating} />
-                          </span>
+                    <div className="h-1 w-1 rounded-full bg-black" />
+
+                    <span className="text-gray-700">
+                      {car?.reviews?.meta?.totalReviews} đánh giá
+                    </span>
+                  </div>
+
+                  {/* review */}
+                  <div className="mt-4">
+                    {car?.reviews?.data.map((review: any, index: number) => (
+                      <div
+                        className="mt-4 flex items-center justify-between rounded-lg border border-gray-300 px-8 py-6"
+                        key={index}
+                      >
+                        <div className="flex items-center justify-start gap-3">
+                          <Avatar className="h-20 w-20">
+                            <AvatarImage
+                              src={review.user.avatarUrl}
+                              alt="avatar"
+                            />
+                            <AvatarFallback>Avatar</AvatarFallback>
+                          </Avatar>
+
+                          <div className="flex flex-col items-start justify-center">
+                            <h4 className="text-2xl font-bold">
+                              {review.user.name}
+                            </h4>
+                            <span className="flex items-center justify-center gap-1">
+                              <StarRating rating={review?.rating} />
+                            </span>
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="">{formatDate(review?.createAt)}</div>
-                    </div>
-                  ))}
+                        <div className="">{formatDate(review?.createAt)}</div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>

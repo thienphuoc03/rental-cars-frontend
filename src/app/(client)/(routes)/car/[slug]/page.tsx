@@ -22,7 +22,7 @@ import {
 } from '@/components/ui/dialog';
 import StarRating from '@/components/ui/star-rating';
 import { GET_CAR_BY_SLUG } from '@/lib/api-constants';
-import { countDays, formatCurrency, formatDate } from '@/lib/utils';
+import { countDays, formatCurrency, formatDateToDMY } from '@/lib/utils';
 import { API } from '@/services';
 import { FeatureNameEnum, FuelEnum, TransmissionEnum } from '@/types/enums';
 
@@ -445,7 +445,9 @@ const CarPage = ({ params }: { params: { slug: string } }) => {
                           </div>
                         </div>
 
-                        <div className="">{formatDate(review?.createAt)}</div>
+                        <div className="">
+                          {formatDateToDMY(review?.createAt)}
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -478,7 +480,7 @@ const CarPage = ({ params }: { params: { slug: string } }) => {
                     </span>
                     {date?.from && (
                       <span className="font-medium">
-                        {formatDate(date?.from)}
+                        {formatDateToDMY(date?.from)}
                       </span>
                     )}
                   </div>
@@ -492,7 +494,7 @@ const CarPage = ({ params }: { params: { slug: string } }) => {
                     </span>
                     {date?.to && (
                       <span className="font-medium">
-                        {formatDate(date?.to)}
+                        {formatDateToDMY(date?.to)}
                       </span>
                     )}
                   </div>
@@ -519,7 +521,8 @@ const CarPage = ({ params }: { params: { slug: string } }) => {
                       <div className="flex items-center justify-center gap-2 font-medium">
                         {date?.from && date?.to && (
                           <span>
-                            {formatDate(date?.from)} - {formatDate(date?.to)}
+                            {formatDateToDMY(date?.from)} -{' '}
+                            {formatDateToDMY(date?.to)}
                           </span>
                         )}
                       </div>

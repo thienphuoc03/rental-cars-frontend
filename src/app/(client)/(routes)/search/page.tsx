@@ -1,376 +1,68 @@
 'use client';
 
-import { CalendarDays } from 'lucide-react';
-import React from 'react';
+import { CalendarDays, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import ReactPaginate from 'react-paginate';
+import { toast } from 'sonner';
 
 import CarCard from '@/components/CarCard';
 import FilterDialog from '@/components/FilterDialog';
-
-const carList = [
-  {
-    slug: '/xe-oto-1',
-    image: '/images/car.jpg',
-    name: 'TOYOTA VELOZ CROSS 2022',
-    transmission: 'Số tự động',
-    address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-    price: 500.0,
-    trip: 59,
-    rating: 4.5,
-  },
-  {
-    slug: '/xe-oto-2',
-    image: '/images/car.jpg',
-    name: 'TOYOTA VELOZ CROSS 2022',
-    transmission: 'Số tự động',
-    address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-    price: 500.0,
-    trip: 59,
-    rating: 4.5,
-  },
-  {
-    slug: '/xe-oto-3',
-    image: '/images/car.jpg',
-    name: 'TOYOTA VELOZ CROSS 2022',
-    transmission: 'Số tự động',
-    address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-    price: 500.0,
-    trip: 59,
-    rating: 4.5,
-  },
-  {
-    slug: '/xe-oto-4',
-    image: '/images/car.jpg',
-    name: 'TOYOTA VELOZ CROSS 2022',
-    transmission: 'Số tự động',
-    address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-    price: 500.0,
-    trip: 59,
-    rating: 4.5,
-  },
-  {
-    slug: '/xe-oto-5',
-    image: '/images/car.jpg',
-    name: 'TOYOTA VELOZ CROSS 2022',
-    transmission: 'Số tự động',
-    address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-    price: 500.0,
-    trip: 59,
-    rating: 4.5,
-  },
-  {
-    slug: '/xe-oto-6',
-    image: '/images/car.jpg',
-    name: 'TOYOTA VELOZ CROSS 2022',
-    transmission: 'Số tự động',
-    address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-    price: 500.0,
-    trip: 59,
-    rating: 4.5,
-  },
-  {
-    slug: '/xe-oto-7',
-    image: '/images/car.jpg',
-    name: 'TOYOTA VELOZ CROSS 2022',
-    transmission: 'Số tự động',
-    address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-    price: 500.0,
-    trip: 59,
-    rating: 4.5,
-  },
-  {
-    slug: '/xe-oto-1',
-    image: '/images/car.jpg',
-    name: 'TOYOTA VELOZ CROSS 2022',
-    transmission: 'Số tự động',
-    address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-    price: 500.0,
-    trip: 59,
-    rating: 4.5,
-  },
-  {
-    slug: '/xe-oto-1',
-    image: '/images/car.jpg',
-    name: 'TOYOTA VELOZ CROSS 2022',
-    transmission: 'Số tự động',
-    address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-    price: 500.0,
-    trip: 59,
-    rating: 4.5,
-  },
-  {
-    slug: '/xe-oto-1',
-    image: '/images/car.jpg',
-    name: 'TOYOTA VELOZ CROSS 2022',
-    transmission: 'Số tự động',
-    address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-    price: 500.0,
-    trip: 59,
-    rating: 4.5,
-  },
-  {
-    slug: '/xe-oto-1',
-    image: '/images/car.jpg',
-    name: 'TOYOTA VELOZ CROSS 2022',
-    transmission: 'Số tự động',
-    address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-    price: 500.0,
-    trip: 59,
-    rating: 4.5,
-  },
-  {
-    slug: '/xe-oto-1',
-    image: '/images/car.jpg',
-    name: 'TOYOTA VELOZ CROSS 2022',
-    transmission: 'Số tự động',
-    address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-    price: 500.0,
-    trip: 59,
-    rating: 4.5,
-  },
-  {
-    slug: '/xe-oto-1',
-    image: '/images/car.jpg',
-    name: 'TOYOTA VELOZ CROSS 2022',
-    transmission: 'Số tự động',
-    address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-    price: 500.0,
-    trip: 59,
-    rating: 4.5,
-  },
-  {
-    slug: '/xe-oto-1',
-    image: '/images/car.jpg',
-    name: 'TOYOTA VELOZ CROSS 2022',
-    transmission: 'Số tự động',
-    address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-    price: 500.0,
-    trip: 59,
-    rating: 4.5,
-  },
-  {
-    slug: '/xe-oto-1',
-    image: '/images/car.jpg',
-    name: 'TOYOTA VELOZ CROSS 2022',
-    transmission: 'Số tự động',
-    address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-    price: 500.0,
-    trip: 59,
-    rating: 4.5,
-  },
-  {
-    slug: '/xe-oto-1',
-    image: '/images/car.jpg',
-    name: 'TOYOTA VELOZ CROSS 2022',
-    transmission: 'Số tự động',
-    address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-    price: 500.0,
-    trip: 59,
-    rating: 4.5,
-  },
-];
-
-// const carList2 = [
-//   {
-//     slug: '/xe-oto-1',
-//     image: '/images/car.jpg',
-//     name: 'TOYOTA VELOZ CROSS 2022',
-//     transmission: 'Số tự động',
-//     address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-//     price: 500.0,
-//     trip: 59,
-//     rating: 4.5,
-//   },
-//   {
-//     slug: '/xe-oto-1',
-//     image: '/images/car.jpg',
-//     name: 'TOYOTA VELOZ CROSS 2022',
-//     transmission: 'Số tự động',
-//     address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-//     price: 500.0,
-//     trip: 59,
-//     rating: 4.5,
-//   },
-//   {
-//     slug: '/xe-oto-1',
-//     image: '/images/car.jpg',
-//     name: 'TOYOTA VELOZ CROSS 2022',
-//     transmission: 'Số tự động',
-//     address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-//     price: 500.0,
-//     trip: 59,
-//     rating: 4.5,
-//   },
-//   {
-//     slug: '/xe-oto-1',
-//     image: '/images/car.jpg',
-//     name: 'TOYOTA VELOZ CROSS 2022',
-//     transmission: 'Số tự động',
-//     address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-//     price: 500.0,
-//     trip: 59,
-//     rating: 4.5,
-//   },
-//   {
-//     slug: '/xe-oto-1',
-//     image: '/images/car.jpg',
-//     name: 'TOYOTA VELOZ CROSS 2022',
-//     transmission: 'Số tự động',
-//     address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-//     price: 500.0,
-//     trip: 59,
-//     rating: 4.5,
-//   },
-//   {
-//     slug: '/xe-oto-1',
-//     image: '/images/car.jpg',
-//     name: 'TOYOTA VELOZ CROSS 2022',
-//     transmission: 'Số tự động',
-//     address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-//     price: 500.0,
-//     trip: 59,
-//     rating: 4.5,
-//   },
-//   {
-//     slug: '/xe-oto-1',
-//     image: '/images/car.jpg',
-//     name: 'TOYOTA VELOZ CROSS 2022',
-//     transmission: 'Số tự động',
-//     address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-//     price: 500.0,
-//     trip: 59,
-//     rating: 4.5,
-//   },
-//   {
-//     slug: '/xe-oto-1',
-//     image: '/images/car.jpg',
-//     name: 'TOYOTA VELOZ CROSS 2022',
-//     transmission: 'Số tự động',
-//     address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-//     price: 500.0,
-//     trip: 59,
-//     rating: 4.5,
-//   },
-//   {
-//     slug: '/xe-oto-1',
-//     image: '/images/car.jpg',
-//     name: 'TOYOTA VELOZ CROSS 2022',
-//     transmission: 'Số tự động',
-//     address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-//     price: 500.0,
-//     trip: 59,
-//     rating: 4.5,
-//   },
-//   {
-//     slug: '/xe-oto-1',
-//     image: '/images/car.jpg',
-//     name: 'TOYOTA VELOZ CROSS 2022',
-//     transmission: 'Số tự động',
-//     address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-//     price: 500.0,
-//     trip: 59,
-//     rating: 4.5,
-//   },
-//   {
-//     slug: '/xe-oto-1',
-//     image: '/images/car.jpg',
-//     name: 'TOYOTA VELOZ CROSS 2022',
-//     transmission: 'Số tự động',
-//     address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-//     price: 500.0,
-//     trip: 59,
-//     rating: 4.5,
-//   },
-//   {
-//     slug: '/xe-oto-1',
-//     image: '/images/car.jpg',
-//     name: 'TOYOTA VELOZ CROSS 2022',
-//     transmission: 'Số tự động',
-//     address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-//     price: 500.0,
-//     trip: 59,
-//     rating: 4.5,
-//   },
-//   {
-//     slug: '/xe-oto-1',
-//     image: '/images/car.jpg',
-//     name: 'TOYOTA VELOZ CROSS 2022',
-//     transmission: 'Số tự động',
-//     address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-//     price: 500.0,
-//     trip: 59,
-//     rating: 4.5,
-//   },
-//   {
-//     slug: '/xe-oto-1',
-//     image: '/images/car.jpg',
-//     name: 'TOYOTA VELOZ CROSS 2022',
-//     transmission: 'Số tự động',
-//     address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-//     price: 500.0,
-//     trip: 59,
-//     rating: 4.5,
-//   },
-//   {
-//     slug: '/xe-oto-1',
-//     image: '/images/car.jpg',
-//     name: 'TOYOTA VELOZ CROSS 2022',
-//     transmission: 'Số tự động',
-//     address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-//     price: 500.0,
-//     trip: 59,
-//     rating: 4.5,
-//   },
-//   {
-//     slug: '/xe-oto-1',
-//     image: '/images/car.jpg',
-//     name: 'TOYOTA VELOZ CROSS 2022',
-//     transmission: 'Số tự động',
-//     address: 'Phường Thanh Bình, Hải Châu, Đà Nẵng',
-//     price: 500.0,
-//     trip: 59,
-//     rating: 4.5,
-//   },
-// ];
+import SearchSkeleton from '@/components/skeletons/search-skeleton';
+import { Button } from '@/components/ui/button';
+import { SEARCH_CARS } from '@/lib/api-constants';
+import { formatDateToISO } from '@/lib/utils';
+import { API } from '@/services';
 
 const SearchPage = ({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
-  // const [data, setData] = useState([]);
-  // const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [carList, setCarList] = useState<any>();
+  const [page, setPage] = useState<number>(1);
+  const [totalPage, setTotalPage] = useState<number>(0);
 
-  // useEffect(() => {
-  //   // fetchData();
-  //   setData(carList)
-  // }, []); // Empty dependency array ensures that the effect runs only once on mount
+  const getCarList = async () => {
+    setIsLoading(true);
+    try {
+      const startDate = formatDateToISO(searchParams.startDate);
+      const endDate = formatDateToISO(searchParams.endDate);
 
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     if (
-  //       window.innerHeight + document.documentElement.scrollTop ===
-  //       document.documentElement.offsetHeight
-  //     ) {
-  //       // fetchData();
-  //     }
-  //   };
-  //
-  //   window.addEventListener('scroll', handleScroll);
-  //
-  //   return () => {
-  //     window.removeEventListener('scroll', handleScroll);
-  //   };
-  // }, []);
+      const response = await API.get(
+        SEARCH_CARS + `?startDate=${startDate}&endDate=${endDate}&page=${page}`,
+      );
 
-  // const fetchData = async () => {
-  //   try {
-  //     const newData = carList2;
-  //     setData((prevData) => [...prevData, ...newData]); // Concatenate old data with new data
-  //     setPage((prevPage) => prevPage + 1); // Increment page number for the next request
-  //   } catch (error) {
-  //     console.error('Error fetching data:', error);
-  //   }
-  // };
+      console.log(
+        SEARCH_CARS + `?startDate=${startDate}&endDate=${endDate}&page=${page}`,
+      );
+
+      if (!response) {
+        toast.error('Có lỗi xảy ra, vui lòng thử lại sau');
+        setIsLoading(false);
+        return;
+      }
+
+      setPage(response.data.meta._page);
+      setTotalPage(response.data.meta.totalPages);
+      setCarList(response.data);
+      setIsLoading(false);
+    } catch (error: any) {
+      toast.error(error.message);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handlePageClick = async (event: any) => {
+    setPage(event.selected + 1);
+    await getCarList();
+  };
+
+  useEffect(() => {
+    getCarList();
+  }, [page]);
 
   return (
     <div className="mt-6">
@@ -390,11 +82,41 @@ const SearchPage = ({
       </header>
 
       <div className="mt-6 grid grid-cols-4 gap-6">
-        {carList.map((car, index) => (
-          <div className="col-span-1" key={index}>
-            <CarCard {...car} />
-          </div>
-        ))}
+        {carList?.data ? (
+          <>
+            {carList.data.map((car: any, index: number) => (
+              <div className="col-span-1" key={index}>
+                <CarCard {...car} />
+              </div>
+            ))}
+          </>
+        ) : (
+          <SearchSkeleton />
+        )}
+      </div>
+
+      {/* pagination */}
+      <div className="mt-10">
+        <ReactPaginate
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={5}
+          pageCount={totalPage}
+          previousLabel={
+            <Button size="icon" variant="ghost" className="rounded-full">
+              <ChevronLeftIcon className="h-4 w-4" />
+            </Button>
+          }
+          breakLabel="..."
+          nextLabel={
+            <Button size="icon" variant="ghost" className="rounded-full">
+              <ChevronRightIcon className="h-4 w-4" />
+            </Button>
+          }
+          renderOnZeroPageCount={null}
+          containerClassName="flex items-center justify-center gap-2"
+          pageClassName="rounded-full w-10 h-10 flex items-center justify-center hover:bg-slate-200/60 cursor-pointer"
+          activeClassName="bg-slate-200"
+        />
       </div>
     </div>
   );

@@ -13,3 +13,5 @@ export const UPLOAD_AVATAR = 'users/avatar/upload';
 export const GET_NEWEST_CARS = 'cars/newest/cars';
 
 export const GET_CAR_BY_SLUG = 'cars/slug';
+
+export const SEARCH_CARS = 'cars/search/cars';

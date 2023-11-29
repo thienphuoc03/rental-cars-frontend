@@ -10,7 +10,7 @@ import { EditProfileDialog } from '@/components/profile/EditProfileDialog';
 import UpdateInfoDialog from '@/components/profile/UpdateInfoDialog';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { GET_USER_BY_USERNAME } from '@/lib/api-constants';
-import { formatDate } from '@/lib/utils';
+import { formatDateToDMY } from '@/lib/utils';
 import { API } from '@/services';
 
 const ProfilePage = () => {
@@ -82,7 +82,7 @@ const ProfilePage = () => {
             <div className="flex flex-col items-center justify-center gap-3">
               <h3 className="text-2xl font-medium">{user?.name}</h3>
               <span className="text-sm">
-                Tham gia: {formatDate(user?.createdAt)}
+                Tham gia: {formatDateToDMY(user?.createdAt)}
               </span>
             </div>
           </div>
@@ -91,7 +91,7 @@ const ProfilePage = () => {
             <div className="flex items-center justify-between">
               <span className="text-base text-gray-700">Ngày sinh</span>
               <span className="text-base font-medium">
-                {formatDate(user?.dateOfBirth)}
+                {formatDateToDMY(user?.dateOfBirth)}
               </span>
             </div>
             <div className="flex items-center justify-between">

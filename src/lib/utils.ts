@@ -5,13 +5,14 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatDate(date: Date) {
+// format date to dd/mm/yyyy format (e.g. 01/01/2021)
+export const formatDateToDMY = (date: Date) => {
   return new Date(date).toLocaleDateString('vi-VN', {
-    day: 'numeric',
-    month: 'numeric',
+    day: '2-digit',
+    month: '2-digit',
     year: 'numeric',
   });
-}
+};
 
 export const formatCurrency = (value: number) => {
   return new Intl.NumberFormat('vi-VN', {
@@ -55,4 +56,10 @@ export const formatNumberToCurrency = (value: number) => {
     .replace(/,00/g, '')
     .replace(/\./g, '.')
     .replace(/₫/g, 'K');
+};
+
+export const formatDateToISO = (date: any) => {
+  const [day, month, year] = date.split('/');
+
+  return `${year}-${month}-${day}`;
 };

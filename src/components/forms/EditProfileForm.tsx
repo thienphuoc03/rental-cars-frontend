@@ -25,7 +25,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { cn, formatDate } from '@/lib/utils';
+import { cn, formatDateToDMY } from '@/lib/utils';
 import { editProfileSchema } from '@/schemas/';
 
 const genders: { key: string; value: string }[] = [
@@ -103,7 +103,7 @@ const EditProfileForm = ({
                     >
                       {field.value
                         ? format(field.value, 'dd/MM/yyyy')
-                        : formatDate(dateOfBirth)}
+                        : formatDateToDMY(dateOfBirth)}
                       <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                     </Button>
                   </FormControl>

@@ -9,6 +9,10 @@ export function middleware(request: NextRequest) {
 
   // Check if the user is logged in
   if (role) {
+    if (pathname === '/signin' || pathname === '/signup') {
+      return NextResponse.redirect(new URL('/', request.url));
+    }
+
     // Check admin routes for admin role
     if (pathname.startsWith('/admin') && role !== 'ADMIN') {
       return NextResponse.redirect(new URL('/', request.url));
@@ -25,10 +29,6 @@ export function middleware(request: NextRequest) {
     // Redirect to signin for protected routes when the user is not logged in
     if (protectedRoutes.includes(pathname) || pathname.startsWith('/admin')) {
       return NextResponse.redirect(new URL('/signin', request.url));
-    }
-
-    if (pathname === '/signin' || pathname === '/signup') {
-      return NextResponse.redirect(new URL('/', request.url));
     }
 
     // Allow access to public routes when the user is not logged in

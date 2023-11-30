@@ -2,16 +2,13 @@ import { Bell } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 
-import { Button } from './ui/button';
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from './ui/dropdown-menu';
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '@/components/ui/hover-card';
+
+import { Button } from './ui/button';
 import { ScrollArea } from './ui/scroll-area';
 
 const notificationList: {
@@ -51,8 +48,8 @@ const notificationList: {
 
 const Notification = () => {
   return (
-    <DropdownMenu modal={false}>
-      <DropdownMenuTrigger asChild>
+    <HoverCard>
+      <HoverCardTrigger asChild>
         <Button
           variant="ghost"
           className="relative flex h-auto w-auto items-center justify-center rounded-full p-2 hover:bg-white/20 focus:border-none focus:bg-transparent focus:ring-0 focus:ring-offset-0"
@@ -60,29 +57,29 @@ const Notification = () => {
           <Bell size={20} className="text-white" />
           <div className="absolute right-1 top-1 h-2 w-2 rounded-full bg-red-500" />
         </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-96">
-        <DropdownMenuLabel>Thông báo</DropdownMenuLabel>
+      </HoverCardTrigger>
+      <HoverCardContent className="w-96">
+        <h2 className="text-md font-bold text-black">Thông báo</h2>
 
-        <DropdownMenuSeparator />
+        <hr className="mb-4 mt-1 h-[1px] w-full bg-slate-50" />
 
-        <DropdownMenuGroup>
+        <div>
           <ScrollArea className="h-72 w-full">
             <div className="px-4">
               {notificationList.map(({ title, description, timer }, index) => (
                 <Link href="/" key={index}>
-                  <DropdownMenuItem className="flex cursor-pointer flex-col items-start justify-center">
+                  <div className="flex cursor-pointer flex-col items-start justify-center">
                     <h2 className="text-base font-medium">{title}</h2>
                     <span className="text-sm text-black">{description}</span>
                     <span className="text-xs text-gray-400">{timer}</span>
-                  </DropdownMenuItem>
+                  </div>
                 </Link>
               ))}
             </div>
           </ScrollArea>
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+        </div>
+      </HoverCardContent>
+    </HoverCard>
   );
 };
 

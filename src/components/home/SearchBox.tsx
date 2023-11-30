@@ -23,13 +23,6 @@ const SearchBox = () => {
   const submit = () => {
     setIsLoading(true);
 
-    // format date to ISO string
-    // const startDate = formatDateToDMY(date?.from as Date);
-    // const endDate = formatDateToDMY(date?.to as Date);
-
-    const startDate = date?.from?.toISOString();
-    const endDate = date?.to?.toISOString();
-
     if (!date?.from || !date?.to) return;
 
     // link to search page

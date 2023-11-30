@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
+import RentalCart from '@/components/RentalCart';
 import Username from '@/components/Username';
 import { CookiesStorage } from '@/config/cookie';
 import { useAppSelector } from '@/stores/hooks';
@@ -41,11 +42,13 @@ const Header = () => {
 
             {/* login */}
             {isLogged ? (
-              <>
+              <div className="flex items-center justify-between gap-3">
+                <RentalCart />
+
                 <Notification />
 
                 <Username />
-              </>
+              </div>
             ) : (
               <div className="flex items-center justify-center gap-4 lg:hidden">
                 <Link

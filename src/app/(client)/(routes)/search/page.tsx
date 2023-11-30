@@ -3,6 +3,7 @@
 import { PopoverClose } from '@radix-ui/react-popover';
 import { addDays, format } from 'date-fns';
 import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { toast } from 'sonner';
@@ -22,6 +23,7 @@ import { cn, formatDateToDMY, formatDateToISO } from '@/lib/utils';
 import { API } from '@/services';
 
 const SearchPage = ({ searchParams }: { searchParams: any }) => {
+  const router = useRouter();
   const [carList, setCarList] = useState<any>();
   const [page, setPage] = useState<number>(1);
   const [totalPage, setTotalPage] = useState<number>(0);
@@ -43,6 +45,13 @@ const SearchPage = ({ searchParams }: { searchParams: any }) => {
         toast.error('Có lỗi xảy ra, vui lòng thử lại sau');
         return;
       }
+
+      router.replace(
+        `/search?startDate=${startDate}&endDate=${endDate}&page=${page}`,
+        {
+          scroll: false,
+        },
+      );
 
       setPage(response.data.meta._page);
       setTotalPage(response.data.meta.totalPages);

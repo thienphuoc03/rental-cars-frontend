@@ -5,7 +5,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 const SearchSkeleton = () => {
   return (
     <>
-      <div className="col-span-1 min-h-[396px] min-w-[302px]">
+      <div className="col-span-1">
         <div className="flex min-w-[180px] flex-col items-stretch justify-center gap-6 rounded-lg border border-gray-100 bg-white p-4 shadow-xl hover:scale-105">
           <div className="overflow-hidden rounded-lg">
             <Skeleton className="h-[204px] w-[272px]" />
@@ -45,7 +45,7 @@ const SearchSkeleton = () => {
           </div>
         </div>
       </div>
-      <div className="col-span-1 min-h-[396px] min-w-[302px]">
+      <div className="col-span-1">
         <div className="flex min-w-[180px] flex-col items-stretch justify-center gap-6 rounded-lg border border-gray-100 bg-white p-4 shadow-xl hover:scale-105">
           <div className="overflow-hidden rounded-lg">
             <Skeleton className="h-[204px] w-[272px]" />
@@ -85,7 +85,7 @@ const SearchSkeleton = () => {
           </div>
         </div>
       </div>
-      <div className="col-span-1 min-h-[396px] min-w-[302px]">
+      <div className="col-span-1">
         <div className="flex min-w-[180px] flex-col items-stretch justify-center gap-6 rounded-lg border border-gray-100 bg-white p-4 shadow-xl hover:scale-105">
           <div className="overflow-hidden rounded-lg">
             <Skeleton className="h-[204px] w-[272px]" />
@@ -125,7 +125,7 @@ const SearchSkeleton = () => {
           </div>
         </div>
       </div>
-      <div className="col-span-1 min-h-[396px] min-w-[302px]">
+      <div className="col-span-1">
         <div className="flex min-w-[180px] flex-col items-stretch justify-center gap-6 rounded-lg border border-gray-100 bg-white p-4 shadow-xl hover:scale-105">
           <div className="overflow-hidden rounded-lg">
             <Skeleton className="h-[204px] w-[272px]" />
@@ -165,7 +165,7 @@ const SearchSkeleton = () => {
           </div>
         </div>
       </div>
-      <div className="col-span-1 min-h-[396px] min-w-[302px]">
+      <div className="col-span-1">
         <div className="flex min-w-[180px] flex-col items-stretch justify-center gap-6 rounded-lg border border-gray-100 bg-white p-4 shadow-xl hover:scale-105">
           <div className="overflow-hidden rounded-lg">
             <Skeleton className="h-[204px] w-[272px]" />
@@ -205,7 +205,7 @@ const SearchSkeleton = () => {
           </div>
         </div>
       </div>
-      <div className="col-span-1 min-h-[396px] min-w-[302px]">
+      <div className="col-span-1">
         <div className="flex min-w-[180px] flex-col items-stretch justify-center gap-6 rounded-lg border border-gray-100 bg-white p-4 shadow-xl hover:scale-105">
           <div className="overflow-hidden rounded-lg">
             <Skeleton className="h-[204px] w-[272px]" />
@@ -245,7 +245,7 @@ const SearchSkeleton = () => {
           </div>
         </div>
       </div>
-      <div className="col-span-1 min-h-[396px] min-w-[302px]">
+      <div className="col-span-1">
         <div className="flex min-w-[180px] flex-col items-stretch justify-center gap-6 rounded-lg border border-gray-100 bg-white p-4 shadow-xl hover:scale-105">
           <div className="overflow-hidden rounded-lg">
             <Skeleton className="h-[204px] w-[272px]" />
@@ -285,7 +285,7 @@ const SearchSkeleton = () => {
           </div>
         </div>
       </div>
-      <div className="col-span-1 min-h-[396px] min-w-[302px]">
+      <div className="col-span-1">
         <div className="flex min-w-[180px] flex-col items-stretch justify-center gap-6 rounded-lg border border-gray-100 bg-white p-4 shadow-xl hover:scale-105">
           <div className="overflow-hidden rounded-lg">
             <Skeleton className="h-[204px] w-[272px]" />
@@ -325,7 +325,7 @@ const SearchSkeleton = () => {
           </div>
         </div>
       </div>
-      <div className="col-span-1 min-h-[396px] min-w-[302px]">
+      <div className="col-span-1">
         <div className="flex min-w-[180px] flex-col items-stretch justify-center gap-6 rounded-lg border border-gray-100 bg-white p-4 shadow-xl hover:scale-105">
           <div className="overflow-hidden rounded-lg">
             <Skeleton className="h-[204px] w-[272px]" />
@@ -365,7 +365,7 @@ const SearchSkeleton = () => {
           </div>
         </div>
       </div>
-      <div className="col-span-1 min-h-[396px] min-w-[302px]">
+      <div className="col-span-1">
         <div className="flex min-w-[180px] flex-col items-stretch justify-center gap-6 rounded-lg border border-gray-100 bg-white p-4 shadow-xl hover:scale-105">
           <div className="overflow-hidden rounded-lg">
             <Skeleton className="h-[204px] w-[272px]" />
@@ -405,7 +405,7 @@ const SearchSkeleton = () => {
           </div>
         </div>
       </div>
-      <div className="col-span-1 min-h-[396px] min-w-[302px]">
+      <div className="col-span-1">
         <div className="flex min-w-[180px] flex-col items-stretch justify-center gap-6 rounded-lg border border-gray-100 bg-white p-4 shadow-xl hover:scale-105">
           <div className="overflow-hidden rounded-lg">
             <Skeleton className="h-[204px] w-[272px]" />
@@ -445,7 +445,7 @@ const SearchSkeleton = () => {
           </div>
         </div>
       </div>
-      <div className="col-span-1 min-h-[396px] min-w-[302px]">
+      <div className="col-span-1">
         <div className="flex min-w-[180px] flex-col items-stretch justify-center gap-6 rounded-lg border border-gray-100 bg-white p-4 shadow-xl hover:scale-105">
           <div className="overflow-hidden rounded-lg">
             <Skeleton className="h-[204px] w-[272px]" />

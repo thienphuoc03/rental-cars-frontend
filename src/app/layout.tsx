@@ -1,8 +1,10 @@
+
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import React from 'react';
 import { Toaster } from 'sonner';
 
+import { ThemeProvider } from '@/components/theme-provider';
 import Providers from '@/stores/Providers';
 import './globals.css';
 
@@ -30,8 +32,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${roboto.variable}`}>
-        <Providers>{children}</Providers>
-        <Toaster position="bottom-right" richColors={true} closeButton={true} />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Providers>{children}</Providers>
+          <Toaster
+            position="bottom-right"
+            richColors={true}
+            closeButton={true}
+          />
+        </ThemeProvider>
       </body>
     </html>
   );

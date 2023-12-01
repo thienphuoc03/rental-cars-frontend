@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
+import { ModeToggle } from '@/components/mode-toggle';
 import RentalCart from '@/components/RentalCart';
 import Username from '@/components/Username';
 import { CookiesStorage } from '@/config/cookie';
@@ -66,6 +67,8 @@ const Header = () => {
                 </Link>
               </div>
             )}
+
+            <ModeToggle />
 
             <MobileMenu />
           </div>

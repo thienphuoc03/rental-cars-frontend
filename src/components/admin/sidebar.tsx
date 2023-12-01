@@ -20,27 +20,27 @@ import { logout } from '@/stores/reducers/authReducer';
 
 const menuAdmin = [
   {
-    icon: <LayoutDashboard className="h-4 w-4 text-black dark:text-white" />,
+    icon: <LayoutDashboard className="h-4 w-4 " />,
     title: 'Dashboard',
     href: '/admin/dashboard',
   },
   {
-    icon: <Users className="h-4 w-4 text-black dark:text-white" />,
+    icon: <Users className="h-4 w-4" />,
     title: 'Người dùng',
     href: '/admin/users',
   },
   {
-    icon: <Car className="h-4 w-4 text-black dark:text-white" />,
+    icon: <Car className="h-4 w-4" />,
     title: 'Xe',
     href: '/admin/cars',
   },
   {
-    icon: <BaggageClaim className="h-4 w-4 text-black dark:text-white" />,
+    icon: <BaggageClaim className="h-4 w-4" />,
     title: 'Đơn hàng',
     href: '/admin/orders',
   },
   {
-    icon: <Settings className="h-4 w-4 text-black dark:text-white" />,
+    icon: <Settings className="h-4 w-4" />,
     title: 'Cài đặt',
     href: '/admin/settings',
   },
@@ -65,7 +65,8 @@ export function Sidebar({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'sticky left-0 right-0 top-0 z-40 min-w-[183px] pb-12 shadow-xl dark:bg-black lg:min-w-fit',
+        'sticky left-0 right-0 top-0 z-40 min-w-[183px] pb-12 text-gray-500 shadow-xl dark:bg-black lg:min-w-fit' +
+          ' lg:w-auto',
         className,
       )}
     >
@@ -82,16 +83,16 @@ export function Sidebar({ className }: { className?: string }) {
               <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight lg:hidden">
                 Dashboard
               </h2>
-              <div className="space-y-1 rounded lg:bg-slate-50">
+              <div className="space-y-1 rounded">
                 {menuAdmin.map((item) => (
                   <Link
                     href={item.href}
                     key={item.href}
                     className={cn(
                       'flex items-center justify-start gap-2 rounded px-4 py-3 transition-colors duration-200' +
-                        'hover:bg-slate-100 active:scale-95 dark:bg-slate-800 dark:hover:bg-slate-600',
+                        ' hover:bg-primary/5 active:scale-95 dark:hover:bg-primary/20',
                       pathname.startsWith(item.href) &&
-                        'bg-slate-200 dark:bg-slate-500',
+                        'bg-primary/20 text-blue-600 hover:bg-primary/40 dark:hover:bg-primary/50',
                     )}
                   >
                     {item.icon}

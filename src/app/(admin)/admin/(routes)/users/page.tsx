@@ -23,7 +23,8 @@ export default function UsersPage() {
   return (
     <div>
       {/* navbar */}
-      <div className="mb-6 flex justify-end">
+      <div className="mb-6 flex items-center justify-between gap-3">
+        <h2 className="text-2xl font-bold">Quản lý người dùng</h2>
         <UserNav />
       </div>
 

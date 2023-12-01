@@ -6,6 +6,7 @@ export const AUTH_SIGNUP = 'auth/signup';
 export const GET_ALL_USERS = 'users';
 export const GET_USER_BY_USERNAME = 'users/username';
 export const UPLOAD_AVATAR = 'users/avatar/upload';
+export const CREATE_USER = 'users';
 
 // CARS
 

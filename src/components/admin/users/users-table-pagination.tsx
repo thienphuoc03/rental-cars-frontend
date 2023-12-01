@@ -83,7 +83,7 @@ export function UsersTablePagination<TData>({
           </Button>
           <Button
             variant="outline"
-            className="hidden h-8 w-8 p-0 lg:flex"
+            className="flex h-8 w-8 p-0"
             onClick={() => table.setPageIndex(table.getPageCount() - 1)}
             disabled={!table.getCanNextPage()}
           >

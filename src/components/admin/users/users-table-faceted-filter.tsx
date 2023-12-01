@@ -63,11 +63,11 @@ export function UsersTableFacetedFilter<TData, TValue>({
                   </Badge>
                 ) : (
                   options
-                    .filter((option) => selectedValues.has(option.value))
+                    .filter((option) => selectedValues.has(option.key))
                     .map((option) => (
                       <Badge
                         variant="secondary"
-                        key={option.value}
+                        key={option.key}
                         className="rounded-sm px-1 font-normal"
                       >
                         {option.value}
@@ -86,15 +86,15 @@ export function UsersTableFacetedFilter<TData, TValue>({
             <CommandEmpty>Không tìm thấy.</CommandEmpty>
             <CommandGroup>
               {options.map((option) => {
-                const isSelected = selectedValues.has(option.value);
+                const isSelected = selectedValues.has(option.key);
                 return (
                   <CommandItem
-                    key={option.value}
+                    key={option.key}
                     onSelect={() => {
                       if (isSelected) {
-                        selectedValues.delete(option.value);
+                        selectedValues.delete(option.key);
                       } else {
-                        selectedValues.add(option.value);
+                        selectedValues.add(option.key);
                       }
                       const filterValues = Array.from(selectedValues);
                       column?.setFilterValue(
@@ -113,9 +113,9 @@ export function UsersTableFacetedFilter<TData, TValue>({
                       <Check className={cn('h-4 w-4')} />
                     </div>
                     <span>{option.value}</span>
-                    {facets?.get(option.value) && (
+                    {facets?.get(option.key) && (
                       <span className="ml-auto flex h-4 w-4 items-center justify-center font-mono text-xs">
-                        {facets.get(option.value)}
+                        {facets.get(option.key)}
                       </span>
                     )}
                   </CommandItem>

@@ -21,8 +21,6 @@ const SearchForm = ({ className }: React.HTMLAttributes<HTMLDivElement>) => {
     // format date to ISO string
     const startDate = date?.from?.toISOString();
     const endDate = date?.to?.toISOString();
-
-    console.log({ startDate, endDate });
   };
 
   return (

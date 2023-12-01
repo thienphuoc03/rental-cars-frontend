@@ -51,12 +51,18 @@ export const columns: ColumnDef<UserType>[] = [
       <UsersTableColumnHeader column={column} title="Avatar" />
     ),
     cell: ({ row }) => (
-      <Image
-        src={row.getValue('avatarUrl')}
-        alt={row.getValue('avatarUrl')}
-        width={40}
-        height={40}
-      />
+      <div className="h-10 w-10 bg-slate-50">
+        {row.getValue('avatarUrl') ? (
+          <Image
+            src={row.getValue('avatarUrl')}
+            alt={row.getValue('avatarUrl')}
+            width={40}
+            height={40}
+          />
+        ) : (
+          ''
+        )}
+      </div>
     ),
     enableSorting: false,
     enableHiding: false,
@@ -81,7 +87,7 @@ export const columns: ColumnDef<UserType>[] = [
         {row.getValue('name') ? (
           <>{row.getValue('name')}</>
         ) : (
-          <>Khng có dữ liệu</>
+          <>Không có dữ liệu</>
         )}
       </div>
     ),
@@ -99,7 +105,7 @@ export const columns: ColumnDef<UserType>[] = [
         {row.getValue('email') ? (
           <>{row.getValue('email')}</>
         ) : (
-          <>Khng có dữ liệu</>
+          <>Không có dữ liệu</>
         )}
       </div>
     ),

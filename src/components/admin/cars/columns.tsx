@@ -1,17 +1,19 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
-import Image from 'next/image';
 
-import { UserType } from '@/components/admin/schemas';
+import {
+  fuel,
+  status,
+  transmissions,
+} from '@/components/admin/cars/common/data';
+import { CarType } from '@/components/admin/schemas';
 import { DataTableColumnHeader } from '@/components/admin/tables/data-table-column-header';
 import { DataTableRowActions } from '@/components/admin/tables/data-table-row-action';
 import { Checkbox } from '@/components/ui/checkbox';
-import { cn, formatDateToDMY } from '@/lib/utils';
+import { cn, formatDateToDMY, formatNumberToCurrency } from '@/lib/utils';
 
-import { role, status } from './common/data';
-
-export const columns: ColumnDef<UserType>[] = [
+export const columns: ColumnDef<CarType>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -46,49 +48,89 @@ export const columns: ColumnDef<UserType>[] = [
     enableHiding: true,
   },
   {
-    accessorKey: 'avatarUrl',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Avatar" />
-    ),
-    cell: ({ row }) => (
-      <div className="h-10 w-10 bg-slate-50">
-        {row.getValue('avatarUrl') ? (
-          <Image
-            src={row.getValue('avatarUrl')}
-            alt={row.getValue('avatarUrl')}
-            width={40}
-            height={40}
-          />
-        ) : (
-          ''
-        )}
-      </div>
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: 'username',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Tài khoản" />
-    ),
-    cell: ({ row }) => <div className="">{row.getValue('username')}</div>,
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
-    },
-  },
-  {
     accessorKey: 'name',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Họ tên" />
+      <DataTableColumnHeader column={column} title="Tên xe" />
+    ),
+    cell: ({ row }) => <div className="">{row.getValue('name')}</div>,
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
+  },
+  {
+    accessorKey: 'licensePlates',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Biển số" />
+    ),
+    cell: ({ row }) => <div className="">{row.getValue('licensePlates')}</div>,
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
+  },
+  {
+    accessorKey: 'seats',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Số ghế" />
+    ),
+    cell: ({ row }) => <div className="">{row.getValue('seats')}</div>,
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
+  },
+  {
+    accessorKey: 'transmission',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Truyền động" />
+    ),
+    cell: ({ row }) => {
+      const trans = transmissions.find(
+        (trans) => trans.key === row.getValue('transmission'),
+      );
+
+      if (!trans) {
+        return null;
+      }
+
+      return (
+        <div className="flex items-center">
+          <span>{trans.value}</span>
+        </div>
+      );
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
+  },
+  {
+    accessorKey: 'fuel',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Nhiên liệu" />
+    ),
+    cell: ({ row }) => {
+      const fuelItem = fuel.find((fuel) => fuel.key === row.getValue('fuel'));
+
+      if (!fuelItem) {
+        return null;
+      }
+
+      return (
+        <div className="flex items-center">
+          <span>{fuelItem.value}</span>
+        </div>
+      );
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
+  },
+  {
+    accessorKey: 'pricePerDay',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Giá/ngày" />
     ),
     cell: ({ row }) => (
       <div className="">
-        {row.getValue('name') ? (
-          <>{row.getValue('name')}</>
-        ) : (
-          <>Không có dữ liệu</>
-        )}
+        {formatNumberToCurrency(row.getValue('pricePerDay'))}
       </div>
     ),
     filterFn: (row, id, value) => {
@@ -96,37 +138,21 @@ export const columns: ColumnDef<UserType>[] = [
     },
   },
   {
-    accessorKey: 'email',
+    accessorKey: 'brand',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Email" />
+      <DataTableColumnHeader column={column} title="Hãng" />
     ),
-    cell: ({ row }) => (
-      <div className="">
-        {row.getValue('email') ? (
-          <>{row.getValue('email')}</>
-        ) : (
-          <>Không có dữ liệu</>
-        )}
-      </div>
-    ),
+    cell: ({ row }) => <div className="">{row.getValue('brand')}</div>,
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id));
     },
   },
   {
-    accessorKey: 'phone',
+    accessorKey: 'model',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Số điện thoại" />
+      <DataTableColumnHeader column={column} title="Mẫu" />
     ),
-    cell: ({ row }) => (
-      <div className="">
-        {row.getValue('phone') ? (
-          <>{row.getValue('phone')}</>
-        ) : (
-          <>Không có dữ liệu</>
-        )}
-      </div>
-    ),
+    cell: ({ row }) => <div className="">{row.getValue('model')}</div>,
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id));
     },
@@ -134,35 +160,11 @@ export const columns: ColumnDef<UserType>[] = [
   {
     accessorKey: 'createdAt',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Ngày tham gia" />
+      <DataTableColumnHeader column={column} title="Ngày tạo" />
     ),
     cell: ({ row }) => (
       <div className="">{formatDateToDMY(row.getValue('createdAt'))}</div>
     ),
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
-    },
-  },
-  {
-    accessorKey: 'role',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Vai trò" />
-    ),
-    cell: ({ row }) => {
-      const roleList = role.find(
-        (roleList) => roleList.key === row.getValue('role'),
-      );
-
-      if (!roleList) {
-        return null;
-      }
-
-      return (
-        <div className="flex items-center">
-          <span>{roleList.value}</span>
-        </div>
-      );
-    },
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id));
     },
@@ -186,10 +188,12 @@ export const columns: ColumnDef<UserType>[] = [
           <span
             className={cn(
               'rounded-full px-4 py-1 text-white',
-              statusItem.key === 'ACTIVE'
+              statusItem.key === 'AVAILABLE'
                 ? 'bg-success/70'
-                : statusItem.key === 'INACTIVE'
+                : statusItem.key === 'UNAVAILABLE'
                 ? 'bg-error/70'
+                : statusItem.key === 'RENTING'
+                ? 'bg-warning/70'
                 : 'bg-warning/70',
             )}
           >

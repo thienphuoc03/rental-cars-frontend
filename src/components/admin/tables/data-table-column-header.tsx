@@ -23,7 +23,7 @@ interface UsersTableColumnHeaderProps<TData, TValue>
   title: string;
 }
 
-export function UsersTableColumnHeader<TData, TValue>({
+export function DataTableColumnHeader<TData, TValue>({
   column,
   title,
   className,

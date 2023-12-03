@@ -16,8 +16,8 @@ import {
 } from '@tanstack/react-table';
 import React, { useState } from 'react';
 
-import { UsersTablePagination } from '@/components/admin/users/users-table-pagination';
-import { UsersTableToolbar } from '@/components/admin/users/users-table-toolbar';
+import { DataTablePagination } from '@/components/admin/tables/data-table-pagination';
+import { DataTableToolbar } from '@/components/admin/tables/data-table-toolbar';
 import {
   Table,
   TableBody,
@@ -30,11 +30,15 @@ import {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  search?: string;
+  filters?: any[];
 }
 
-export function UsersTable<TData, TValue>({
+export function DataTable<TData, TValue>({
   columns,
   data,
+  search,
+  filters,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = useState({});
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -65,7 +69,8 @@ export function UsersTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      <UsersTableToolbar table={table} />
+      <DataTableToolbar table={table} filters={filters} />
+
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -116,7 +121,7 @@ export function UsersTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <UsersTablePagination table={table} />
+      <DataTablePagination table={table} />
     </div>
   );
 }

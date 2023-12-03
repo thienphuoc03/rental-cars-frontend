@@ -69,3 +69,34 @@ export const formatIsoToDate = (date: any) => {
 
   return `${day}/${month}/${year}`;
 };
+
+export const translateEnglishToVietnamese = (value: string) => {
+  switch (value) {
+    case 'id':
+      return 'ID';
+    case 'name':
+      return 'Tên';
+    case 'licensePlates':
+      return 'Biển số xe';
+    case 'brand':
+      return 'Hãng xe';
+    case 'model':
+      return 'Mẫu xe';
+    case 'seats':
+      return 'Số ghế';
+    case 'transmission':
+      return 'Hộp số';
+    case 'fuel':
+      return 'Nhiên liệu';
+    case 'features':
+      return 'Tính năng';
+    case 'pricePerDay':
+      return 'Giá/ngày';
+    case 'createdAt':
+      return 'Ngày tạo';
+    case 'status':
+      return 'Trạng thái';
+    default:
+      return value;
+  }
+};

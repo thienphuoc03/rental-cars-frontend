@@ -5,13 +5,19 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
+import { DataTable } from '@/components/admin/tables/data-table';
 import { columns } from '@/components/admin/users/columns';
-import { UsersTable } from '@/components/admin/users/users-table';
+import { role, status } from '@/components/admin/users/common/data';
 import TableSkeleton from '@/components/skeletons/table-skeleton';
 import { GET_ALL_USERS } from '@/lib/api-constants';
 import { API } from '@/services';
+import { useAppSelector } from '@/stores/hooks';
+import { selectDep } from '@/stores/reducers/depReducer';
+
+const filterUser = [{ status }, { role }];
 
 export default function UsersPage() {
+  const dep = useAppSelector(selectDep);
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -34,7 +40,7 @@ export default function UsersPage() {
 
   useEffect(() => {
     getUsers();
-  }, []);
+  }, [dep]);
 
   return (
     <div>
@@ -54,7 +60,12 @@ export default function UsersPage() {
       {/* table */}
       <div>
         {users ? (
-          <UsersTable columns={columns} data={users} />
+          <DataTable
+            columns={columns}
+            data={users}
+            search="name"
+            filters={filterUser}
+          />
         ) : (
           <TableSkeleton />
         )}

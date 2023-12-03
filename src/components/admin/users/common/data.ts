@@ -1,19 +1,4 @@
-export const labels = [
-  {
-    value: 'bug',
-    label: 'Bug',
-  },
-  {
-    value: 'feature',
-    label: 'Feature',
-  },
-  {
-    value: 'documentation',
-    label: 'Documentation',
-  },
-];
-
-export const statuses = [
+export const status = [
   {
     key: 'ACTIVE',
     value: 'Hoạt động',
@@ -24,7 +9,7 @@ export const statuses = [
   },
 ];
 
-export const roles = [
+export const role = [
   {
     key: 'ADMIN',
     value: 'Quản trị viên',

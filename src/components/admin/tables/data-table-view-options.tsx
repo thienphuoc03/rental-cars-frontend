@@ -12,12 +12,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
+import { translateEnglishToVietnamese } from '@/lib/utils';
 
 interface UsersTableViewOptionsProps<TData> {
   table: Table<TData>;
 }
 
-export function UsersTableViewOptions<TData>({
+export function DataTableViewOptions<TData>({
   table,
 }: UsersTableViewOptionsProps<TData>) {
   return (
@@ -45,7 +46,7 @@ export function UsersTableViewOptions<TData>({
                 checked={column.getIsVisible()}
                 onCheckedChange={(value) => column.toggleVisibility(!!value)}
               >
-                {column.id}
+                {translateEnglishToVietnamese(column.id)}
               </DropdownMenuCheckboxItem>
             );
           })}

@@ -24,13 +24,10 @@ import { cn } from '@/lib/utils';
 interface DataTableFacetedFilterProps<TData, TValue> {
   column?: Column<TData, TValue>;
   title?: string;
-  options: {
-    key: string;
-    value: string;
-  }[];
+  options: any;
 }
 
-export function UsersTableFacetedFilter<TData, TValue>({
+export function DataTableFacetedFilter<TData, TValue>({
   column,
   title,
   options,
@@ -62,9 +59,9 @@ export function UsersTableFacetedFilter<TData, TValue>({
                     {selectedValues.size} đã chọn
                   </Badge>
                 ) : (
-                  options
-                    .filter((option) => selectedValues.has(option.key))
-                    .map((option) => (
+                  options[0]
+                    .filter((option: any) => selectedValues.has(option.key))
+                    .map((option: any) => (
                       <Badge
                         variant="secondary"
                         key={option.key}
@@ -85,7 +82,7 @@ export function UsersTableFacetedFilter<TData, TValue>({
           <CommandList>
             <CommandEmpty>Không tìm thấy.</CommandEmpty>
             <CommandGroup>
-              {options.map((option) => {
+              {options[0].map((option: any) => {
                 const isSelected = selectedValues.has(option.key);
                 return (
                   <CommandItem

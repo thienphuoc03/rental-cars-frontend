@@ -1,9 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-const page = () => {
+const DashboardPage = () => {
   return (
-    <div>page</div>
-  )
-}
+    <div className="h-[1000px] w-full bg-slate-50 dark:bg-black">
+      DashboardPage
+    </div>
+  );
+};
 
-export default page
+export default DashboardPage;

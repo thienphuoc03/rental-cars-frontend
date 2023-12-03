@@ -15,19 +15,18 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 const SearchBox = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
-  const [date, setDate] = React.useState<DateRange | undefined>({
-    from: new Date(Date.now()),
-    to: addDays(new Date(Date.now()), 1),
+  const [date, setDate] = useState<DateRange | undefined>({
+    from: addDays(new Date(Date.now()), 1),
+    to: addDays(new Date(Date.now()), 2),
   });
 
   const submit = () => {
     setIsLoading(true);
-    // format date to ISO string
-    const startDate = date?.from?.toISOString();
-    const endDate = date?.to?.toISOString();
+
+    if (!date?.from || !date?.to) return;
 
     // link to search page
-    router.push(`/search?startDate=${startDate}&endDate=${endDate}`, {
+    router.push(`/search?startDate=${date.from}&endDate=${date.to}`, {
       scroll: false,
     });
 
@@ -82,6 +81,7 @@ const SearchBox = () => {
               selected={date}
               onSelect={setDate}
               numberOfMonths={2}
+              fromDate={addDays(new Date(Date.now()), 1)}
             />
           </PopoverContent>
         </Popover>

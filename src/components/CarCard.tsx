@@ -3,41 +3,44 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
+import { formatNumberToCurrency } from '@/lib/utils';
+import { TransmissionEnum } from '@/types/enums';
+
 interface CarCardProps {
   slug: string;
-  image: string;
+  thumbnail: string;
   name: string;
-  transmission: string;
+  transmission: keyof typeof TransmissionEnum;
   address: string;
-  price: number;
-  trip: number;
+  pricePerDay: number;
+  trips: number;
   rating: number;
 }
 
 const CarCard = ({
   slug,
-  image,
+  thumbnail,
   name,
   transmission,
   address,
-  price,
-  trip,
+  pricePerDay,
+  trips,
   rating,
 }: CarCardProps) => {
   return (
     <Link
-      href={slug}
-      className="flex min-w-[180px] flex-col items-stretch justify-center gap-6 rounded-lg bg-white p-4 hover:scale-105"
+      href={`car/${slug}`}
+      className="flex min-w-[180px] flex-col items-stretch justify-center gap-6 rounded-lg border border-gray-100 bg-white p-4 shadow-xl hover:scale-105"
     >
       <div className="overflow-hidden rounded-lg">
-        <Image src={image} alt="car" width={272} height={204} />
+        <Image src={thumbnail} alt="car" width={272} height={204} />
       </div>
 
       <div className="text-start">
         {/* feature car */}
         <div className="mb-2 flex items-center justify-start">
           <span className="rounded-full bg-primary/10 px-2 py-1 text-xs text-[#262626]">
-            {transmission}
+            {TransmissionEnum[transmission]}
           </span>
         </div>
 
@@ -69,11 +72,11 @@ const CarCard = ({
                 height={13}
                 className="inline"
               />
-              {trip} chuyến đi
+              {trips} chuyến đi
             </span>
           </div>
           <span className="text-base font-semibold text-primary">
-            {price}K
+            {formatNumberToCurrency(pricePerDay)}
             <p className="ml-1 inline-block text-xs font-normal text-gray-500">
               / ngày
             </p>

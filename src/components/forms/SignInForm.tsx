@@ -23,7 +23,7 @@ import { Input } from '@/components/ui/input';
 import { CookiesStorage } from '@/config/cookie';
 import { AUTH_SIGNIN } from '@/lib/api-constants';
 import { signInSchema } from '@/schemas';
-import { setTokens, setUser } from '@/stores/slices/authSlice';
+import { setTokens, setUser } from '@/stores/reducers/authReducer';
 
 import { API } from '../../services';
 
@@ -51,6 +51,7 @@ export function SignInFrom() {
 
       // set token to cookie storage
       CookiesStorage.setCookieData('accessToken', data?.tokens.accessToken);
+      CookiesStorage.setCookieData('role', data?.user?.role);
 
       if (data?.user.role === 'TRAVELER' || data?.user.role === 'CAROWNER') {
         router.push('/');
@@ -62,8 +63,14 @@ export function SignInFrom() {
         toast.error('Có lỗi đã xảy ra!!');
       }
       setIsLoading(false);
-    } catch (e: any) {
-      toast.error('Đăng nhập thất bại!!!');
+    } catch (error: any) {
+      if (error?.statusCode === 401) {
+        toast.error(error?.error, {
+          description: 'Tài khoản hoặc mật khẩu không chính xác!!!',
+        });
+      } else {
+        toast.error('Đăng nhập thất bại!!!');
+      }
     } finally {
       setIsLoading(false);
     }

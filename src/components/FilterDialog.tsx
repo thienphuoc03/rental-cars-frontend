@@ -3,6 +3,8 @@
 import { Check, ChevronsUpDown, SlidersHorizontal } from 'lucide-react';
 import React, { useState } from 'react';
 
+import { cn } from '@/lib/utils';
+
 import { Button } from './ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandItem } from './ui/command';
 import {
@@ -18,9 +20,7 @@ import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { ScrollArea } from './ui/scroll-area';
 import { Slider } from './ui/slider';
 
-import { cn } from '@/lib/utils';
-
-const sortList: {value: string; label:string}[] = [
+const sortList: { value: string; label: string }[] = [
   {
     value: 'price-asc',
     label: 'Giá từ thấp đến cao',
@@ -35,7 +35,7 @@ const sortList: {value: string; label:string}[] = [
   },
 ];
 
-const featuresList: {value: string; label:string}[] = [
+const featuresList: { value: string; label: string }[] = [
   {
     value: 'AIR_CONDITIONING',
     label: 'Điều hòa',
@@ -108,14 +108,16 @@ const featuresList: {value: string; label:string}[] = [
     value: 'KID_SEAT',
     label: 'Ghế trẻ em',
   },
-]
+];
 
 const FilterDialog = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [value, setValue] = useState<string>('');
   const [price, setPrice] = useState<[number, number]>([300, 1000]);
   const [seats, setSeats] = useState<[number, number]>([4, 10]);
-  const [yearOfManufacture, setYearOfManufacture] = useState<[number, number]>([2005, 2023]);
+  const [yearOfManufacture, setYearOfManufacture] = useState<[number, number]>([
+    2005, 2023,
+  ]);
 
   const handlePriceChange = (values: any) => {
     setPrice(values);
@@ -144,7 +146,7 @@ const FilterDialog = () => {
         </DialogHeader>
         <div className="h-[1px] w-full bg-gray-200" />
         <ScrollArea className="h-96 w-full rounded-md border-none px-4 py-2">
-          <div className="px-1 flex flex-col justify-start items-start gap-6">
+          <div className="flex flex-col items-start justify-start gap-6 px-1">
             {/* sort filter */}
             <div className="w-full">
               <h4 className="mb-3 text-base font-semibold">Sắp xếp</h4>
@@ -164,7 +166,7 @@ const FilterDialog = () => {
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-full p-0">
-                  <Command className='w-full'>
+                  <Command className="w-full">
                     <CommandEmpty></CommandEmpty>
                     <CommandGroup className="w-full">
                       {sortList.map((framework) => (
@@ -203,20 +205,20 @@ const FilterDialog = () => {
                 min={300}
                 max={3000}
                 step={50}
-                className={cn('w-full my-6')}
+                className={cn('my-6 w-full')}
                 onValueChange={handlePriceChange}
               />
-              <div className="flex justify-between items-center">
-                <div className="p-2 border border-solid border-gray-200 rounded-md px-20 text-center">
-                  <h6 className='text-xs text-gray-500'>Giá thấp nhất</h6>
-                  <p className='text-sm font-semibold'>{price[0]}K</p>
+              <div className="flex items-center justify-between">
+                <div className="rounded-md border border-solid border-gray-200 p-2 px-20 text-center">
+                  <h6 className="text-xs text-gray-500">Giá thấp nhất</h6>
+                  <p className="text-sm font-semibold">{price[0]}K</p>
                 </div>
 
-                <div className='w-4 h-[1px] bg-gray-500' />
+                <div className="h-[1px] w-4 bg-gray-500" />
 
-                <div className="p-2 border border-solid border-gray-200 rounded-md px-20 text-center">
-                  <h6 className='text-xs text-gray-500'>Giá cao nhất</h6>
-                  <p className='text-sm font-semibold'>{price[1]}K</p>
+                <div className="rounded-md border border-solid border-gray-200 p-2 px-20 text-center">
+                  <h6 className="text-xs text-gray-500">Giá cao nhất</h6>
+                  <p className="text-sm font-semibold">{price[1]}K</p>
                 </div>
               </div>
             </div>
@@ -229,20 +231,20 @@ const FilterDialog = () => {
                 min={4}
                 max={10}
                 step={1}
-                className={cn('w-full my-6')}
+                className={cn('my-6 w-full')}
                 onValueChange={handleSeatsChange}
               />
-              <div className="flex justify-between items-center">
-                <div className="p-2 border border-solid border-gray-200 rounded-md px-20 text-center">
-                  <h6 className='text-xs text-gray-500'>Tối thiểu</h6>
-                  <p className='text-sm font-semibold'>{seats[0]} ghế</p>
+              <div className="flex items-center justify-between">
+                <div className="rounded-md border border-solid border-gray-200 p-2 px-20 text-center">
+                  <h6 className="text-xs text-gray-500">Tối thiểu</h6>
+                  <p className="text-sm font-semibold">{seats[0]} ghế</p>
                 </div>
 
-                <div className='w-4 h-[1px] bg-gray-500' />
+                <div className="h-[1px] w-4 bg-gray-500" />
 
-                <div className="p-2 border border-solid border-gray-200 rounded-md px-20 text-center">
-                  <h6 className='text-xs text-gray-500'>Tối đa</h6>
-                  <p className='text-sm font-semibold'>{seats[1]} ghế</p>
+                <div className="rounded-md border border-solid border-gray-200 p-2 px-20 text-center">
+                  <h6 className="text-xs text-gray-500">Tối đa</h6>
+                  <p className="text-sm font-semibold">{seats[1]} ghế</p>
                 </div>
               </div>
             </div>
@@ -255,20 +257,24 @@ const FilterDialog = () => {
                 min={2005}
                 max={2023}
                 step={1}
-                className={cn('w-full my-6')}
+                className={cn('my-6 w-full')}
                 onValueChange={handleYearOfManufactureChange}
               />
-              <div className="flex justify-between items-center">
-                <div className="p-2 border border-solid border-gray-200 rounded-md px-20 text-center">
-                  <h6 className='text-xs text-gray-500'>Tối thiểu</h6>
-                  <p className='text-sm font-semibold'>{yearOfManufacture[0]}</p>
+              <div className="flex items-center justify-between">
+                <div className="rounded-md border border-solid border-gray-200 p-2 px-20 text-center">
+                  <h6 className="text-xs text-gray-500">Tối thiểu</h6>
+                  <p className="text-sm font-semibold">
+                    {yearOfManufacture[0]}
+                  </p>
                 </div>
 
-                <div className='w-4 h-[1px] bg-gray-500' />
+                <div className="h-[1px] w-4 bg-gray-500" />
 
-                <div className="p-2 border border-solid border-gray-200 rounded-md px-20 text-center">
-                  <h6 className='text-xs text-gray-500'>Tối đa</h6>
-                  <p className='text-sm font-semibold'>{yearOfManufacture[1]}</p>
+                <div className="rounded-md border border-solid border-gray-200 p-2 px-20 text-center">
+                  <h6 className="text-xs text-gray-500">Tối đa</h6>
+                  <p className="text-sm font-semibold">
+                    {yearOfManufacture[1]}
+                  </p>
                 </div>
               </div>
             </div>
@@ -276,7 +282,6 @@ const FilterDialog = () => {
             {/* features car */}
             <div className="w-full">
               <h4 className="mb-3 text-base font-semibold">Tính năng</h4>
-
             </div>
           </div>
         </ScrollArea>

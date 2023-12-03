@@ -1,18 +1,28 @@
-import { addMonths } from 'date-fns';
 import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
+
+// Set a cookie with a 12-hour expiration time
+const expirationDate = new Date();
+expirationDate.setTime(expirationDate.getTime() + 12 * 60 * 60 * 1000);
 
 export const CookiesStorage = {
   getCookieData(name: string) {
     return cookies.get(name);
   },
   setCookieData(name: string, value: any) {
-    const currentTime = new Date();
-    const expires = addMonths(currentTime, 1);
-    cookies.set(name, value, { expires, path: '/' });
+    cookies.set(name, value, { expires: expirationDate, path: '/' });
   },
   clearCookieData(name: string) {
     cookies.remove(name, { path: '/' });
+  },
+  getAllCookies() {
+    return cookies.getAll();
+  },
+  clearAllCookies() {
+    const cookies = this.getAllCookies();
+    Object.keys(cookies).forEach((key) => {
+      this.clearCookieData(key);
+    });
   },
 };

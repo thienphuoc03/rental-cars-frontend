@@ -7,7 +7,9 @@ import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 
 import { CookiesStorage } from '@/config/cookie';
-import { logout } from '@/stores/slices/authSlice';
+import { useAppSelector } from '@/stores/hooks';
+import { logout } from '@/stores/reducers/authReducer';
+import { selectDep, setDependence } from '@/stores/reducers/depReducer';
 
 import { Button } from './ui/button';
 import Username from './Username';
@@ -29,6 +31,7 @@ const mobileMenuItems: { title: string; href: string }[] = [
 
 const MobileMenu = () => {
   const dispatch = useDispatch();
+  const dep = useAppSelector(selectDep);
   const [isLogged, setIsLogged] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -37,6 +40,7 @@ const MobileMenu = () => {
   };
 
   // Function to close the mobile menu when the screen size is larger than 1024px
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const closeMenu = () => {
     if (window.innerWidth >= 1024 && isOpen) {
       setIsOpen(false);
@@ -62,7 +66,7 @@ const MobileMenu = () => {
     } else {
       setIsLogged(false);
     }
-  }, []);
+  }, [dep]);
 
   const handleLogout = () => {
     // clear local storage
@@ -70,9 +74,10 @@ const MobileMenu = () => {
 
     // clear redux store
     dispatch(logout());
+    dispatch(setDependence({}));
 
     // clear cookie storage
-    CookiesStorage.clearCookieData('accessToken');
+    CookiesStorage.clearAllCookies();
 
     setIsLogged(false);
     toast.info('Đã đăng xuất!!!');

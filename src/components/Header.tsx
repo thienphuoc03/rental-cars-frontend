@@ -3,8 +3,12 @@
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
+import { ModeToggle } from '@/components/mode-toggle';
+import RentalCart from '@/components/RentalCart';
 import Username from '@/components/Username';
 import { CookiesStorage } from '@/config/cookie';
+import { useAppSelector } from '@/stores/hooks';
+import { selectDep } from '@/stores/reducers/depReducer';
 
 import Logo from './Logo';
 import MobileMenu from './MobileMenu';
@@ -13,9 +17,11 @@ import Notification from './Notification';
 
 const Header = () => {
   const [isLogged, setIsLogged] = useState<boolean>(false);
+  const dep = useAppSelector(selectDep);
 
   // check login and logout
   useEffect(() => {
+    console.log({ dep });
     const isLogged = CookiesStorage.getCookieData('accessToken');
 
     if (isLogged) {
@@ -23,10 +29,10 @@ const Header = () => {
     } else {
       setIsLogged(false);
     }
-  }, []);
+  }, [dep]);
 
   return (
-    <header className="bg-primary max-h-[80.438px] min-h-max w-full">
+    <header className="max-h-[80.438px] min-h-max w-full bg-primary">
       <div className="flex items-center justify-center py-4">
         <div className="flex w-full items-center justify-between px-32 lg:px-8">
           <Logo />
@@ -38,11 +44,13 @@ const Header = () => {
 
             {/* login */}
             {isLogged ? (
-              <>
+              <div className="flex items-center justify-between gap-3">
+                <RentalCart />
+
                 <Notification />
 
                 <Username />
-              </>
+              </div>
             ) : (
               <div className="flex items-center justify-center gap-4 lg:hidden">
                 <Link
@@ -60,6 +68,8 @@ const Header = () => {
                 </Link>
               </div>
             )}
+
+            <ModeToggle />
 
             <MobileMenu />
           </div>

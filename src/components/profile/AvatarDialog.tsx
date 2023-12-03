@@ -68,7 +68,7 @@ const AvatarDialog = ({
         },
         {
           headers: {
-            'Content-Type': 'multipart/forms-data',
+            'Content-Type': 'multipart/form-data',
           },
         },
       );
@@ -80,13 +80,13 @@ const AvatarDialog = ({
       } else {
         toast.error('Cập nhật ảnh đại diện thất bại');
         setIsLoading(false);
-        setIsOpen(true);
+        setFileImage(src);
       }
       window.location.reload();
     } catch (error: any) {
       toast.error(error?.error, { description: error?.message });
+      setFileImage(src);
     } finally {
-      setIsOpen(false);
       setIsLoading(false);
     }
   }

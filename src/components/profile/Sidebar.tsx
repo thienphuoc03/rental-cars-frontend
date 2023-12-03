@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { CookiesStorage } from '@/config/cookie';
 import { cn } from '@/lib/utils';
 import { logout } from '@/stores/reducers/authReducer';
+import { setDependence } from '@/stores/reducers/depReducer';
 
 const ProfileMenu: { icon: ReactElement; href: string; label: string }[] = [
   {
@@ -60,6 +61,7 @@ const Sidebar = () => {
 
     // clear redux store
     dispatch(logout());
+    dispatch(setDependence({}));
 
     // clear cookie storage
     CookiesStorage.clearAllCookies();

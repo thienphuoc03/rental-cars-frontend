@@ -20,5 +20,6 @@ const depReducer = createSlice({
   },
 });
 
+export const { setDependence } = depReducer.actions;
 export default depReducer.reducer;
 export const selectDep = (state: RootState) => state?.dep?.dep;

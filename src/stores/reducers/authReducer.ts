@@ -47,6 +47,7 @@ const authReducer = createSlice({
     },
     setUser(state, action) {
       state.user = action.payload;
+      state.dep = Math.random();
     },
     setTokens(state, action) {
       state.tokens.accessToken = action.payload;

@@ -2,18 +2,8 @@ import { z } from 'zod';
 
 import { USERNAME_PATTERN } from '@/components/admin/utils/constants';
 
-const isFormData = (value: any) => value instanceof FormData;
-
 const CreateUserSchema = z.object({
-  avatarUrl: z
-    .custom((data) => {
-      if (isFormData(data)) {
-        return { success: true, data };
-      } else {
-        return { success: false, message: 'Not a FormData instance' };
-      }
-    })
-    .optional(),
+  avatarUrl: z.string().optional(),
   name: z.string().min(3),
   username: z
     .string()

@@ -82,6 +82,8 @@ export function CreateUserForm() {
   async function onSubmit(values: z.infer<typeof createUserSchema>) {
     setIsLoading(true);
     try {
+      values.avatarUrl = avatarSrc;
+
       // Update the values with the avatarUrl
       const { data } = await API.post(CREATE_USER, values);
 
@@ -135,6 +137,7 @@ export function CreateUserForm() {
                     }
                     field.onChange(e);
                   }}
+                  required={false}
                 />
               </FormControl>
               <FormDescription className="text-xs"></FormDescription>
@@ -212,7 +215,7 @@ export function CreateUserForm() {
             <FormItem>
               <FormLabel>Số điện thoại</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} required={false} />
               </FormControl>
               <FormDescription className="text-xs"></FormDescription>
               <FormMessage className="text-xs" />
@@ -226,7 +229,7 @@ export function CreateUserForm() {
             <FormItem>
               <FormLabel>Địa chỉ</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} required={false} />
               </FormControl>
               <FormDescription className="text-xs">
                 Các thông báo quan trọng sẽ được gửi đến địa chỉ email này.

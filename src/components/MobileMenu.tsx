@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 import { CookiesStorage } from '@/config/cookie';
 import { useAppSelector } from '@/stores/hooks';
 import { logout } from '@/stores/reducers/authReducer';
-import { selectDep } from '@/stores/reducers/depReducer';
+import { selectDep, setDependence } from '@/stores/reducers/depReducer';
 
 import { Button } from './ui/button';
 import Username from './Username';
@@ -74,6 +74,7 @@ const MobileMenu = () => {
 
     // clear redux store
     dispatch(logout());
+    dispatch(setDependence({}));
 
     // clear cookie storage
     CookiesStorage.clearAllCookies();

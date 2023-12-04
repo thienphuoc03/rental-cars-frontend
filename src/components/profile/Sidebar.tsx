@@ -3,7 +3,7 @@
 import { CarFront, Heart, LockKeyhole, LogOut, Map, User } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 
@@ -13,6 +13,8 @@ import { cn } from '@/lib/utils';
 import { logout } from '@/stores/reducers/authReducer';
 import { setDependence } from '@/stores/reducers/depReducer';
 
+const role: string = JSON.parse(localStorage.getItem('user') || '{}').role;
+
 const ProfileMenu: { icon: ReactElement; href: string; label: string }[] = [
   {
     icon: <User size={24} />,
@@ -21,32 +23,36 @@ const ProfileMenu: { icon: ReactElement; href: string; label: string }[] = [
   },
   {
     icon: <Heart size={24} />,
-    href: 'myfavs',
+    href: '/myfavs',
     label: 'Xe yêu thích',
   },
-  {
-    icon: <CarFront size={24} />,
-    href: 'mycars',
-    label: 'Xe của tôi',
-  },
+  ...(role && role === 'CAROWNER'
+    ? [
+        {
+          icon: <CarFront size={24} />,
+          href: '/mycars',
+          label: 'Xe của tôi',
+        },
+      ]
+    : []),
   {
     icon: <Map size={24} />,
-    href: 'mytrips',
+    href: '/mytrips',
     label: 'Chuyến đi của tôi',
   },
   {
     icon: <LockKeyhole size={24} />,
-    href: 'resetpw',
+    href: '/resetpw',
     label: 'Đổi mật khẩu',
   },
 ];
 
 const Sidebar = () => {
-  const [isLogged, setIsLogged] = React.useState<boolean>(false);
+  const [isLogged, setIsLogged] = useState<boolean>(false);
   const dispatch = useDispatch();
   const router = useRouter();
   const pathname = usePathname();
-  const [username, setUsername] = React.useState<string>('');
+  const [username, setUsername] = useState<string>('');
 
   useEffect(() => {
     const userInfo: any = JSON.parse(localStorage.getItem('user') || '{}');

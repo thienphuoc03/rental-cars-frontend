@@ -8,6 +8,7 @@ export const GET_USER_BY_USERNAME = 'users/username';
 export const UPLOAD_AVATAR = 'users/avatar/upload';
 export const CREATE_USER = 'users';
 export const DELETE_USER = 'users';
+export const GET_USER_BY_ID = 'users';
 
 // CARS
 export const GET_NEWEST_CARS = 'cars/newest/cars';

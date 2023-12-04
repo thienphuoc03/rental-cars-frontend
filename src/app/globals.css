@@ -67,11 +67,12 @@
 
 html,
 body {
-  font-family: var(--font-roboto), sans-serif;
+  font-family: sans-serif;
   width: 100vw;
   height: 100vh;
   scroll-behavior: smooth;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
   background-color: #fff;
 }
 

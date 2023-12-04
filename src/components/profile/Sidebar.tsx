@@ -13,7 +13,18 @@ import { cn } from '@/lib/utils';
 import { logout } from '@/stores/reducers/authReducer';
 import { setDependence } from '@/stores/reducers/depReducer';
 
-const role: string = JSON.parse(localStorage.getItem('user') || '{}').role;
+const getRole = () => {
+  if (typeof window !== 'undefined') {
+    const storedUser = localStorage.getItem('user');
+
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      return user.role;
+    }
+  }
+};
+
+const role = getRole();
 
 const ProfileMenu: { icon: ReactElement; href: string; label: string }[] = [
   {

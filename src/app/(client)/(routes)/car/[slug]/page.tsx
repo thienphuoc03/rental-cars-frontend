@@ -21,6 +21,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import StarRating from '@/components/ui/star-rating';
+import { UserInfoAlertDialog } from '@/components/user-info-alert-dialog';
 import { GET_CAR_BY_SLUG } from '@/lib/api-constants';
 import { countDays, formatCurrency, formatDateToDMY } from '@/lib/utils';
 import { API } from '@/services';
@@ -372,14 +373,18 @@ const CarPage = ({ params }: { params: { slug: string } }) => {
 
               {/* info chu xe */}
               <div className="flex items-center justify-start gap-3">
-                <Avatar className="h-20 w-20">
-                  <AvatarImage src={car?.owner?.avatarUrl} alt="avatar" />
-                  <AvatarFallback>Avatar</AvatarFallback>
-                </Avatar>
+                {car?.owner && (
+                  <>
+                    <UserInfoAlertDialog
+                      userId={car?.owner?.id}
+                      avatarUrl={car?.owner?.avatarUrl}
+                    />
 
-                <div className="flex flex-col items-start justify-center">
-                  <h4 className="text-2xl font-bold">{car?.owner?.name}</h4>
-                </div>
+                    <div className="flex flex-col items-start justify-center">
+                      <h4 className="text-2xl font-bold">{car?.owner?.name}</h4>
+                    </div>
+                  </>
+                )}
               </div>
 
               {/* danh gia */}
@@ -446,7 +451,7 @@ const CarPage = ({ params }: { params: { slug: string } }) => {
                         </div>
 
                         <div className="">
-                          {formatDateToDMY(review?.createAt)}
+                          {formatDateToDMY(review?.createdAt)}
                         </div>
                       </div>
                     ))}

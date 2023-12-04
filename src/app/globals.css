@@ -71,8 +71,7 @@ body {
   width: 100vw;
   height: 100vh;
   scroll-behavior: smooth;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  overflow: hidden;
   background-color: #fff;
 }
 

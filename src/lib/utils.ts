@@ -45,6 +45,12 @@ export const convertBase64 = (file: any) => {
   });
 };
 
+export const formatCurrencyToNumber = (value: string) => {
+  const number = value.replace(/,/g, '').replace(/₫/g, '');
+
+  return Number(number) * 1000;
+};
+
 export const formatNumberToCurrency = (value: number) => {
   const number = value / 1000;
 

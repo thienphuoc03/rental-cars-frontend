@@ -5,6 +5,7 @@ import { AlertCircle, Armchair, Fuel, Info, Settings2 } from 'lucide-react';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { DateRange } from 'react-day-picker';
+import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 
 import HoverCardCustom from '@/components/cards/hover-card-custom';
@@ -25,6 +26,7 @@ import { UserInfoAlertDialog } from '@/components/user-info-alert-dialog';
 import { GET_CAR_BY_SLUG } from '@/lib/api-constants';
 import { countDays, formatCurrency, formatDateToDMY } from '@/lib/utils';
 import { API } from '@/services';
+import { addItem } from '@/stores/reducers/cartReducer';
 import { FeatureNameEnum, FuelEnum, TransmissionEnum } from '@/types/enums';
 
 const menuItems = [
@@ -80,6 +82,7 @@ const CarPage = ({ params }: { params: { slug: string } }) => {
     to: addDays(new Date(Date.now()), 1),
   });
   const [car, setCar] = useState<any>(null);
+  const dispatch = useDispatch();
 
   const getCar = async () => {
     const slug = params.slug;
@@ -99,13 +102,30 @@ const CarPage = ({ params }: { params: { slug: string } }) => {
     setDate({ from, to });
   };
 
-  const handleRentCar = () => {
+  const handleRentCar = (
+    car: any,
+    startDate: Date | undefined,
+    endDate: Date | undefined,
+    price: number,
+  ) => {
     setIsLoading(true);
     try {
-      setTimeout(() => {
-        setIsLoading(false);
-        toast.success('Đặt xe thành công');
-      }, 3000);
+      if (!startDate || !endDate) return;
+
+      const startDateString = formatDateToDMY(startDate);
+      const endDateString = formatDateToDMY(endDate);
+
+      const carItem = {
+        id: Number(car.id),
+        name: car.name,
+        images: car.images,
+        priceOfDay: car.pricePerDay,
+        startDate: startDateString,
+        endDate: endDateString,
+        totalAmount: price,
+      };
+
+      dispatch(addItem(carItem));
     } catch (error: any) {
       toast.error(error?.message);
     } finally {
@@ -592,7 +612,14 @@ const CarPage = ({ params }: { params: { slug: string } }) => {
             <Button
               className="w-full"
               size="lg"
-              onClick={handleRentCar}
+              onClick={() =>
+                handleRentCar(
+                  car,
+                  date?.from,
+                  date?.to,
+                  car?.pricePerDay * countDays(date?.from, date?.to),
+                )
+              }
               isLoading={isLoading}
             >
               Chọn thuê

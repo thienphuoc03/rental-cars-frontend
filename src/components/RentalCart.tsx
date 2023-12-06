@@ -1,95 +1,124 @@
+'use client';
+
 import { ShoppingCart } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
+import RentalCartItem from '@/components/RentalCartItem';
+import { buttonVariants } from '@/components/ui/button';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Separator } from '@/components/ui/separator';
 import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from '@/components/ui/hover-card';
+  Sheet,
+  SheetContent,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
+import { formatCurrency } from '@/lib/utils';
 
 const RentalCart = () => {
+  const cars = useSelector((state: any) => state.cart.items);
+  const itemCount = cars.length;
+
+  const [isMounted, setIsMounted] = useState<boolean>(false);
+
+  const cartTotal = () => {
+    return cars.reduce(
+      (total: any, car: { totalAmount: any }) => total + car?.totalAmount,
+      0,
+    );
+  };
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  console.log({ cartTotal });
+
   return (
-    <HoverCard>
-      <HoverCardTrigger asChild>
-        <div className="relative">
-          <span className="block cursor-pointer rounded-full p-2 hover:bg-slate-50/30">
-            <ShoppingCart className="h-5 w-5 text-white" />
-          </span>
-          <span className="absolute -right-[1px] -top-[1px] flex items-center justify-center rounded-full bg-red-500 text-[10px] font-semibold text-white">
-            <p className="px-1">2</p>
-          </span>
-        </div>
-      </HoverCardTrigger>
-      <HoverCardContent className="w-80 overflow-hidden">
-        <h2 className="text-md font-bold text-black">Danh sách xe</h2>
-
-        <hr className="mb-4 mt-1 h-[1px] w-full bg-slate-50" />
-
-        <div className="flex flex-col items-stretch justify-between gap-2">
-          <div className="flex items-center justify-between gap-4 text-xs">
-            <div className="flex items-center justify-between gap-2">
-              <Image
-                src="/images/car-img-1.jpg"
-                alt=""
-                width={40}
-                height={40}
-                className="bg-slate-50"
-              />
-
-              <div className="flex w-44 flex-col items-start justify-between gap-1 text-xs">
-                <span className="inline-block w-40 truncate font-bold">
-                  Xe Toyota ABC 2025
-                </span>
-                <span className="truncates w-40 text-[10px] text-foreground">
-                  14/12/2023 - 16/12/2023
-                </span>
+    <Sheet>
+      <SheetTrigger className="tex-white group -m-2 flex items-center rounded p-2">
+        <ShoppingCart
+          aria-hidden="true"
+          className="h-6 w-6 flex-shrink-0 text-white group-hover:scale-105"
+        />
+        <span className="ml-1 text-sm font-medium text-white group-hover:scale-105">
+          {isMounted ? itemCount : 0}
+        </span>
+      </SheetTrigger>
+      <SheetContent className="flex w-full flex-col pr-0 sm:max-w-lg">
+        <SheetHeader className="space-y-2.5 pr-6">
+          <SheetTitle>Thuê xe ({itemCount})</SheetTitle>
+        </SheetHeader>
+        {itemCount > 0 ? (
+          <>
+            <div className="flex w-full flex-col pr-6">
+              <ScrollArea className="h-[488px]">
+                {cars.map((car: any, index: number) => (
+                  <RentalCartItem car={car} key={index} />
+                ))}
+              </ScrollArea>
+            </div>
+            <div className="space-y-4 pr-6">
+              <Separator />
+              <div className="space-y-1.5 text-sm">
+                <div className="flex items-center justify-between">
+                  <span className="flex-1 font-bold">Tổng tiền</span>
+                  <span className="text-xl font-bold text-primary">
+                    {formatCurrency(cartTotal())}
+                  </span>
+                </div>
               </div>
-            </div>
 
-            <div>
-              <span className="font-medium text-primary">3.500 K</span>
+              <SheetFooter>
+                <SheetTrigger asChild>
+                  <Link
+                    href="/cart"
+                    className={buttonVariants({
+                      className: 'w-full rounded-full',
+                    })}
+                  >
+                    Thanh toán
+                  </Link>
+                </SheetTrigger>
+              </SheetFooter>
             </div>
-          </div>
-          <div className="flex items-center justify-between gap-4 text-xs">
-            <div className="flex items-center justify-between gap-2">
+          </>
+        ) : (
+          <div className="flex h-full flex-col items-center justify-center space-y-1">
+            <div
+              aria-hidden="true"
+              className="relative mb-4 h-60 w-60 text-muted-foreground"
+            >
               <Image
-                src="/images/car-img-2.jpg"
-                alt=""
-                width={40}
-                height={40}
-                className="bg-slate-50"
+                src="/images/hippo-empty-cart.png"
+                fill
+                alt="empty shopping cart hippo"
               />
-
-              <div className="flex w-44 flex-col items-start justify-between gap-1 text-xs">
-                <span className="inline-block w-40 truncate font-bold">
-                  Xe Toyota ABC 2025
-                </span>
-                <span className="w-40 truncate text-[10px] text-foreground">
-                  14/12/2023 - 16/12/2023
-                </span>
-              </div>
             </div>
-
-            <div>
-              <span className="font-medium text-primary">3.500 K</span>
+            <div className="text-xl font-semibold">
+              Chưa có xe nào được chọn
             </div>
+            <SheetTrigger asChild>
+              <Link
+                href="/products"
+                className={buttonVariants({
+                  variant: 'link',
+                  size: 'sm',
+                  className: 'text-sm text-muted-foreground',
+                })}
+              >
+                Thêm xe để thanh toán
+              </Link>
+            </SheetTrigger>
           </div>
-        </div>
-
-        <hr className="my-4 h-[1px] w-full bg-slate-50" />
-
-        <div className="w-full text-right">
-          <Link
-            href="/"
-            className="font text-md rounded bg-primary px-4 py-2 text-white"
-          >
-            Xem chi tiết
-          </Link>
-        </div>
-      </HoverCardContent>
-    </HoverCard>
+        )}
+      </SheetContent>
+    </Sheet>
   );
 };
 

@@ -105,7 +105,7 @@ const RentalCart = () => {
             </div>
             <SheetTrigger asChild>
               <Link
-                href="/products"
+                href="/"
                 className={buttonVariants({
                   variant: 'link',
                   size: 'sm',

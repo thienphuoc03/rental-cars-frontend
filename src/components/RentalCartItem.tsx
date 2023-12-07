@@ -1,4 +1,3 @@
-
 import { ImageIcon, X } from 'lucide-react';
 import Image from 'next/image';
 import { useDispatch } from 'react-redux';
@@ -6,7 +5,17 @@ import { useDispatch } from 'react-redux';
 import { formatCurrency } from '@/lib/utils';
 import { removeItem } from '@/stores/reducers/cartReducer';
 
-const RentalCartItem = ({ car }: { car: any }) => {
+interface RentalCartItemProps {
+  carId: number;
+  carName: string;
+  startDate: string;
+  priceOfDay: number;
+  endDate: string;
+  totalAmount: number;
+  images: string[];
+}
+
+const RentalCartItem = ({ car }: { car: RentalCartItemProps }) => {
   const dispatch = useDispatch();
   const handleRemoveItem = (carId: number) => {
     dispatch(removeItem(carId));
@@ -20,7 +29,7 @@ const RentalCartItem = ({ car }: { car: any }) => {
             {car?.images ? (
               <Image
                 src={car?.images[0]}
-                alt={car?.name}
+                alt={car?.carName}
                 fill
                 className="absolute object-cover"
               />
@@ -36,7 +45,7 @@ const RentalCartItem = ({ car }: { car: any }) => {
 
           <div className="flex flex-col self-start">
             <span className="mb-1 line-clamp-1 text-sm font-medium">
-              {car?.name}
+              {car?.carName}
             </span>
 
             <span className="line-clamp-1 text-xs capitalize text-muted-foreground">
@@ -45,7 +54,7 @@ const RentalCartItem = ({ car }: { car: any }) => {
 
             <div className="mt-4 text-xs text-muted-foreground">
               <button
-                onClick={() => handleRemoveItem(car?.id)}
+                onClick={() => handleRemoveItem(car?.carId)}
                 className="flex items-center gap-0.5 hover:text-error"
               >
                 <X className="h-4 w-3" />

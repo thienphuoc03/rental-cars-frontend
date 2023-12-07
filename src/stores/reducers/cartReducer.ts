@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'sonner';
 
 interface Car {
-  id: number;
-  name: string;
+  carId: number;
+  carName: string;
   priceOfDay: number;
   images: any[];
   startDate: string;
@@ -54,7 +54,7 @@ const cartReducer = createSlice({
     addItem(state, action) {
       state.items = loadCartState().items;
       const exitsCar = state.items.find(
-        (item: any) => item?.id === action.payload?.id,
+        (item: any) => item?.carId === action.payload?.carId,
       );
       if (exitsCar) {
         toast.error('Xe đã tồn tại trong giỏ hàng');
@@ -68,7 +68,7 @@ const cartReducer = createSlice({
     removeItem(state, action) {
       state.items = loadCartState().items;
       state.items = state.items.filter(
-        (item: any) => item?.id !== action.payload,
+        (item: any) => item?.carId !== action.payload,
       );
       saveCartState(state);
       toast.success('Đã xóa xe khỏi giỏ hàng');

@@ -42,7 +42,6 @@ export function DataTable<TData, TValue>({
   search,
   filters,
   initVisibleColumns = [],
-  statuses,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = useState({});
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});

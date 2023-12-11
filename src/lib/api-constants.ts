@@ -25,3 +25,7 @@ export const GET_SESSION_BY_ID = 'stripe/session';
 
 // ORDERS
 export const CREATE_ORDER = 'orders';
+
+// ORDER DETAILS
+export const GET_ORDER_DETAIL_BY_USER_ID = 'order-detail/user/my-orders';
+export const UPDATE_ORDER_DETAIL_STATUS_BY_ID = 'order-detail/update/status';

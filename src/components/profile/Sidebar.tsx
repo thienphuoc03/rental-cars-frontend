@@ -1,6 +1,14 @@
 'use client';
 
-import { CarFront, Heart, LockKeyhole, LogOut, Map, User } from 'lucide-react';
+import {
+  CarFront,
+  Heart,
+  ListOrdered,
+  LockKeyhole,
+  LogOut,
+  Map,
+  User,
+} from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { ReactElement, useEffect, useState } from 'react';
@@ -25,11 +33,6 @@ const ProfileMenu: { icon: ReactElement; href: string; label: string }[] = [
     label: 'Xe yêu thích',
   },
   {
-    icon: <CarFront size={24} />,
-    href: '/mycars',
-    label: 'Xe của tôi',
-  },
-  {
     icon: <Map size={24} />,
     href: '/mytrips',
     label: 'Chuyến đi của tôi',
@@ -47,11 +50,28 @@ const Sidebar = ({ className }: { className?: string }) => {
   const router = useRouter();
   const pathname = usePathname();
   const [username, setUsername] = useState<string>('');
+  const [menu, setMenu] = useState<any[]>(ProfileMenu);
 
   useEffect(() => {
     const userInfo: any = JSON.parse(localStorage.getItem('user') || '{}');
     if (userInfo) {
       setUsername(userInfo?.username);
+
+      if (userInfo.role && userInfo?.role === 'CAROWNER') {
+        setMenu([
+          ...ProfileMenu,
+          {
+            icon: <CarFront size={24} />,
+            href: '/mycars',
+            label: 'Xe của tôi',
+          },
+          {
+            icon: <ListOrdered size={24} />,
+            href: '/myorders',
+            label: 'Đơn đặt xe',
+          },
+        ]);
+      }
     }
   }, []);
 
@@ -76,36 +96,39 @@ const Sidebar = ({ className }: { className?: string }) => {
     <div className={cn('sticky top-0 z-30 p-2', className)}>
       <h2 className="text-2xl font-bold ">Xin chào {username}!</h2>
 
-      <div className="mt-6">
-        {ProfileMenu.map(({ icon, href, label }, index) => (
-          <Link
-            href={href}
-            key={index}
-            className="block w-full border-b-[1px] border-t-[1px] border-solid border-gray-200 py-4 text-left hover:bg-gray-100"
-          >
-            <div
-              className={cn(
-                'flex w-full items-center justify-start px-3',
-                href === pathname
-                  ? 'border-l-4 border-solid border-primary'
-                  : '',
-              )}
+      <div className="mt-6 flex h-full flex-col items-start justify-between">
+        <div>
+          {menu.map(({ icon, href, label }, index) => (
+            <Link
+              href={href}
+              key={index}
+              className="block w-full border-t-2 border-gray-100 py-4 text-left hover:bg-gray-100"
             >
-              {icon}
-              <span
+              <div
                 className={cn(
-                  'ml-2 text-base',
-                  href === pathname ? 'font-bold' : '',
+                  'flex w-full items-center justify-start px-3',
+                  href === pathname
+                    ? 'border-l-4 border-solid border-primary'
+                    : '',
                 )}
               >
-                {label}
-              </span>
-            </div>
-          </Link>
-        ))}
+                {icon}
+                <span
+                  className={cn(
+                    'ml-2 text-base',
+                    href === pathname ? 'font-bold' : '',
+                  )}
+                >
+                  {label}
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+
         <Button
-          variant="ghost"
-          className="flex w-full items-center justify-start gap-3 px-3 py-4 text-base font-normal hover:bg-gray-100"
+          variant="outline"
+          className="mt-28 flex w-full items-center justify-start gap-3 px-3 py-4 text-base font-normal hover:bg-gray-100"
           onClick={handleLogout}
           isLoading={isLogged}
         >

@@ -15,3 +15,10 @@ export const GET_NEWEST_CARS = 'cars/newest/cars';
 export const GET_CAR_BY_SLUG = 'cars/slug';
 export const SEARCH_CARS = 'cars/search/cars';
 export const GET_ALL_CARS = 'cars';
+
+// STRIPE
+export const CHECKOUT = 'stripe/checkout';
+export const GET_SESSION_BY_ID = 'stripe/session';
+
+// ORDERS
+export const CREATE_ORDER = 'orders';

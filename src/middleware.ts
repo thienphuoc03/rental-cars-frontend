@@ -1,11 +1,18 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
-const protectedRoutes = ['/profile', '/mycars', '/myfavs'];
+const protectedRoutes = [
+  '/profile',
+  '/mycars',
+  '/myfavs',
+  '/payment/success',
+  '/payment/cancel',
+];
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const role = request.cookies.get('role')?.value;
+  const cspHeader = `default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self'; font-src 'self';`;
 
   // Check if the user is logged in
   if (role) {

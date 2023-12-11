@@ -4,10 +4,11 @@ import { toast } from 'sonner';
 interface Car {
   carId: number;
   carName: string;
-  priceOfDay: number;
-  images: any[];
+  pricePerDay: number;
+  images: string;
   startDate: string;
   endDate: string;
+  deposits: number;
   totalAmount: number;
 }
 

@@ -127,10 +127,11 @@ const CarPage = ({ params }: { params: { slug: string } }) => {
       const carItem = {
         carId: Number(car.id),
         carName: car.name,
-        images: car.images,
-        priceOfDay: car.pricePerDay,
+        images: car.images[0],
+        pricePerDay: car.pricePerDay,
         startDate: startDateString,
         endDate: endDateString,
+        deposits: price * 0.3,
         totalAmount: price,
       };
 
@@ -618,8 +619,26 @@ const CarPage = ({ params }: { params: { slug: string } }) => {
                 </span>
               </div>
             </div>
+
+            <div className="my-4 h-[1px] w-full bg-gray-400" />
+
+            {/* tiền cọc */}
+            <div className="w-full">
+              <span className="text-xs text-error">
+                *Bạn chỉ cần thanh toán trước 30% tiền cọc khi đặt xe
+              </span>
+              <div className="flex w-full items-center justify-between">
+                <h5 className="font-bold">Thanh toán tiền cọc</h5>
+                <span className="font-bold">
+                  {formatCurrency(
+                    car?.pricePerDay * countDays(date?.from, date?.to) * 0.3,
+                  )}
+                </span>
+              </div>
+            </div>
+
             <Button
-              className="w-full"
+              className="w-full rounded-full"
               size="lg"
               onClick={() =>
                 handleRentCar(

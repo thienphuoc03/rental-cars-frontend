@@ -9,10 +9,11 @@ interface RentalCartItemProps {
   carId: number;
   carName: string;
   startDate: string;
-  priceOfDay: number;
+  pricePerDay: number;
   endDate: string;
   totalAmount: number;
-  images: string[];
+  deposits: number;
+  images: string;
 }
 
 const RentalCartItem = ({ car }: { car: RentalCartItemProps }) => {
@@ -28,9 +29,10 @@ const RentalCartItem = ({ car }: { car: RentalCartItemProps }) => {
           <div className="relative aspect-square h-16 w-16 min-w-fit overflow-hidden rounded">
             {car?.images ? (
               <Image
-                src={car?.images[0]}
+                src={car?.images}
                 alt={car?.carName}
                 fill
+                sizes="(max-width: 64px)"
                 className="absolute object-cover"
               />
             ) : (
@@ -64,9 +66,12 @@ const RentalCartItem = ({ car }: { car: RentalCartItemProps }) => {
           </div>
         </div>
 
-        <div className="flex flex-col space-y-1 font-medium">
+        <div className="flex h-full flex-col space-y-1 font-medium">
           <span className="ml-auto line-clamp-1 text-sm">
             {formatCurrency(car?.totalAmount)}
+          </span>
+          <span className="ml-auto line-clamp-1 text-sm font-semibold">
+            {formatCurrency(car?.deposits)}
           </span>
         </div>
       </div>

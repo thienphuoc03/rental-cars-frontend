@@ -15,22 +15,22 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { DELETE_USER } from '@/lib/api-constants';
+import { DELETE_CAR } from '@/lib/api-constants';
 import { API } from '@/services';
 import { setDependence } from '@/stores/reducers/depReducer';
 
-export function DeleteDialog({ data }: { data: any }) {
+export function DeleteCarDialog({ data }: { data: any }) {
   const dispatch = useDispatch();
 
   const handleDelete = async () => {
-    const res = await API.destroy(DELETE_USER + `/${data.id}`);
+    const res = await API.destroy(DELETE_CAR + `/${data.id}`);
 
     if (res.status === 200) {
-      toast.success('Xóa người dùng thành công');
+      toast.success('Xóa thành công');
       //   load data
       dispatch(setDependence({}));
     } else {
-      toast.error('Xóa người dùng thất bại');
+      toast.error('Xóa thất bại');
     }
   };
 
@@ -46,12 +46,16 @@ export function DeleteDialog({ data }: { data: any }) {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Xóa người dùng "{data?.name}" ?</AlertDialogTitle>
-          <AlertDialogDescription></AlertDialogDescription>
+          <AlertDialogTitle>Bạn có chắc chắn muốn xóa?</AlertDialogTitle>
+          <AlertDialogDescription>
+            Xe <span className="font-bold">{data?.name}</span> sẽ bị xóa
+          </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Hủy</AlertDialogCancel>
-          <AlertDialogAction onClick={handleDelete}>Xóa</AlertDialogAction>
+        <AlertDialogFooter className="flex flex-row items-center justify-between">
+          <AlertDialogCancel className="min-w-[100px]">Hủy</AlertDialogCancel>
+          <AlertDialogAction onClick={handleDelete} className="min-w-[100px]">
+            Xóa
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

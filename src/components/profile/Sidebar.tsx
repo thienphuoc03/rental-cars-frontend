@@ -3,7 +3,7 @@
 import { CarFront, Heart, LockKeyhole, LogOut, Map, User } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 
@@ -21,32 +21,32 @@ const ProfileMenu: { icon: ReactElement; href: string; label: string }[] = [
   },
   {
     icon: <Heart size={24} />,
-    href: 'myfavs',
+    href: '/myfavs',
     label: 'Xe yêu thích',
   },
   {
     icon: <CarFront size={24} />,
-    href: 'mycars',
+    href: '/mycars',
     label: 'Xe của tôi',
   },
   {
     icon: <Map size={24} />,
-    href: 'mytrips',
+    href: '/mytrips',
     label: 'Chuyến đi của tôi',
   },
   {
     icon: <LockKeyhole size={24} />,
-    href: 'resetpw',
+    href: '/resetpw',
     label: 'Đổi mật khẩu',
   },
 ];
 
-const Sidebar = () => {
-  const [isLogged, setIsLogged] = React.useState<boolean>(false);
+const Sidebar = ({ className }: { className?: string }) => {
+  const [isLogged, setIsLogged] = useState<boolean>(false);
   const dispatch = useDispatch();
   const router = useRouter();
   const pathname = usePathname();
-  const [username, setUsername] = React.useState<string>('');
+  const [username, setUsername] = useState<string>('');
 
   useEffect(() => {
     const userInfo: any = JSON.parse(localStorage.getItem('user') || '{}');
@@ -73,7 +73,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="sticky top-0 z-30 w-1/3 p-2">
+    <div className={cn('sticky top-0 z-30 p-2', className)}>
       <h2 className="text-2xl font-bold ">Xin chào {username}!</h2>
 
       <div className="mt-6">

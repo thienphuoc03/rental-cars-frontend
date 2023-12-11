@@ -5,6 +5,7 @@ import { AlertCircle, Armchair, Fuel, Info, Settings2 } from 'lucide-react';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { DateRange } from 'react-day-picker';
+import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 
 import HoverCardCustom from '@/components/cards/hover-card-custom';
@@ -21,9 +22,11 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import StarRating from '@/components/ui/star-rating';
+import { UserInfoAlertDialog } from '@/components/user-info-alert-dialog';
 import { GET_CAR_BY_SLUG } from '@/lib/api-constants';
 import { countDays, formatCurrency, formatDateToDMY } from '@/lib/utils';
 import { API } from '@/services';
+import { addItem } from '@/stores/reducers/cartReducer';
 import { FeatureNameEnum, FuelEnum, TransmissionEnum } from '@/types/enums';
 
 const menuItems = [
@@ -79,6 +82,7 @@ const CarPage = ({ params }: { params: { slug: string } }) => {
     to: addDays(new Date(Date.now()), 1),
   });
   const [car, setCar] = useState<any>(null);
+  const dispatch = useDispatch();
 
   const getCar = async () => {
     const slug = params.slug;
@@ -98,13 +102,40 @@ const CarPage = ({ params }: { params: { slug: string } }) => {
     setDate({ from, to });
   };
 
-  const handleRentCar = () => {
+  const handleRentCar = (
+    car: any,
+    startDate: Date | undefined,
+    endDate: Date | undefined,
+    price: number,
+  ) => {
     setIsLoading(true);
     try {
-      setTimeout(() => {
-        setIsLoading(false);
-        toast.success('Đặt xe thành công');
-      }, 3000);
+      const user = localStorage.getItem('user');
+
+      const userObj = user ? JSON.parse(user) : undefined;
+
+      if (!userObj) {
+        toast.error('Bạn cần đăng nhập để thuê xe');
+        return;
+      }
+
+      if (!startDate || !endDate) return;
+
+      const startDateString = formatDateToDMY(startDate);
+      const endDateString = formatDateToDMY(endDate);
+
+      const carItem = {
+        carId: Number(car.id),
+        carName: car.name,
+        images: car.images[0],
+        pricePerDay: car.pricePerDay,
+        startDate: startDateString,
+        endDate: endDateString,
+        deposits: price * 0.3,
+        totalAmount: price,
+      };
+
+      dispatch(addItem(carItem));
     } catch (error: any) {
       toast.error(error?.message);
     } finally {
@@ -372,14 +403,18 @@ const CarPage = ({ params }: { params: { slug: string } }) => {
 
               {/* info chu xe */}
               <div className="flex items-center justify-start gap-3">
-                <Avatar className="h-20 w-20">
-                  <AvatarImage src={car?.owner?.avatarUrl} alt="avatar" />
-                  <AvatarFallback>Avatar</AvatarFallback>
-                </Avatar>
+                {car?.owner && (
+                  <>
+                    <UserInfoAlertDialog
+                      userId={car?.owner?.id}
+                      avatarUrl={car?.owner?.avatarUrl}
+                    />
 
-                <div className="flex flex-col items-start justify-center">
-                  <h4 className="text-2xl font-bold">{car?.owner?.name}</h4>
-                </div>
+                    <div className="flex flex-col items-start justify-center">
+                      <h4 className="text-2xl font-bold">{car?.owner?.name}</h4>
+                    </div>
+                  </>
+                )}
               </div>
 
               {/* danh gia */}
@@ -446,7 +481,7 @@ const CarPage = ({ params }: { params: { slug: string } }) => {
                         </div>
 
                         <div className="">
-                          {formatDateToDMY(review?.createAt)}
+                          {formatDateToDMY(review?.createdAt)}
                         </div>
                       </div>
                     ))}
@@ -584,10 +619,35 @@ const CarPage = ({ params }: { params: { slug: string } }) => {
                 </span>
               </div>
             </div>
+
+            <div className="my-4 h-[1px] w-full bg-gray-400" />
+
+            {/* tiền cọc */}
+            <div className="w-full">
+              <span className="text-xs text-error">
+                *Bạn chỉ cần thanh toán trước 30% tiền cọc khi đặt xe
+              </span>
+              <div className="flex w-full items-center justify-between">
+                <h5 className="font-bold">Thanh toán tiền cọc</h5>
+                <span className="font-bold">
+                  {formatCurrency(
+                    car?.pricePerDay * countDays(date?.from, date?.to) * 0.3,
+                  )}
+                </span>
+              </div>
+            </div>
+
             <Button
-              className="w-full"
+              className="w-full rounded-full"
               size="lg"
-              onClick={handleRentCar}
+              onClick={() =>
+                handleRentCar(
+                  car,
+                  date?.from,
+                  date?.to,
+                  car?.pricePerDay * countDays(date?.from, date?.to),
+                )
+              }
               isLoading={isLoading}
             >
               Chọn thuê

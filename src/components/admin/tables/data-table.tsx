@@ -14,7 +14,7 @@ import {
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { DataTablePagination } from '@/components/admin/tables/data-table-pagination';
 import { DataTableToolbar } from '@/components/admin/tables/data-table-toolbar';
@@ -32,6 +32,8 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   search?: string;
   filters?: any[];
+  initVisibleColumns?: string[];
+  statuses?: any[];
 }
 
 export function DataTable<TData, TValue>({
@@ -39,6 +41,8 @@ export function DataTable<TData, TValue>({
   data,
   search,
   filters,
+  initVisibleColumns = [],
+  statuses,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = useState({});
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -50,7 +54,15 @@ export function DataTable<TData, TValue>({
     columns,
     state: {
       sorting,
-      columnVisibility,
+      columnVisibility: {
+        ...columnVisibility,
+        ...columns.reduce((acc: any, column: any) => {
+          if (initVisibleColumns.includes(column.id)) {
+            acc[column.id] = true;
+          }
+          return acc;
+        }, {}),
+      },
       rowSelection,
       columnFilters,
     },
@@ -67,9 +79,25 @@ export function DataTable<TData, TValue>({
     getFacetedUniqueValues: getFacetedUniqueValues(),
   });
 
+  useEffect(() => {
+    if (initVisibleColumns.length > 0) {
+      table.getAllColumns().map((column) => {
+        column.toggleVisibility(false);
+      });
+      initVisibleColumns.forEach((columnId) => {
+        table.getColumn(columnId)?.toggleVisibility(true);
+      });
+    }
+  }, [initVisibleColumns]);
+
   return (
     <div className="space-y-4">
-      <DataTableToolbar table={table} filters={filters} />
+      <DataTableToolbar
+        table={table}
+        filters={filters}
+        search={search}
+        initVisibleColumns={initVisibleColumns}
+      />
 
       <div className="rounded-md border">
         <Table>

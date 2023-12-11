@@ -32,7 +32,7 @@ export function EditProfileDialog({
           <Pen size={16} />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Cập nhật thông tin</DialogTitle>
         </DialogHeader>

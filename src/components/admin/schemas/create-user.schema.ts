@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { USERNAME_PATTERN } from '@/components/admin/utils/constants';
 
 const CreateUserSchema = z.object({
-  avatarUrl: z.string().optional(),
+  avatarUrl: z.string().min(0).optional().or(z.literal(undefined)),
   name: z.string().min(3),
   username: z
     .string()
@@ -18,10 +18,10 @@ const CreateUserSchema = z.object({
     ),
   email: z.string().email(),
   password: z.string().min(6),
-  address: z.string().optional(),
-  dateOfBirth: z.date().optional(),
-  gender: z.string().optional(),
-  phone: z.string().min(10).max(12).optional(),
+  address: z.string().min(0).optional().or(z.literal(undefined)),
+  dateOfBirth: z.date().optional().or(z.literal(undefined)),
+  gender: z.string().min(0).optional().or(z.literal(undefined)),
+  phone: z.string().max(12).min(0).optional().or(z.literal(undefined)),
   role: z.string(),
 });
 

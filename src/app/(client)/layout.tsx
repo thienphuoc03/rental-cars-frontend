@@ -19,10 +19,12 @@ export default function HomeLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="h-screen w-screen overflow-auto">
+    <div className="h-full w-full overflow-y-auto overflow-x-hidden">
       <Header />
       <main className="flex w-screen justify-center">
-        <div className="w-full px-32 lg:px-8">{children}</div>
+        <div className="w-full px-32 dark:bg-black dark:text-white lg:px-8">
+          {children}
+        </div>
       </main>
       <Footer />
     </div>

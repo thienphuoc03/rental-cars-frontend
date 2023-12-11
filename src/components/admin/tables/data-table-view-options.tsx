@@ -16,10 +16,12 @@ import { translateEnglishToVietnamese } from '@/lib/utils';
 
 interface UsersTableViewOptionsProps<TData> {
   table: Table<TData>;
+  initVisibleColumns?: string[];
 }
 
 export function DataTableViewOptions<TData>({
   table,
+  initVisibleColumns = [],
 }: UsersTableViewOptionsProps<TData>) {
   return (
     <DropdownMenu>

@@ -3,8 +3,8 @@
 import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 import { Row } from '@tanstack/react-table';
 import { FileSignature } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
-import { DeleteDialog } from '@/components/admin/users/delete-dialog';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -16,11 +16,26 @@ import {
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
+  statuses: any[];
+  onDeleted?: any;
+  updateStatus?: any;
 }
 
 export function DataTableRowActions<TData>({
   row,
+  statuses,
+  onDeleted,
+  updateStatus,
 }: DataTableRowActionsProps<TData>) {
+  const [value, setValue] = useState('');
+
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const status: string = row.original?.status;
+    setValue(status);
+  }, [row.original]);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -33,14 +48,14 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem>
+        <DropdownMenuItem className="cursor-pointer">
           Chỉnh sửa
           <DropdownMenuShortcut>
             <FileSignature className="h-4 w-4 text-warning" />
           </DropdownMenuShortcut>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <DeleteDialog user={row.original} />
+        <DropdownMenuItem asChild className="cursor-pointer">
+          {onDeleted}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

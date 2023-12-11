@@ -21,7 +21,6 @@ const Header = () => {
 
   // check login and logout
   useEffect(() => {
-    console.log({ dep });
     const isLogged = CookiesStorage.getCookieData('accessToken');
 
     if (isLogged) {

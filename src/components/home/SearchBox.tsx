@@ -33,7 +33,7 @@ const SearchBox = () => {
     setIsLoading(false);
   };
   return (
-    <div className="absolute -mt-6 flex w-full items-center justify-center ">
+    <div className="absolute -mt-6 flex w-full items-center justify-center">
       <div className="flex gap-2 rounded-lg bg-white p-6 shadow-lg">
         <Popover>
           <PopoverTrigger asChild>
@@ -41,7 +41,8 @@ const SearchBox = () => {
               id="date"
               variant={'outline'}
               className={cn(
-                'flex items-center justify-center border-none text-left font-normal hover:bg-transparent focus:ring-transparent focus:ring-offset-0 active:scale-100',
+                'flex items-center justify-center border-none text-left font-normal hover:bg-transparent' +
+                  ' focus:ring-transparent focus:ring-offset-0 active:scale-100 dark:bg-white dark:text-black',
                 !date && 'text-muted-foreground',
               )}
             >
@@ -88,7 +89,7 @@ const SearchBox = () => {
 
         <Button
           onClick={submit}
-          className="text-lg"
+          className="text-lg dark:text-white"
           size="lg"
           isLoading={isLoading}
           disabled={!date?.from || !date?.to}

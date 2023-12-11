@@ -15,6 +15,9 @@ export const GET_NEWEST_CARS = 'cars/newest/cars';
 export const GET_CAR_BY_SLUG = 'cars/slug';
 export const SEARCH_CARS = 'cars/search/cars';
 export const GET_ALL_CARS = 'cars';
+export const GET_ALL_MY_CAR = 'cars/user/my-cars';
+export const UPDATE_CAR_STATUS = 'cars/status';
+export const DELETE_CAR = 'cars';
 
 // STRIPE
 export const CHECKOUT = 'stripe/checkout';

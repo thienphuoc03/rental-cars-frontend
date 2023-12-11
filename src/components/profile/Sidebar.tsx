@@ -13,19 +13,6 @@ import { cn } from '@/lib/utils';
 import { logout } from '@/stores/reducers/authReducer';
 import { setDependence } from '@/stores/reducers/depReducer';
 
-const getRole = () => {
-  if (typeof window !== 'undefined') {
-    const storedUser = localStorage.getItem('user');
-
-    if (storedUser) {
-      const user = JSON.parse(storedUser);
-      return user.role;
-    }
-  }
-};
-
-const role = getRole();
-
 const ProfileMenu: { icon: ReactElement; href: string; label: string }[] = [
   {
     icon: <User size={24} />,
@@ -37,15 +24,11 @@ const ProfileMenu: { icon: ReactElement; href: string; label: string }[] = [
     href: '/myfavs',
     label: 'Xe yêu thích',
   },
-  ...(role && role === 'CAROWNER'
-    ? [
-        {
-          icon: <CarFront size={24} />,
-          href: '/mycars',
-          label: 'Xe của tôi',
-        },
-      ]
-    : []),
+  {
+    icon: <CarFront size={24} />,
+    href: '/mycars',
+    label: 'Xe của tôi',
+  },
   {
     icon: <Map size={24} />,
     href: '/mytrips',
@@ -58,7 +41,7 @@ const ProfileMenu: { icon: ReactElement; href: string; label: string }[] = [
   },
 ];
 
-const Sidebar = () => {
+const Sidebar = ({ className }: { className?: string }) => {
   const [isLogged, setIsLogged] = useState<boolean>(false);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -90,7 +73,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="sticky top-0 z-30 w-1/3 p-2">
+    <div className={cn('sticky top-0 z-30 p-2', className)}>
       <h2 className="text-2xl font-bold ">Xin chào {username}!</h2>
 
       <div className="mt-6">

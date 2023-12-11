@@ -12,11 +12,15 @@ import { translateEnglishToVietnamese } from '@/lib/utils';
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
   filters?: any[];
+  search?: string;
+  initVisibleColumns?: string[];
 }
 
 export function DataTableToolbar<TData>({
   table,
   filters,
+  search = 'name',
+  initVisibleColumns = [],
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
 
@@ -24,8 +28,8 @@ export function DataTableToolbar<TData>({
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
         <Input
-          placeholder=""
-          value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
+          placeholder={`Nhập ${translateEnglishToVietnamese(search)}...`}
+          value={(table.getColumn(search)?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
             table.getColumn('name')?.setFilterValue(event.target.value)
           }
@@ -57,7 +61,10 @@ export function DataTableToolbar<TData>({
         )}
       </div>
       <div>
-        <DataTableViewOptions table={table} />
+        <DataTableViewOptions
+          table={table}
+          initVisibleColumns={initVisibleColumns}
+        />
       </div>
     </div>
   );

@@ -7,11 +7,13 @@ import {
   status,
   transmissions,
 } from '@/components/admin/cars/common/data';
+import { DeleteCarDialog } from '@/components/admin/cars/delete-car-dialog';
+import StatusCombobox from '@/components/admin/cars/status-combobox';
 import { CarType } from '@/components/admin/schemas';
 import { DataTableColumnHeader } from '@/components/admin/tables/data-table-column-header';
 import { DataTableRowActions } from '@/components/admin/tables/data-table-row-action';
 import { Checkbox } from '@/components/ui/checkbox';
-import { cn, formatDateToDMY, formatNumberToCurrency } from '@/lib/utils';
+import { formatDateToDMY, formatNumberToCurrency } from '@/lib/utils';
 
 export const columns: ColumnDef<CarType>[] = [
   {
@@ -184,21 +186,12 @@ export const columns: ColumnDef<CarType>[] = [
       }
 
       return (
-        <div className="flex w-[100px] items-center">
-          <span
-            className={cn(
-              'rounded-full px-4 py-1 text-white',
-              statusItem.key === 'AVAILABLE'
-                ? 'bg-success/70'
-                : statusItem.key === 'UNAVAILABLE'
-                ? 'bg-error/70'
-                : statusItem.key === 'RENTING'
-                ? 'bg-warning/70'
-                : 'bg-warning/70',
-            )}
-          >
-            {statusItem.value}
-          </span>
+        <div className="flex items-center">
+          <StatusCombobox
+            status={status}
+            statusInit={statusItem}
+            carId={Number(row.original.id)}
+          />
         </div>
       );
     },
@@ -208,6 +201,12 @@ export const columns: ColumnDef<CarType>[] = [
   },
   {
     id: 'actions',
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    cell: ({ row }) => (
+      <DataTableRowActions
+        row={row}
+        onDeleted={<DeleteCarDialog data={row.original} />}
+        statuses={status}
+      />
+    ),
   },
 ];

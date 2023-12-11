@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { UserType } from '@/components/admin/schemas';
 import { DataTableColumnHeader } from '@/components/admin/tables/data-table-column-header';
 import { DataTableRowActions } from '@/components/admin/tables/data-table-row-action';
+import { DeleteDialog } from '@/components/admin/users/delete-dialog';
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn, formatDateToDMY } from '@/lib/utils';
 
@@ -204,6 +205,12 @@ export const columns: ColumnDef<UserType>[] = [
   },
   {
     id: 'actions',
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    cell: ({ row }) => (
+      <DataTableRowActions
+        row={row}
+        onDeleted={<DeleteDialog data={row.original} />}
+        statuses={status}
+      />
+    ),
   },
 ];

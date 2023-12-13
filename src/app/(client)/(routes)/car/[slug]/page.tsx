@@ -78,8 +78,8 @@ const surcharges: { name: string; price: string; description: string }[] = [
 const CarPage = ({ params }: { params: { slug: string } }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [date, setDate] = useState<DateRange | undefined>({
-    from: new Date(Date.now()),
-    to: addDays(new Date(Date.now()), 1),
+    from: addDays(new Date(Date.now()), 1),
+    to: addDays(new Date(Date.now()), 2),
   });
   const [car, setCar] = useState<any>(null);
   const dispatch = useDispatch();

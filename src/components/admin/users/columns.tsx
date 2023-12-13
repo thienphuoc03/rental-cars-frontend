@@ -209,7 +209,6 @@ export const columns: ColumnDef<UserType>[] = [
       <DataTableRowActions
         row={row}
         onDeleted={<DeleteDialog data={row.original} />}
-        statuses={status}
       />
     ),
   },

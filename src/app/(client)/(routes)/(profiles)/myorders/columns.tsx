@@ -178,7 +178,8 @@ export const columns: ColumnDef<any>[] = [
           <PaymentStatusCombobox
             status={paymentStatus}
             statusInit={statusItem}
-            carId={Number(row.original.id)}
+            orderDetailId={Number(row.original.id)}
+            carId={Number(row.original.carId)}
           />
         </div>
       );

@@ -6,7 +6,7 @@ import { Button } from '../ui/button';
 
 const Explorer = () => {
   return (
-    <section className="mt-20 flex w-full justify-center rounded-lg bg-sky-50 py-14">
+    <section className="mt-20 flex w-full justify-center rounded-lg bg-sky-50 py-14 dark:bg-sky-900">
       <div className="grid grid-cols-2 gap-10">
         <div className="col-span-1">
           <div className="flex flex-col items-center justify-center gap-10">

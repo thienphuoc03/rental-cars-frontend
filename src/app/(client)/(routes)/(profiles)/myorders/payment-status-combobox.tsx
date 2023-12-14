@@ -1,8 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
-import UpdateStatusAlertDialog from '@/components/admin/cars/update-status-alert-dialog';
+import { paymentStatus } from '@/app/(client)/(routes)/(profiles)/myorders/common/data';
+import UpdateOrderDetailStatusAlertDialog from '@/app/(client)/(routes)/(profiles)/myorders/update-order-detail-status-alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Command, CommandGroup } from '@/components/ui/command';
 import {
@@ -10,15 +12,19 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { UPDATE_PAYMENT_STATUS_BY_ID } from '@/lib/api-constants';
 import { cn } from '@/lib/utils';
+import { API } from '@/services';
 
 const PaymentStatusCombobox = ({
   status,
   statusInit,
+  orderDetailId,
   carId,
 }: {
   status: any;
   statusInit: any;
+  orderDetailId: number;
   carId: number;
 }) => {
   const [open, setOpen] = useState(false);
@@ -26,6 +32,32 @@ const PaymentStatusCombobox = ({
     key: string;
     value: string;
   }>(statusInit);
+
+  const updatePaymentStatus = async (status: string) => {
+    try {
+      const res = await API.patch(
+        UPDATE_PAYMENT_STATUS_BY_ID + `/${orderDetailId}`,
+        {
+          paymentStatus: status,
+          carId: carId,
+        },
+      );
+      if (res.status === 200) {
+        setValue({
+          key: res.data.paymentStatus,
+          value: paymentStatus.find(
+            (statusItem: any) => statusItem.key === res.data.paymentStatus,
+          )?.value as string,
+        });
+
+        toast.success('Cập nhật trạng thái xe thành công');
+      }
+    } catch (error: any) {
+      toast.error(error.error, {
+        description: error.message,
+      });
+    }
+  };
 
   useEffect(() => {
     setValue(value);
@@ -45,7 +77,7 @@ const PaymentStatusCombobox = ({
               : value.key === 'DEPOSIT'
               ? 'bg-info/60'
               : value.key === 'PAID'
-              ? 'bg-success/60'
+              ? 'bg-success'
               : value.key === 'RECEIVED'
               ? 'bg-warning/60'
               : 'bg-warning/60',
@@ -62,11 +94,11 @@ const PaymentStatusCombobox = ({
         <Command>
           <CommandGroup className="">
             {status.map((statusItem: any) => (
-              <UpdateStatusAlertDialog
+              <UpdateOrderDetailStatusAlertDialog
                 statusItem={statusItem}
-                statusInit={statusInit}
-                carId={carId}
+                statusInit={value}
                 key={statusItem.key}
+                handleUpdateStatus={updatePaymentStatus}
               />
             ))}
           </CommandGroup>

@@ -41,13 +41,13 @@ const advantageList: { image: string; title: string; content: string }[] = [
 
 const Advantage = () => {
   return (
-    <section className="mt-20 w-full rounded-lg bg-white py-6">
+    <section className="mt-20 w-full rounded-lg bg-white py-6 dark:bg-black dark:text-white">
       <div className="">
         <div className="flex flex-col items-center justify-center gap-6">
-          <h2 className="text-4xl font-bold text-black">
+          <h2 className="text-4xl font-bold text-black dark:text-white">
             Ưu Điểm của <span className="text-primary">Rental Cars</span>
           </h2>
-          <p className="text-lg text-black">
+          <p className="text-lg text-black dark:text-white">
             Những tính năng giúp bạn dễ dàng hơn khi thuê xe trên Rental Cars.
           </p>
         </div>
@@ -60,8 +60,12 @@ const Advantage = () => {
             className="flex max-w-[326px] flex-col items-center justify-start text-center"
           >
             <Image src={image} alt={title} width={240} height={240} />
-            <h3 className="px-6 text-xl font-bold text-black">{title}</h3>
-            <p className="px-6 text-base text-black">{content}</p>
+            <h3 className="px-6 text-xl font-bold text-black dark:text-white">
+              {title}
+            </h3>
+            <p className="px-6 text-base text-black dark:text-white">
+              {content}
+            </p>
           </div>
         ))}
       </div>

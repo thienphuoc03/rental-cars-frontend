@@ -30,7 +30,7 @@ const CarCard = ({
   return (
     <Link
       href={`car/${slug}`}
-      className="flex min-w-[180px] flex-col items-stretch justify-center gap-6 rounded-lg border border-gray-100 bg-white p-4 shadow-xl hover:scale-105"
+      className="flex min-h-[356px] min-w-[180px] flex-col items-stretch justify-center gap-6 overflow-hidden rounded-lg border border-gray-100 bg-white p-4 text-white shadow-xl hover:scale-105 dark:bg-black xl:min-h-[398px]"
     >
       <div className="overflow-hidden rounded-lg">
         <Image src={thumbnail} alt="car" width={272} height={204} />

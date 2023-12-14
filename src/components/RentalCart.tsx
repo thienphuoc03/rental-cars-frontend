@@ -85,7 +85,7 @@ const RentalCart = () => {
 
   return (
     <>
-      {isLoading && <LoadingScreen />}
+      {isLoading && <LoadingScreen title="Đang thanh toán" />}
       <Sheet>
         <SheetTrigger className="tex-white group -m-2 flex items-center rounded p-2">
           <ShoppingCart

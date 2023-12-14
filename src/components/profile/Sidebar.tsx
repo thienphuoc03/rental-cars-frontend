@@ -128,7 +128,7 @@ const Sidebar = ({ className }: { className?: string }) => {
 
         <Button
           variant="outline"
-          className="mt-28 flex w-full items-center justify-start gap-3 px-3 py-4 text-base font-normal hover:bg-gray-100"
+          className="mt-6 flex w-full items-center justify-start gap-3 px-3 py-4 text-base font-normal hover:bg-gray-100"
           onClick={handleLogout}
           isLoading={isLogged}
         >

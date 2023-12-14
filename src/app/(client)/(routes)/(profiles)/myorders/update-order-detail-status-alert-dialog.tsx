@@ -2,7 +2,6 @@
 
 import { Check } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
-import { toast } from 'sonner';
 
 import {
   AlertDialog,
@@ -16,101 +15,73 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { CommandItem } from '@/components/ui/command';
-import { UPDATE_ORDER_DETAIL_STATUS_BY_ID } from '@/lib/api-constants';
 import { cn } from '@/lib/utils';
-import { API } from '@/services';
 
 interface UpdateStatusDialogProps {
   statusItem: {
     key: string;
     value: string;
   };
-  orderDetailId: number;
   statusInit: {
     key: string;
     value: string;
   };
   className?: string;
-  carId: number;
+  handleUpdateStatus?: (status: string) => void;
 }
 
 const UpdateOrderDetailStatusAlertDialog = (props: UpdateStatusDialogProps) => {
-  const { statusItem, orderDetailId, statusInit, carId, className } = props;
+  const { statusItem, statusInit, className, handleUpdateStatus } = props;
   const [value, setValue] = useState<typeof statusItem>(statusItem);
-
-  const updateOrderDetailStatus = async (status: string) => {
-    try {
-      const res = await API.patch(
-        UPDATE_ORDER_DETAIL_STATUS_BY_ID + `/${orderDetailId}`,
-        {
-          orderDetailStatus: status,
-          carId: carId,
-        },
-      );
-      if (res.status === 200) {
-        toast.success('Cập nhật trạng thái xe thành công');
-        setValue(res.data.status);
-        window.location.reload();
-      }
-    } catch (error: any) {
-      toast.error(error.error, {
-        description: error.message,
-      });
-    }
-  };
 
   useEffect(() => {
     setValue(statusItem);
-  }, []);
+  }, [statusInit]);
 
   return (
-    <>
-      {value ? (
-        <AlertDialog>
-          <AlertDialogTrigger className={cn('w-full', className)}>
-            <CommandItem
-              key={statusItem.value}
-              value={statusItem.value}
-              className="w-full cursor-pointer bg-transparent"
-            >
-              <Check
-                className={cn(
-                  'mr-2 h-4 w-4',
-                  value.key === statusInit.key
-                    ? 'bg-primary/10 opacity-100'
-                    : 'opacity-0',
-                )}
-              />
-              {statusItem.value}
-            </CommandItem>
-          </AlertDialogTrigger>
-          <AlertDialogContent className="rounded-lg">
-            <AlertDialogHeader>
-              <AlertDialogTitle>
-                Bạn có chắc muốn cập nhật trạng thái xe?
-              </AlertDialogTitle>
-              <AlertDialogDescription>
-                Trạng thái xe sẽ thay đổi từ{' '}
-                <span className="font-bold">{statusInit.value}</span> sang{' '}
-                <span className="font-bold">{statusItem.value}</span>
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter className="flex w-full flex-row items-center justify-between">
-              <AlertDialogCancel>Hủy</AlertDialogCancel>
-              <AlertDialogAction
-                onClick={() => {
-                  updateOrderDetailStatus(value.key);
-                }}
-              >
-                Cập nhật
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      ) : (
-        ''
-      )}
-    </>
+    <AlertDialog>
+      <AlertDialogTrigger className={cn('w-full', className)}>
+        <CommandItem
+          key={statusItem.value}
+          value={statusItem.value}
+          className="w-full cursor-pointer bg-transparent"
+        >
+          <Check
+            className={cn(
+              'mr-2 h-4 w-4',
+              value.key === statusInit.key
+                ? 'bg-primary/10 opacity-100'
+                : 'opacity-0',
+            )}
+          />
+          {statusItem.value}
+        </CommandItem>
+      </AlertDialogTrigger>
+      <AlertDialogContent className="rounded-lg">
+        <AlertDialogHeader>
+          <AlertDialogTitle>
+            Bạn có chắc muốn cập nhật trạng thái xe?
+          </AlertDialogTitle>
+          <AlertDialogDescription>
+            Trạng thái xe sẽ thay đổi từ{' '}
+            <span className="font-bold">{statusInit.value}</span> sang{' '}
+            <span className="font-bold">{statusItem.value}</span>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter className="flex w-full flex-row items-center justify-between">
+          <AlertDialogCancel>Hủy</AlertDialogCancel>
+          <AlertDialogAction
+            onClick={() => {
+              if (handleUpdateStatus) {
+                handleUpdateStatus(value.key);
+              }
+            }}
+          >
+            Cập nhật
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 };
 

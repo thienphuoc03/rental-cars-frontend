@@ -548,6 +548,7 @@ const CarPage = ({ params }: { params: { slug: string } }) => {
                     selected={date}
                     onSelect={setDate}
                     numberOfMonths={2}
+                    fromDate={addDays(new Date(Date.now()), 1)}
                   />
                 </div>
                 <DialogFooter className="border-t-2 border-gray-200 py-3">

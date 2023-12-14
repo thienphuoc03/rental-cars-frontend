@@ -22,11 +22,13 @@ const carRentalInstructionsList: { image: string; title: string }[] = [
 
 const CarRentalInstructions = () => {
   return (
-    <section className="mt-20 w-full rounded-lg bg-white py-6">
+    <section className="mt-20 w-full rounded-lg bg-white py-6 dark:bg-black">
       <div className="">
         <div className="flex flex-col items-center justify-center gap-6">
-          <h2 className="text-4xl font-bold text-black">Hướng dẫn thuê xe</h2>
-          <p className="text-lg text-black">
+          <h2 className="text-4xl font-bold text-black dark:text-white">
+            Hướng dẫn thuê xe
+          </h2>
+          <p className="text-lg text-black dark:text-white">
             Chỉ với 4 bước đơn giản để trải nghiệm thuê xe Mioto một cách nhanh
             chóng
           </p>
@@ -37,7 +39,7 @@ const CarRentalInstructions = () => {
         {carRentalInstructionsList.map(({ image, title }, index) => (
           <li
             key={index}
-            className="mt-4 flex max-h-[308px] max-w-[313px] flex-col items-center gap-4 text-black "
+            className="mt-4 flex max-h-[308px] max-w-[313px] flex-col items-center gap-4 text-black dark:text-white"
           >
             <div className="max-h-[200px] max-w-[200px]">
               <Image src={image} alt="title" width={200} height={200} />

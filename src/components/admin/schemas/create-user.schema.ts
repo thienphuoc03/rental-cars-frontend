@@ -21,7 +21,7 @@ const CreateUserSchema = z.object({
   address: z.string().min(0).optional().or(z.literal(undefined)),
   dateOfBirth: z.date().optional().or(z.literal(undefined)),
   gender: z.string().min(0).optional().or(z.literal(undefined)),
-  phone: z.string().max(12).min(0).optional().or(z.literal(undefined)),
+  phone: z.string().optional().or(z.literal(undefined)),
   role: z.string(),
 });
 

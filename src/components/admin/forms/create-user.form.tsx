@@ -84,6 +84,8 @@ export function CreateUserForm() {
     try {
       values.avatarUrl = avatarSrc;
 
+      console.log({ values });
+
       // Update the values with the avatarUrl
       const { data } = await API.post(CREATE_USER, values);
 
@@ -215,7 +217,7 @@ export function CreateUserForm() {
             <FormItem>
               <FormLabel>Số điện thoại</FormLabel>
               <FormControl>
-                <Input {...field} required={false} />
+                <Input {...field} />
               </FormControl>
               <FormDescription className="text-xs"></FormDescription>
               <FormMessage className="text-xs" />

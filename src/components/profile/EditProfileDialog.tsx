@@ -1,4 +1,7 @@
+'use client';
+
 import { Pen } from 'lucide-react';
+import { toast } from 'sonner';
 
 import EditProfileForm from '@/components/forms/EditProfileForm';
 import { Button } from '@/components/ui/button';
@@ -9,6 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { API } from '@/services';
 
 interface EditProfileDialogProps {
   name: string;
@@ -21,6 +25,22 @@ export function EditProfileDialog({
   dateOfBirth,
   gender,
 }: EditProfileDialogProps) {
+  const updateProfile = async () => {
+    try {
+      const payload = {
+        name: name,
+        dateOfBirth: dateOfBirth,
+        gender: gender,
+      };
+
+      const res = await API.put('/users/me', payload);
+    } catch (error: any) {
+      toast.error(error.error, {
+        description: error.message,
+      });
+    }
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>

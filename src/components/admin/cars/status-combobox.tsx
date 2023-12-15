@@ -42,12 +42,12 @@ const StatusCombobox = ({
           className={cn(
             'justify-between rounded-full px-4 py-1 text-white',
             value.key === 'AVAILABLE'
-              ? 'bg-success/70'
+              ? 'bg-success/60'
               : value.key === 'UNAVAILABLE'
-              ? 'bg-error/70'
+              ? 'bg-error/60'
               : value.key === 'RENTING'
-              ? 'bg-warning/70'
-              : 'bg-warning/70',
+              ? 'bg-warning/60'
+              : 'bg-warning/60',
           )}
         >
           {value

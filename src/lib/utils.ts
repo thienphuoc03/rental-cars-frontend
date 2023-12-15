@@ -102,6 +102,22 @@ export const translateEnglishToVietnamese = (value: string) => {
       return 'Ngày tạo';
     case 'status':
       return 'Trạng thái';
+    case 'orderId':
+      return 'Mã đơn hàng';
+    case 'carId':
+      return 'Mã xe';
+    case 'deposits':
+      return 'Tiền cọc';
+    case 'totalAmount':
+      return 'Tổng tiền';
+    case 'orderDetailStatus':
+      return 'Trạng thái đơn hàng';
+    case 'paymentStatus':
+      return 'Trạng thái thanh toán';
+    case 'startDate':
+      return 'Ngày bắt đầu';
+    case 'endDate':
+      return 'Ngày kết thúc';
     default:
       return value;
   }

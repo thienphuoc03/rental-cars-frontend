@@ -1,6 +1,7 @@
 # Rental Cars: Self-driving Car Rental Application
 
-Welcome to Rental Cars, a self-driving car rental application. This repository contains the codebase for our application.
+Welcome to Rental Cars, a self-driving car rental application. This repository contains the codebase for our
+application.
 
 ## Getting Started
 

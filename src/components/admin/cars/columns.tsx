@@ -82,7 +82,7 @@ export const columns: ColumnDef<CarType>[] = [
   {
     accessorKey: 'transmission',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Truyền động" />
+      <DataTableColumnHeader column={column} title="Hộp số" />
     ),
     cell: ({ row }) => {
       const trans = transmissions.find(
@@ -205,7 +205,6 @@ export const columns: ColumnDef<CarType>[] = [
       <DataTableRowActions
         row={row}
         onDeleted={<DeleteCarDialog data={row.original} />}
-        statuses={status}
       />
     ),
   },

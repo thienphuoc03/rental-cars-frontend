@@ -22,7 +22,7 @@ export default function HomeLayout({
     <div className="h-full w-full overflow-y-auto overflow-x-hidden">
       <Header />
       <main className="flex w-screen justify-center">
-        <div className="w-full px-32 dark:bg-black dark:text-white lg:px-8">
+        <div className="w-full px-32 py-10 dark:bg-black dark:text-white lg:px-8">
           {children}
         </div>
       </main>

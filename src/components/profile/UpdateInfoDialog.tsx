@@ -28,7 +28,7 @@ const UpdateInfoDialog = ({ label, name, data }: UpdateInfoDialogProps) => {
           <Pen size={13} />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Cập nhật {name}</DialogTitle>
         </DialogHeader>

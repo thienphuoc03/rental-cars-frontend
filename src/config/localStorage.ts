@@ -18,7 +18,7 @@ export const LocalStorage = {
     localStorage.setItem(key, item);
   },
   get(key: string) {
-    if (typeof localStorage !== "undefined") {
+    if (typeof localStorage !== 'undefined') {
       return localStorage.getItem(key);
     }
   },

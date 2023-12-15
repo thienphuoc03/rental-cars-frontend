@@ -16,16 +16,12 @@ import {
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
-  statuses: any[];
   onDeleted?: any;
-  updateStatus?: any;
 }
 
 export function DataTableRowActions<TData>({
   row,
-  statuses,
   onDeleted,
-  updateStatus,
 }: DataTableRowActionsProps<TData>) {
   const [value, setValue] = useState('');
 

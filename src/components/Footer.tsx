@@ -46,7 +46,7 @@ const findOutMoreItems = [
 
 const Footer = () => {
   return (
-    <footer className="mt-20 flex w-full justify-center border-t-2 border-solid border-gray-300 bg-[#f6f7f9] px-32 lg:px-8">
+    <footer className="flex w-full justify-center border-t-2 border-solid border-gray-300 bg-[#f6f7f9] px-32 dark:bg-black/90 lg:px-8">
       <div className="flex w-full items-center justify-between py-6">
         {/* Logo */}
         <div className="flex flex-col items-center justify-between gap-2">

@@ -1,1 +1,11 @@
-<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M52.5 17.5V42.5C52.5 50 48.75 55 40 55H20C11.25 55 7.5 50 7.5 42.5V17.5C7.5 10 11.25 5 20 5H40C48.75 5 52.5 10 52.5 17.5Z" stroke="#2563EB" stroke-width="4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M36.25 11.25V16.25C36.25 19 38.5 21.25 41.25 21.25H46.25" stroke="#2563EB" stroke-width="4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M20 32.5H30" stroke="#2563EB" stroke-width="4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M20 42.5H40" stroke="#2563EB" stroke-width="4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path
+      d="M52.5 17.5V42.5C52.5 50 48.75 55 40 55H20C11.25 55 7.5 50 7.5 42.5V17.5C7.5 10 11.25 5 20 5H40C48.75 5 52.5 10 52.5 17.5Z"
+      stroke="#2563EB" stroke-width="4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+  <path d="M36.25 11.25V16.25C36.25 19 38.5 21.25 41.25 21.25H46.25" stroke="#2563EB" stroke-width="4"
+        stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+  <path d="M20 32.5H30" stroke="#2563EB" stroke-width="4" stroke-miterlimit="10" stroke-linecap="round"
+        stroke-linejoin="round"></path>
+  <path d="M20 42.5H40" stroke="#2563EB" stroke-width="4" stroke-miterlimit="10" stroke-linecap="round"
+        stroke-linejoin="round"></path>
+</svg>

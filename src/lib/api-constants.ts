@@ -9,6 +9,7 @@ export const UPLOAD_AVATAR = 'users/avatar/upload';
 export const CREATE_USER = 'users';
 export const DELETE_USER = 'users';
 export const GET_USER_BY_ID = 'users';
+export const UPDATE_USER = 'users';
 
 // CARS
 export const GET_NEWEST_CARS = 'cars/newest/cars';
@@ -18,6 +19,7 @@ export const GET_ALL_CARS = 'cars';
 export const GET_ALL_MY_CAR = 'cars/user/my-cars';
 export const UPDATE_CAR_STATUS = 'cars/status';
 export const DELETE_CAR = 'cars';
+export const GET_CAR_BY_ID = 'cars';
 
 // STRIPE
 export const CHECKOUT = 'stripe/checkout';

@@ -49,7 +49,7 @@ export default function UsersPage() {
         <h2 className="text-2xl font-bold">Quản lý người dùng</h2>
 
         <Link
-          href="/admin/users/add"
+          href="/admin/users/new"
           className="flex items-center justify-between gap-2 rounded border border-gray-100 bg-primary px-4 py-1 text-white hover:bg-primary/90 active:scale-95"
         >
           <PlusCircle className="h-4 w-4" />

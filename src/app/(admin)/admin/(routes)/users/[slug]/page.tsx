@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { CreateUserForm } from '@/components/admin/forms/create-user.form';
 import { Button } from '@/components/ui/button';
 
-export default function AddUserPage() {
+export default function AddUserPage({ params }: { params: { slug: string } }) {
   const router = useRouter();
 
   return (
@@ -25,7 +25,7 @@ export default function AddUserPage() {
 
       <div className="flex items-center justify-center">
         <div className="w-4/5">
-          <CreateUserForm />
+          <CreateUserForm slug={params?.slug} />
         </div>
       </div>
     </div>

@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 import { CalendarIcon, Check, ChevronsUpDown } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -35,9 +35,22 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { CREATE_USER } from '@/lib/api-constants';
+import { CREATE_USER, GET_USER_BY_ID, UPDATE_USER } from '@/lib/api-constants';
 import { cn, convertBase64 } from '@/lib/utils';
 import { API } from '@/services';
+
+interface UserTypes {
+  name?: string;
+  username?: string;
+  password?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+  gender?: string;
+  dateOfBirth?: Date;
+  avatarUrl?: string;
+  role?: string;
+}
 
 const genders = [
   {
@@ -69,33 +82,72 @@ const roles = [
   },
 ];
 
-export function CreateUserForm() {
+export function CreateUserForm({ slug }: { slug: string }) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<any>();
-  const [avatarSrc, setAvatarSrc] = useState<any>();
+  const [avatarSrc, setAvatarSrc] = useState<any>(undefined);
 
   const form = useForm<z.infer<typeof createUserSchema>>({
     resolver: zodResolver(createUserSchema),
   });
 
+  const getCarById = async (id: string) => {
+    try {
+      const res = await API.get(GET_USER_BY_ID + `/${Number(id)}`);
+
+      if (res.status === 200) {
+        const userData = {
+          name: res.data.name,
+          username: res.data.username,
+          password: res.data.password || '',
+          email: res.data.email,
+          phone: res.data.phone || '',
+          gender: res.data.gender,
+          dateOfBirth: res.data.dateOfBirth || '',
+          avatarUrl: '',
+          role: res.data.role,
+        };
+
+        form.reset(userData);
+        setAvatarSrc(res.data.avatarUrl);
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
+
   async function onSubmit(values: z.infer<typeof createUserSchema>) {
     setIsLoading(true);
     try {
-      values.avatarUrl = avatarSrc;
+      if (slug === 'new') {
+        values.avatarUrl = avatarSrc;
 
-      console.log({ values });
+        // Update the values with the avatarUrl
+        const res = await API.post(CREATE_USER, values);
 
-      // Update the values with the avatarUrl
-      const { data } = await API.post(CREATE_USER, values);
+        if (res.status === 200) {
+          toast.success('Tạo người dùng thành công!');
+          setIsLoading(false);
+          router.push('/admin/users');
+        }
+      } else {
+        if (values.avatarUrl !== avatarSrc) {
+          values.avatarUrl = avatarSrc;
+        }
 
-      if (data) {
-        toast.success('Tạo người dùng thành công!');
-        setIsLoading(false);
-        router.push('/admin/users');
+        if (values.dateOfBirth) {
+          values.dateOfBirth = values.dateOfBirth.toISOString() as any;
+        }
+
+        const res = await API.patch(UPDATE_USER + `/${Number(slug)}`, values);
+
+        if (res.status === 200) {
+          toast.success('Cập nhật người dùng thành công!');
+          setIsLoading(false);
+          router.push('/admin/users');
+        }
       }
-
-      setIsLoading(false);
     } catch (error: any) {
       setIsLoading(false);
       toast.error(error?.message);
@@ -103,6 +155,24 @@ export function CreateUserForm() {
       setIsLoading(false);
     }
   }
+
+  useEffect(() => {
+    if (slug === 'new') {
+      form.reset({
+        name: '',
+        username: '',
+        password: '',
+        email: '',
+        phone: '',
+        gender: '',
+        dateOfBirth: new Date(),
+        avatarUrl: '',
+        role: '',
+      });
+    } else {
+      getCarById(slug);
+    }
+  }, [slug]);
 
   return (
     <Form {...form}>
@@ -257,7 +327,7 @@ export function CreateUserForm() {
                       )}
                     >
                       {field.value ? (
-                        format(field.value, 'dd/MM/yyyy')
+                        format(new Date(field.value), 'dd/MM/yyyy')
                       ) : (
                         <span>Chọn ngày</span>
                       )}
@@ -400,7 +470,7 @@ export function CreateUserForm() {
 
         <div className="text-right">
           <Button type="submit" className="px-8" isLoading={isLoading}>
-            Lưu
+            {slug === 'new' ? 'Tạo' : 'Cập nhật'}
           </Button>
         </div>
       </form>

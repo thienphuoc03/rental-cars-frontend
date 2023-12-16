@@ -3,6 +3,7 @@
 import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 import { Row } from '@tanstack/react-table';
 import { FileSignature } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -23,6 +24,8 @@ export function DataTableRowActions<TData>({
   row,
   onDeleted,
 }: DataTableRowActionsProps<TData>) {
+  const router = useRouter();
+  const pathname = usePathname();
   const [value, setValue] = useState('');
 
   useEffect(() => {
@@ -44,7 +47,14 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem className="cursor-pointer">
+        <DropdownMenuItem
+          className="cursor-pointer"
+          onClick={() => {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            router.push(`${pathname}/${row?.original?.id}`);
+          }}
+        >
           Chỉnh sửa
           <DropdownMenuShortcut>
             <FileSignature className="h-4 w-4 text-warning" />

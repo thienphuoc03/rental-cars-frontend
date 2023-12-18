@@ -1,6 +1,6 @@
 'use client';
 
-import { addDays } from 'date-fns';
+import { addDays, subDays } from 'date-fns';
 import { AlertCircle, Armchair, Fuel, Info, Settings2 } from 'lucide-react';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
@@ -23,7 +23,10 @@ import {
 } from '@/components/ui/dialog';
 import StarRating from '@/components/ui/star-rating';
 import { UserInfoAlertDialog } from '@/components/user-info-alert-dialog';
-import { GET_CAR_BY_SLUG } from '@/lib/api-constants';
+import {
+  GET_CAR_BY_SLUG,
+  GET_DISABLE_DATE_BY_CAR_ID,
+} from '@/lib/api-constants';
 import { countDays, formatCurrency, formatDateToDMY } from '@/lib/utils';
 import { API } from '@/services';
 import { addItem } from '@/stores/reducers/cartReducer';
@@ -82,14 +85,38 @@ const CarPage = ({ params }: { params: { slug: string } }) => {
     to: addDays(new Date(Date.now()), 2),
   });
   const [car, setCar] = useState<any>(null);
+  const [disabledDates, setDisabledDates] = useState<Date[] | Date | undefined>(
+    undefined,
+  );
   const dispatch = useDispatch();
+
+  const getDisabledDates = async (id: number) => {
+    try {
+      const response = await API.get(GET_DISABLE_DATE_BY_CAR_ID + `/${id}`);
+
+      if (response.status === 200 && response.data.length > 0) {
+        const convertedDateRanges = response.data.map((range: any) => ({
+          after: subDays(new Date(range.startDate), 1),
+          before: addDays(new Date(range.endDate), 1),
+        }));
+
+        setDisabledDates(convertedDateRanges);
+      }
+    } catch (error: any) {
+      toast.error(error?.message);
+    }
+  };
 
   const getCar = async () => {
     const slug = params.slug;
 
     const response = await API.get(GET_CAR_BY_SLUG + `/${slug}`);
 
-    setCar(response.data);
+    if (response.status === 200) {
+      setCar(response.data);
+
+      getDisabledDates(response.data.id);
+    }
   };
 
   useEffect(() => {
@@ -543,12 +570,12 @@ const CarPage = ({ params }: { params: { slug: string } }) => {
                   <Calendar
                     initialFocus
                     mode="range"
-                    max={30}
                     defaultMonth={date?.from}
                     selected={date}
                     onSelect={setDate}
                     numberOfMonths={2}
                     fromDate={addDays(new Date(Date.now()), 1)}
+                    disabled={disabledDates}
                   />
                 </div>
                 <DialogFooter className="border-t-2 border-gray-200 py-3">

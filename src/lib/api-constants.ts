@@ -32,6 +32,7 @@ export const CREATE_ORDER = 'orders';
 export const GET_ORDER_DETAIL_BY_USER_ID = 'order-detail/user/my-orders';
 export const UPDATE_ORDER_DETAIL_STATUS_BY_ID = 'order-detail/update/status';
 export const UPDATE_PAYMENT_STATUS_BY_ID = 'order-detail/update/payment-status';
+export const GET_DISABLE_DATE_BY_CAR_ID = 'order-detail/disable-date/car';
 
 // ANALYTICS
 export const GET_ANALYTICS = 'analytics';

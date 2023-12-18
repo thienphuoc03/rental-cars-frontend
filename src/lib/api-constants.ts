@@ -5,11 +5,11 @@ export const AUTH_SIGNUP = 'auth/signup';
 // USERS
 export const GET_ALL_USERS = 'users';
 export const GET_USER_BY_USERNAME = 'users/username';
+export const GET_USER_BY_ID = 'users';
+export const UPDATE_USER = 'users';
 export const UPLOAD_AVATAR = 'users/avatar/upload';
 export const CREATE_USER = 'users';
 export const DELETE_USER = 'users';
-export const GET_USER_BY_ID = 'users';
-export const UPDATE_USER = 'users';
 
 // CARS
 export const GET_NEWEST_CARS = 'cars/newest/cars';
@@ -32,3 +32,6 @@ export const CREATE_ORDER = 'orders';
 export const GET_ORDER_DETAIL_BY_USER_ID = 'order-detail/user/my-orders';
 export const UPDATE_ORDER_DETAIL_STATUS_BY_ID = 'order-detail/update/status';
 export const UPDATE_PAYMENT_STATUS_BY_ID = 'order-detail/update/payment-status';
+
+// ANALYTICS
+export const GET_ANALYTICS = 'analytics';

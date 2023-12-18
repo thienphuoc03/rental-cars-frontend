@@ -118,6 +118,8 @@ export const translateEnglishToVietnamese = (value: string) => {
       return 'Ngày bắt đầu';
     case 'endDate':
       return 'Ngày kết thúc';
+    case 'role':
+      return 'Vai trò';
     default:
       return value;
   }

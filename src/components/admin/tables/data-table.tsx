@@ -14,6 +14,7 @@ import {
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table';
+import { usePathname, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 import { DataTablePagination } from '@/components/admin/tables/data-table-pagination';
@@ -47,6 +48,9 @@ export function DataTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
+
+  const router = useRouter();
+  const pathname = usePathname();
 
   const table = useReactTable({
     data,
@@ -120,13 +124,19 @@ export function DataTable<TData, TValue>({
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
+              table.getRowModel().rows.map((row: any) => (
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
                 >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                  {row.getVisibleCells().map((cell: any) => (
+                    <TableCell
+                      key={cell.id}
+                      onClick={() =>
+                        router.push(`${pathname}/${row?.original?.id}`)
+                      }
+                      className="cursor-pointer"
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),

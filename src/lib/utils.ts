@@ -120,6 +120,8 @@ export const translateEnglishToVietnamese = (value: string) => {
       return 'Ngày kết thúc';
     case 'role':
       return 'Vai trò';
+    case 'orderStatus':
+      return 'Trạng thái đơn hàng';
     default:
       return value;
   }

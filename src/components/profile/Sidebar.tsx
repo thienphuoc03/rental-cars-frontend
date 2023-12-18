@@ -96,7 +96,7 @@ const Sidebar = ({ className }: { className?: string }) => {
     <div className={cn('sticky top-0 z-30 p-2', className)}>
       <h2 className="text-2xl font-bold ">Xin chào {username}!</h2>
 
-      <div className="mt-6 flex h-full flex-col items-start justify-between">
+      <div className="mt-6 flex h-full w-full flex-col items-start justify-between">
         <div>
           {menu.map(({ icon, href, label }, index) => (
             <Link

@@ -171,9 +171,9 @@ const CarPage = ({ params }: { params: { slug: string } }) => {
   };
 
   return (
-    <div className="my-4">
+    <div className="mb-4">
       {/*stick menu*/}
-      <nav className="sticky top-2 z-30 mb-14 w-full rounded-lg border border-gray-200 bg-white shadow">
+      <nav className="sticky top-[84px] z-30 mb-14 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div className="flex items-center justify-start pl-8">
           {menuItems.map((item, index) => (
             <a

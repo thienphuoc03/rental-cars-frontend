@@ -55,7 +55,7 @@ export function DataTableRowActions<TData>({
             router.push(`${pathname}/${row?.original?.id}`);
           }}
         >
-          Chỉnh sửa
+          Cập nhật
           <DropdownMenuShortcut>
             <FileSignature className="h-4 w-4 text-warning" />
           </DropdownMenuShortcut>

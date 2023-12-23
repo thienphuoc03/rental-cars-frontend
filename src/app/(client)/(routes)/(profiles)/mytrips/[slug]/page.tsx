@@ -10,6 +10,7 @@ import {
   paymentStatus,
 } from '@/app/(client)/(routes)/(profiles)/mytrips/data';
 import { DataTable } from '@/components/admin/tables/data-table';
+import { Button } from '@/components/ui/button';
 import { GET_ORDER_BY_USER_ID } from '@/lib/api-constants';
 import { formatCurrency, formatDateToDMY } from '@/lib/utils';
 import { API } from '@/services';
@@ -23,7 +24,6 @@ const initVisibleColumns = [
   'totalAmount',
   'orderDetailStatus',
   'paymentStatus',
-  'actions',
 ];
 
 const OrderPage = () => {
@@ -55,10 +55,12 @@ const OrderPage = () => {
       <div className="mb-10">
         <header className="flex items-center justify-between">
           <h3 className="text-2xl font-bold">Thông tin đơn hàng</h3>
+
+          <Button>Tạo hợp đồng</Button>
         </header>
       </div>
 
-      <div>
+      <div className="w-full">
         <div className="flex w-full flex-col items-start justify-between gap-3">
           <div className="flex items-center justify-center gap-3">
             <h4 className="text-base font-semibold">Mã đơn hàng:</h4>

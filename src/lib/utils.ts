@@ -27,7 +27,7 @@ export const countDays = (
 ): number => {
   if (!from || !to) return 0;
 
-  return Math.ceil((to.getTime() - from.getTime()) / (1000 * 3600 * 24));
+  return Math.ceil((to.getTime() - from.getTime()) / (1000 * 3600 * 24)) + 1;
 };
 
 export const convertBase64 = (file: any) => {

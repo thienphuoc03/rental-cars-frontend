@@ -71,7 +71,7 @@ const OrderStatusCombobox = ({
           role="combobox"
           aria-expanded={open}
           className={cn(
-            'justify-between rounded-full px-2 py-1 text-white',
+            'flex min-w-[86px] justify-center rounded-full px-2 py-1 text-white',
             value.key === 'PENDING'
               ? 'bg-warning/60'
               : value.key === 'CONFIRMED'

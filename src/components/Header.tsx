@@ -31,7 +31,7 @@ const Header = () => {
   }, [dep]);
 
   return (
-    <header className="max-h-[80.438px] min-h-max w-full bg-primary">
+    <header className="sticky top-0 z-30 max-h-[80.438px] min-h-max w-full bg-primary">
       <div className="flex items-center justify-center py-4">
         <div className="flex w-full items-center justify-between px-32 lg:px-8">
           <Logo />

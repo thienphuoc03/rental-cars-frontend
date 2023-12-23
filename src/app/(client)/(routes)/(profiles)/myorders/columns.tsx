@@ -6,13 +6,11 @@ import {
   orderDetailStatus,
   paymentStatus,
 } from '@/app/(client)/(routes)/(profiles)/myorders/common/data';
-import OrderStatusCombobox from '@/app/(client)/(routes)/(profiles)/myorders/order-status-combobox';
-import PaymentStatusCombobox from '@/app/(client)/(routes)/(profiles)/myorders/payment-status-combobox';
 import { DeleteCarDialog } from '@/components/admin/cars/delete-car-dialog';
 import { DataTableColumnHeader } from '@/components/admin/tables/data-table-column-header';
 import { DataTableRowActions } from '@/components/admin/tables/data-table-row-action';
 import { Checkbox } from '@/components/ui/checkbox';
-import { formatDateToDMY, formatNumberToCurrency } from '@/lib/utils';
+import { cn, formatDateToDMY, formatNumberToCurrency } from '@/lib/utils';
 
 export const columns: ColumnDef<any>[] = [
   {
@@ -145,13 +143,25 @@ export const columns: ColumnDef<any>[] = [
       }
 
       return (
-        <div className="flex items-center">
-          <OrderStatusCombobox
-            status={orderDetailStatus}
-            statusInit={statusItem}
-            orderDetailId={Number(row.original.id)}
-            carId={Number(row.original.carId)}
-          />
+        <div className="flex items-center justify-center">
+          <span
+            className={cn(
+              'rounded-full px-2 py-1 text-center text-white',
+              statusItem.key === 'PENDING'
+                ? 'bg-warning/60'
+                : statusItem.key === 'CONFIRMED'
+                ? 'bg-success/50'
+                : statusItem.key === 'CANCELED'
+                ? 'bg-error/60'
+                : statusItem.key === 'COMPLETED'
+                ? 'bg-success/60'
+                : statusItem.key === 'RECEIVED'
+                ? 'bg-info/60'
+                : 'bg-warning/60',
+            )}
+          >
+            {statusItem.value}
+          </span>
         </div>
       );
     },
@@ -174,13 +184,23 @@ export const columns: ColumnDef<any>[] = [
       }
 
       return (
-        <div className="flex items-center">
-          <PaymentStatusCombobox
-            status={paymentStatus}
-            statusInit={statusItem}
-            orderDetailId={Number(row.original.id)}
-            carId={Number(row.original.carId)}
-          />
+        <div className="flex items-center justify-center">
+          <span
+            className={cn(
+              'rounded-full px-2 py-1 text-center text-white',
+              statusItem.key === 'PENDING'
+                ? 'bg-warning/60'
+                : statusItem.key === 'DEPOSIT'
+                ? 'bg-info/60'
+                : statusItem.key === 'REFUND'
+                ? 'bg-error/60'
+                : statusItem.key === 'PAID'
+                ? 'bg-success/60'
+                : 'bg-warning/60',
+            )}
+          >
+            {statusItem.value}
+          </span>
         </div>
       );
     },

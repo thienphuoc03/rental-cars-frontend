@@ -1,13 +1,14 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
+import { Eye } from 'lucide-react';
+import Link from 'next/link';
 
 import { paymentStatus } from '@/app/(client)/(routes)/(profiles)/myorders/common/data';
 import { orderStatus } from '@/app/(client)/(routes)/(profiles)/mytrips/data';
-import { DeleteCarDialog } from '@/components/admin/cars/delete-car-dialog';
 import { DataTableColumnHeader } from '@/components/admin/tables/data-table-column-header';
-import { DataTableRowActions } from '@/components/admin/tables/data-table-row-action';
 import { Checkbox } from '@/components/ui/checkbox';
+import TooltipCustom from '@/components/ui/tooltip-custom';
 import { cn, formatDateToDMY, formatNumberToCurrency } from '@/lib/utils';
 
 export const columns: ColumnDef<any>[] = [
@@ -163,10 +164,16 @@ export const columns: ColumnDef<any>[] = [
   {
     id: 'actions',
     cell: ({ row }) => (
-      <DataTableRowActions
-        row={row}
-        onDeleted={<DeleteCarDialog data={row.original} />}
-      />
+      <div className="flex items-center justify-between gap-2">
+        <Link
+          href={`/mytrips/${row.getValue('id')}`}
+          className="rounded-full p-1 text-primary hover:bg-gray-200"
+        >
+          <TooltipCustom content="Xem chi tiet">
+            <Eye className="h-4 w-4" />
+          </TooltipCustom>
+        </Link>
+      </div>
     ),
   },
 ];

@@ -28,12 +28,14 @@ export const GET_SESSION_BY_ID = 'stripe/session';
 // ORDERS
 export const CREATE_ORDER = 'orders';
 export const GET_ORDER_BY_USER_ID = 'orders';
+export const GET_ORDER_BY_ID = 'orders';
 export const GET_MY_ORDERS = 'orders/user/my-orders';
 export const UPDATE_ORDER_STATUS_BY_ID = 'orders/update/status';
 export const UPDATE_ORDER_PAYMENT_STATUS_BY_ID = 'orders/update/payment-status';
 
 // ORDER DETAILS
 export const GET_ORDER_DETAIL_BY_USER_ID = 'order-detail/user/my-orders';
+export const GET_ORDER_DETAIL_BY_ID = 'order-detail';
 export const UPDATE_ORDER_DETAIL_STATUS_BY_ID = 'order-detail/update/status';
 export const UPDATE_PAYMENT_STATUS_BY_ID = 'order-detail/update/payment-status';
 export const GET_DISABLE_DATE_BY_CAR_ID = 'order-detail/disable-date/car';

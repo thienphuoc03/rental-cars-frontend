@@ -35,7 +35,7 @@ const ProfileMenu: { icon: ReactElement; href: string; label: string }[] = [
   {
     icon: <Map size={24} />,
     href: '/mytrips',
-    label: 'Chuyến đi của tôi',
+    label: 'Lịch sử thuê xe',
   },
   {
     icon: <LockKeyhole size={24} />,
@@ -93,7 +93,7 @@ const Sidebar = ({ className }: { className?: string }) => {
   };
 
   return (
-    <div className={cn('sticky top-0 z-30 p-2', className)}>
+    <div className={cn('p-2', className)}>
       <h2 className="text-2xl font-bold ">Xin chào {username}!</h2>
 
       <div className="mt-6 flex h-full w-full flex-col items-start justify-between">
@@ -107,7 +107,7 @@ const Sidebar = ({ className }: { className?: string }) => {
               <div
                 className={cn(
                   'flex w-full items-center justify-start px-3',
-                  href === pathname
+                  href === '/' + pathname.split('/')[1]
                     ? 'border-l-4 border-solid border-primary'
                     : '',
                 )}
@@ -116,7 +116,7 @@ const Sidebar = ({ className }: { className?: string }) => {
                 <span
                   className={cn(
                     'ml-2 text-base',
-                    href === pathname ? 'font-bold' : '',
+                    href === '/' + pathname.split('/')[1] ? 'font-bold' : '',
                   )}
                 >
                   {label}

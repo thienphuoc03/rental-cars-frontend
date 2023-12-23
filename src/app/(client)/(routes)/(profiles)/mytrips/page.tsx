@@ -29,6 +29,7 @@ const Mytrips = () => {
     'orderStatus',
     'paymentStatus',
     'createdAt',
+    'actions',
   ];
 
   const getOrder = async () => {

@@ -43,6 +43,12 @@ const OrderDetailPage = () => {
     getOrderDetailById();
   }, [dep]);
 
+  console.log(
+    'orderDetail',
+    orderDetail?.orderDetailStatus !== 'CANCELLED' ||
+      orderDetail?.orderDetailStatus !== 'COMPLETED',
+  );
+
   return (
     <div className="w-full rounded-xl bg-white p-6">
       <div className="mb-10">
@@ -127,8 +133,9 @@ const OrderDetailPage = () => {
                 </span>
               </div>
             </div>
-            {(orderDetail?.orderDetailStatus !== 'CANCELLED' ||
-              orderDetail?.orderDetailStatus !== 'COMPLETED') && (
+            {(orderDetail?.orderDetailStatus === 'PENDING' ||
+              orderDetail?.orderDetailStatus === 'CONFIRMED' ||
+              orderDetail?.orderDetailStatus === 'RECEIVED') && (
               <div className="flex items-center justify-center gap-10">
                 <h4 className="text-base font-semibold">
                   Cập nhật trạng thái:

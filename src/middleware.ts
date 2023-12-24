@@ -7,6 +7,8 @@ const protectedRoutes = [
   '/myfavs',
   '/payment/success',
   '/payment/cancel',
+  '/myorders',
+  '/mytrips',
 ];
 
 export function middleware(request: NextRequest) {
@@ -57,7 +59,11 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   } else {
     // Redirect to signin for protected routes when the user is not logged in
-    if (protectedRoutes.includes(pathname) || pathname.startsWith('/admin')) {
+    if (
+      protectedRoutes.includes(pathname) ||
+      pathname.startsWith('/admin') ||
+      protectedRoutes.includes('/' + pathname.split('/')[1])
+    ) {
       return NextResponse.redirect(new URL('/signin', request.url));
     }
 

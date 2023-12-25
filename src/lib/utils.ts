@@ -126,3 +126,62 @@ export const translateEnglishToVietnamese = (value: string) => {
       return value;
   }
 };
+export const numberToText = (number: number) => {
+  const words = [
+    '',
+    'một',
+    'hai',
+    'ba',
+    'bốn',
+    'năm',
+    'sáu',
+    'bảy',
+    'tám',
+    'chín',
+  ];
+  const unitWords = ['', 'nghìn', 'triệu', 'tỷ'];
+
+  function convertGroupOfThree(num: number) {
+    const units = num % 10;
+    const tens = Math.floor((num % 100) / 10);
+    const hundreds = Math.floor(num / 100);
+
+    let result = '';
+
+    if (hundreds > 0) {
+      result += words[hundreds] + ' trăm ';
+    }
+
+    if (tens > 1) {
+      result += words[tens] + ' mươi ';
+    } else if (tens === 1) {
+      result += 'mười ';
+    }
+
+    if (units > 0) {
+      result += words[units] + ' ';
+    }
+
+    return result.trim();
+  }
+
+  // Convert the number to a string to handle leading zeros
+  const numString = String(number);
+
+  // Split the number into groups of three digits
+  const groups = [];
+  for (let i = numString.length; i > 0; i -= 3) {
+    groups.push(Number(numString.slice(Math.max(i - 3, 0), i)));
+  }
+
+  // Convert each group to text and combine with unit words
+  let result = '';
+  for (let i = 0; i < groups.length; i++) {
+    const groupText = convertGroupOfThree(groups[i]);
+    if (groupText !== '') {
+      result = groupText + ' ' + unitWords[i] + ' ' + result;
+    }
+  }
+
+  return result.trim();
+};

@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -21,6 +21,7 @@ const OrderDetailPage = () => {
   const [orderDetail, setOrderDetail] = useState<any>();
 
   const pathname = usePathname();
+  const router = useRouter();
   const dep = useAppSelector(selectDep);
 
   const getOrderDetailById = async () => {
@@ -43,19 +44,20 @@ const OrderDetailPage = () => {
     getOrderDetailById();
   }, [dep]);
 
-  console.log(
-    'orderDetail',
-    orderDetail?.orderDetailStatus !== 'CANCELLED' ||
-      orderDetail?.orderDetailStatus !== 'COMPLETED',
-  );
-
   return (
     <div className="w-full rounded-xl bg-white p-6">
       <div className="mb-10">
         <header className="flex items-center justify-between">
           <h3 className="text-2xl font-bold">Thông tin đơn hàng</h3>
 
-          <Button>Tạo hợp đồng</Button>
+          {orderDetail &&
+          (orderDetail.orderDetailStatus === 'CONFIRMED' ||
+            orderDetail.orderDetailStatus === 'RECEIVED' ||
+            orderDetail.orderDetailStatus === 'COMPLETED') ? (
+            <Button onClick={() => router.push(`${pathname}/hopdong`)}>
+              Tạo hợp đồng
+            </Button>
+          ) : null}
         </header>
       </div>
 
@@ -187,10 +189,6 @@ const OrderDetailPage = () => {
                 ) : null}
               </div>
             )}
-            <div className="flex items-center justify-center gap-3">
-              <h4 className="text-base font-semibold">Đặt cọc:</h4>
-              <span>{formatCurrency(orderDetail?.deposits)}</span>
-            </div>
             <div className="flex items-center justify-center gap-3">
               <h4 className="text-base font-semibold">Ghi chú:</h4>
               <span>{orderDetail?.note}</span>

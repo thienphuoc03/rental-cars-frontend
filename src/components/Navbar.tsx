@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -13,14 +13,28 @@ const menuItems: { title: string; href: string }[] = [
     title: 'Giới thiệu',
     href: '/about',
   },
-  {
-    title: 'Đăng ký chủ xe',
-    href: '/owner-registration',
-  },
 ];
 
 const Navbar = () => {
+  const [menu, setMenu] = useState<any>(menuItems);
   const pathName = usePathname();
+
+  const generateMenu = () => {
+    const userInfo: any = JSON.parse(localStorage.getItem('user') || '{}');
+    if (userInfo) {
+      if (userInfo.role && userInfo?.role === 'TRAVELER') {
+        setMenu([
+          ...menuItems,
+          {
+            title: 'Đăng ký chủ xe',
+            href: '/owner-registration',
+          },
+        ]);
+      }
+    }
+  };
+
+  useEffect(() => {}, []);
 
   return (
     <ul className="flex items-center justify-center gap-6 md:hidden">

@@ -71,8 +71,8 @@ const SearchPage = ({ searchParams }: { searchParams: any }) => {
   }, [page]);
 
   return (
-    <div className="mt-6">
-      <header className="sticky top-0 z-30 rounded-lg bg-white px-6 py-6 shadow-xl">
+    <div className="mt-2">
+      <header className="rounded-lg bg-white px-6 py-6 shadow-xl">
         <div className="text-center">
           <div className="my-4 flex w-full items-center justify-center">
             <Popover>

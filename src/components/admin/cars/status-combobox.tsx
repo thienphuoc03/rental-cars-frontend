@@ -1,6 +1,5 @@
 'use client';
 
-import { ChevronsUpDown } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import UpdateStatusAlertDialog from '@/components/admin/cars/update-status-alert-dialog';
@@ -40,7 +39,7 @@ const StatusCombobox = ({
           role="combobox"
           aria-expanded={open}
           className={cn(
-            'justify-between rounded-full px-4 py-1 text-white',
+            'justify-between rounded-full px-2 py-1 text-white',
             value.key === 'AVAILABLE'
               ? 'bg-success/60'
               : value.key === 'UNAVAILABLE'
@@ -54,7 +53,7 @@ const StatusCombobox = ({
             ? status.find((statusItem: any) => statusItem.key === value.key)
                 ?.value
             : ''}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          {/* <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" /> */}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">

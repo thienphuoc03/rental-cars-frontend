@@ -126,7 +126,7 @@ export function CreateUserForm({ slug }: { slug: string }) {
         // Update the values with the avatarUrl
         const res = await API.post(CREATE_USER, values);
 
-        if (res.status === 200) {
+        if (res.status === 201) {
           toast.success('Tạo người dùng thành công!');
           setIsLoading(false);
           router.push('/admin/users');

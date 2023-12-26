@@ -71,7 +71,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cloudinary/url-gen@npm:^1.13.0, @cloudinary/url-gen@npm:^1.7.0":
+"@cloudinary/transformation-builder-sdk@npm:^1.9.0":
+  version: 1.10.0
+  resolution: "@cloudinary/transformation-builder-sdk@npm:1.10.0"
+  dependencies:
+    "@cloudinary/url-gen": ^1.7.0
+  checksum: 9b45e611a31da3d1f5b6242cca27e1a29aa51f64a508ad68133515fef2be2af9c1d8a07975327cacfb3975dc6f112e67b3238ea4df740710d517afbcbe1fb1a3
+  languageName: node
+  linkType: hard
+
+"@cloudinary/url-gen@npm:^1.14.0":
+  version: 1.14.0
+  resolution: "@cloudinary/url-gen@npm:1.14.0"
+  dependencies:
+    "@cloudinary/transformation-builder-sdk": ^1.9.0
+  checksum: 057b7a5d9ea72c129fbb912d4db16a8caa5c54d732d62471d8c8b1b1afd2c455a5e61a547b40502b62dbed8ab8b3617713dbffdee20846d6bb76dce3f40fdfc6
+  languageName: node
+  linkType: hard
+
+"@cloudinary/url-gen@npm:^1.7.0":
   version: 1.13.0
   resolution: "@cloudinary/url-gen@npm:1.13.0"
   dependencies:
@@ -272,15 +290,6 @@ __metadata:
   dependencies:
     glob: 7.1.7
   checksum: 58b5ef15d8298c112c72bbbc34a7a5f63637b5a02af7937d86f26223d370c6bd7c8de0eab737851a17dff52c620068a72179eb72b565add071841b720110490f
-  languageName: node
-  linkType: hard
-
-"@next/font@npm:^14.0.4":
-  version: 14.0.4
-  resolution: "@next/font@npm:14.0.4"
-  peerDependencies:
-    next: "*"
-  checksum: df1d12993754809ed0f1158e9a99f3d22df36c83761b2dff3d974aa9b050b4a7825d67eac55c92089b7aa30c7bc34b1761b17dbb6e78a5860e83062d1497a58e
   languageName: node
   linkType: hard
 
@@ -5705,10 +5714,9 @@ __metadata:
   resolution: "rental-cars-frontend@workspace:."
   dependencies:
     "@cloudinary/react": ^1.11.2
-    "@cloudinary/url-gen": ^1.13.0
+    "@cloudinary/url-gen": ^1.14.0
     "@hookform/resolvers": ^3.3.2
     "@next/eslint-plugin-next": ^13.5.6
-    "@next/font": ^14.0.4
     "@radix-ui/react-alert-dialog": ^1.0.5
     "@radix-ui/react-avatar": ^1.0.4
     "@radix-ui/react-checkbox": ^1.0.4

@@ -20,6 +20,8 @@ export const GET_ALL_MY_CAR = 'cars/user/my-cars';
 export const UPDATE_CAR_STATUS = 'cars/status';
 export const DELETE_CAR = 'cars';
 export const GET_CAR_BY_ID = 'cars';
+export const CREATE_CAR = 'cars';
+export const UPDATE_CAR = 'cars';
 
 // STRIPE
 export const CHECKOUT = 'stripe/checkout';
@@ -42,3 +44,12 @@ export const GET_DISABLE_DATE_BY_CAR_ID = 'order-detail/disable-date/car';
 
 // ANALYTICS
 export const GET_ANALYTICS = 'analytics';
+
+// BRANDS
+export const GET_BRANDS_AND_MODELS = 'car-brands/and/models';
+
+// MODELS
+export const GET_ALL_MODELS = 'car-brands';
+
+// FEATURES
+export const GET_ALL_FEATURES = 'features';

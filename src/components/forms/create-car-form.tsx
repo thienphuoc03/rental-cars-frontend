@@ -185,7 +185,6 @@ export function CreateCarForm({ slug }: { slug: string }) {
       const imagesArr: any[] = [];
 
       const uploadPromises = files.map(async (file: any) => {
-        console.log('file', file);
         const formData = new FormData();
         formData.append('file', file);
         formData.append('cloud_name', cloudName as string);
@@ -204,8 +203,6 @@ export function CreateCarForm({ slug }: { slug: string }) {
             toast.error('Upload ảnh thất bại');
             throw new Error('Upload ảnh thất bại');
           }
-
-          console.log({ response });
 
           return response.data.public_id;
         } catch (error: any) {
@@ -306,8 +303,6 @@ export function CreateCarForm({ slug }: { slug: string }) {
     try {
       const imgArr = await uploadImagesToCloud(selectedImage);
 
-      console.log({ imgArr });
-
       if (slug === 'new') {
         values.images = imgArr;
 
@@ -315,8 +310,6 @@ export function CreateCarForm({ slug }: { slug: string }) {
           ...values,
           pricePerDay: Number(values.pricePerDay),
         });
-
-        console.log({ res });
 
         if (res.status === 201) {
           toast.success('Thêm xe thành công!');

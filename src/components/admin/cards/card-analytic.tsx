@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 
 interface CardAnalyticProps {
   title: string;
-  total: number;
+  total: any;
   icon?: React.ReactNode;
   percentage: number;
   className?: string;

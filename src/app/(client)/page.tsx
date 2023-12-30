@@ -31,7 +31,7 @@ const HomePage = () => {
   return (
     <div className="mt-6">
       {/* Banner */}
-      <div className="relative flex h-auto max-h-[600px] w-auto items-center justify-center overflow-hidden rounded-xl bg-primary/10 bg-transparent">
+      <div className="relative flex h-auto max-h-[600px] w-auto items-center justify-center overflow-hidden rounded-xl bg-primary/10">
         <Image
           src={bannerImg}
           width={1280}

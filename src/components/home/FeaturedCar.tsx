@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from 'react';
 
 import { GET_NEWEST_CARS } from '@/lib/api-constants';
+import { API } from '@/services';
 
-import { API } from '../../services';
 import CarCard from '../CarCard';
 
 const FeaturedCar = () => {

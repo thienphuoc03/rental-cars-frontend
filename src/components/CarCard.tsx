@@ -4,13 +4,14 @@ import Link from 'next/link';
 import React from 'react';
 
 import { formatNumberToCurrency } from '@/lib/utils';
-import { TransmissionEnum } from '@/types/enums';
+import { FuelEnum, TransmissionEnum } from '@/types/enums';
 
 interface CarCardProps {
   slug: string;
   thumbnail: string;
   name: string;
   transmission: keyof typeof TransmissionEnum;
+  fuel: keyof typeof FuelEnum;
   address: string;
   pricePerDay: number;
   trips: number;
@@ -21,7 +22,7 @@ const CarCard = ({
   slug,
   thumbnail,
   name,
-  transmission,
+  fuel,
   address,
   pricePerDay,
   trips,
@@ -30,7 +31,7 @@ const CarCard = ({
   return (
     <Link
       href={`car/${slug}`}
-      className="flex min-h-[356px] min-w-[180px] flex-col items-stretch justify-center gap-6 overflow-hidden rounded-lg border border-gray-100 bg-white p-4 text-black shadow-xl hover:scale-105 dark:bg-black dark:text-white xl:min-h-[398px]"
+      className="flex min-h-[356px] min-w-[180px] flex-col items-stretch justify-center gap-6 overflow-hidden rounded-lg border border-gray-100 bg-white p-4 text-black shadow-xl hover:scale-105 xl:min-h-[398px] dark:bg-black dark:text-white"
     >
       <div className="overflow-hidden rounded-lg">
         <Image src={thumbnail} alt="car" width={272} height={204} />
@@ -40,7 +41,7 @@ const CarCard = ({
         {/* feature car */}
         <div className="mb-2 flex items-center justify-start">
           <span className="rounded-full bg-primary/10 px-2 py-1 text-xs text-[#262626] dark:bg-primary dark:text-white">
-            {TransmissionEnum[transmission]}
+            {FuelEnum[fuel]}
           </span>
         </div>
 

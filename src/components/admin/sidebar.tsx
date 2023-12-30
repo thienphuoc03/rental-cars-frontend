@@ -5,7 +5,6 @@ import {
   Car,
   LayoutDashboard,
   LogOut,
-  Settings,
   Users,
 } from 'lucide-react';
 import Link from 'next/link';
@@ -38,11 +37,6 @@ const menuAdmin = [
     icon: <BaggageClaim className="h-4 w-4" />,
     title: 'Đơn hàng',
     href: '/admin/orders',
-  },
-  {
-    icon: <Settings className="h-4 w-4" />,
-    title: 'Cài đặt',
-    href: '/admin/settings',
   },
 ];
 
@@ -108,7 +102,7 @@ export function Sidebar({ className }: { className?: string }) {
             <div className="w-full">
               <Button
                 variant="outline"
-                className="w-full justify-start bg-slate-50 dark:bg-black lg:w-auto"
+                className="w-full justify-start bg-slate-50 lg:w-auto dark:bg-black"
                 onClick={handleLogout}
               >
                 <LogOut className="h-4 w-4 rotate-180 text-black dark:text-white" />

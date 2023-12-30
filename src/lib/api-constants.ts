@@ -22,12 +22,14 @@ export const DELETE_CAR = 'cars';
 export const GET_CAR_BY_ID = 'cars';
 export const CREATE_CAR = 'cars';
 export const UPDATE_CAR = 'cars';
+export const GET_ALL_CAR_IS_RENTING = 'cars/status/renting';
 
 // STRIPE
 export const CHECKOUT = 'stripe/checkout';
 export const GET_SESSION_BY_ID = 'stripe/session';
 
 // ORDERS
+export const GET_ALL_ORDERS = 'orders';
 export const CREATE_ORDER = 'orders';
 export const GET_ORDER_BY_USER_ID = 'orders';
 export const GET_ORDER_BY_ID = 'orders';

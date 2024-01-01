@@ -1,3 +1,5 @@
+'use client';
+
 import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
 
 const data = [
@@ -56,8 +58,8 @@ const renderCustomizedLabel = ({
 const UserStatistics = () => {
   return (
     <>
-      <ResponsiveContainer width="100%" height="100%">
-        <PieChart height={250}>
+      <ResponsiveContainer width="100%" height={250}>
+        <PieChart>
           <Pie
             data={data}
             dataKey="value"

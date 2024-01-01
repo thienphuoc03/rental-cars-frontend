@@ -1,21 +1,40 @@
 'use client';
 
-import { CarFront, CircleDollarSign, ShoppingCart, Users } from 'lucide-react';
+import { format } from 'date-fns';
+import {
+  CalendarIcon,
+  CarFront,
+  CircleDollarSign,
+  ShoppingCart,
+  Users,
+} from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
+import RevenueStatistics from '@/app/(admin)/admin/(routes)/dashboard/revenue-statistics';
 import CardAnalytic from '@/components/admin/cards/card-analytic';
 import { columns } from '@/components/admin/cars/columns';
 import UserStatistics from '@/components/admin/dashboard/user-statistics';
 import { DataTable } from '@/components/admin/tables/data-table';
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 import { GET_ALL_CAR_IS_RENTING, GET_ANALYTICS } from '@/lib/api-constants';
-import { formatCurrency } from '@/lib/utils';
+import { cn, formatCurrency } from '@/lib/utils';
 import { API } from '@/services';
 
 const DashboardPage = () => {
   const [analytics, setAnalytics] = useState<any>();
   const [carIsRenting, setCarIsRenting] = useState<any>();
+  const [fromDay, setFromDay] = useState<Date | undefined>(
+    new Date(new Date().getFullYear(), 0, 1),
+  );
+  const [toDay, setToDay] = useState<Date | undefined>(new Date());
 
   const getUserAnalytics = async () => {
     try {
@@ -51,11 +70,6 @@ const DashboardPage = () => {
     getAllCarIsRenting();
   }, []);
 
-  const doanhthu = {
-    totalAmount: 60000000,
-    amountPercentageChange: 10,
-  };
-
   return (
     <div className="w-full bg-white dark:bg-black">
       <div className="mb-10 grid grid-cols-4 gap-4">
@@ -80,17 +94,83 @@ const DashboardPage = () => {
         <CardAnalytic
           title="Doanh thu"
           icon={<CircleDollarSign className="h-4 w-4 text-gray-500" />}
-          total={formatCurrency(doanhthu.totalAmount)}
-          percentage={doanhthu.amountPercentageChange}
+          total={formatCurrency(analytics?.revenue?.totalRevenue)}
+          percentage={analytics?.revenue?.revenuePercentageChange}
         />
       </div>
 
       <div className="grid grid-cols-7 gap-4">
         <Card className="col-span-5">
-          <CardHeader>
-            <CardTitle>Doanh thu</CardTitle>
+          <CardHeader className="flex flex-row items-center justify-between">
+            <CardTitle className="inline">Doanh thu</CardTitle>
+            <div className="inline">
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    id="date"
+                    variant={'outline'}
+                    className={cn(
+                      'justify-start text-left font-normal',
+                      !fromDay && 'text-muted-foreground',
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {fromDay ? (
+                      <>{format(fromDay, 'dd/MM/yyyy')}</>
+                    ) : (
+                      format(
+                        new Date(new Date().getFullYear(), 0, 1),
+                        'dd/MM/yyyy',
+                      )
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="end">
+                  <Calendar
+                    initialFocus
+                    mode="single"
+                    defaultMonth={fromDay}
+                    selected={fromDay}
+                    onSelect={setFromDay}
+                    numberOfMonths={1}
+                  />
+                </PopoverContent>
+              </Popover>
+              {' - '}
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    id="date"
+                    variant={'outline'}
+                    className={cn(
+                      'justify-start text-left font-normal',
+                      !toDay && 'text-muted-foreground',
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {toDay ? (
+                      <>{format(toDay, 'dd/MM/yyyy')}</>
+                    ) : (
+                      format(new Date(new Date()), 'dd/MM/yyyy')
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="end">
+                  <Calendar
+                    initialFocus
+                    mode="single"
+                    defaultMonth={toDay}
+                    selected={toDay}
+                    onSelect={setToDay}
+                    numberOfMonths={1}
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
           </CardHeader>
-          <CardContent className="pl-2">{/* <Overview /> */}</CardContent>
+          <CardContent className="pl-2">
+            <RevenueStatistics fromDay={fromDay} toDay={toDay} />
+          </CardContent>
         </Card>
         <Card className="col-span-2">
           <CardHeader>
@@ -99,7 +179,6 @@ const DashboardPage = () => {
               <UserStatistics />
             </CardContent>
           </CardHeader>
-          <CardContent>{/* <RecentSales /> */}</CardContent>
         </Card>
       </div>
 

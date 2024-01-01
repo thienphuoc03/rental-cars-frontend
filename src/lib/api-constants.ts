@@ -46,6 +46,7 @@ export const GET_DISABLE_DATE_BY_CAR_ID = 'order-detail/disable-date/car';
 
 // ANALYTICS
 export const GET_ANALYTICS = 'analytics';
+export const GET_REVENUE_ANALYTICS = 'analytics/revenue';
 
 // BRANDS
 export const GET_BRANDS_AND_MODELS = 'car-brands/and/models';

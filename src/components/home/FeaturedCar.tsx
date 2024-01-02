@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 import { GET_NEWEST_CARS } from '@/lib/api-constants';
 import { API } from '@/services';
@@ -17,8 +18,8 @@ const FeaturedCar = () => {
       const response = await API.get(GET_NEWEST_CARS);
       setNewestCar(response.data);
       setIsLoading(false);
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error.message);
     } finally {
       setIsLoading(false);
     }

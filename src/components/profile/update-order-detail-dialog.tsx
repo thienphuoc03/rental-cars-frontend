@@ -27,6 +27,7 @@ interface UpdateOrderDetailDialogProps {
   orderDetailStatus: string;
   carId: number;
   className?: string;
+  totalAmount?: number;
 }
 
 const UpdateOrderDetailDialog = ({
@@ -35,6 +36,7 @@ const UpdateOrderDetailDialog = ({
   orderDetailStatus,
   carId,
   className,
+  totalAmount,
 }: UpdateOrderDetailDialogProps) => {
   const [open, setOpen] = useState<boolean>(false);
   const [note, setNote] = useState<string | undefined>(undefined);
@@ -54,6 +56,16 @@ const UpdateOrderDetailDialog = ({
           ...body,
           note,
           paymentStatus: 'REFUND',
+        };
+      }
+
+      if (orderDetailStatus === 'CONFIRMED' && totalAmount) {
+        const serviceFee = totalAmount * 0.5;
+
+        body = {
+          ...body,
+          paymentStatus: 'PAID',
+          serviceFee,
         };
       }
 

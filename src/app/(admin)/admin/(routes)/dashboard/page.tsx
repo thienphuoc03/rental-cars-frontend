@@ -133,6 +133,7 @@ const DashboardPage = () => {
                     selected={fromDay}
                     onSelect={setFromDay}
                     numberOfMonths={1}
+                    toDate={new Date(Date.now())}
                   />
                 </PopoverContent>
               </Popover>
@@ -163,6 +164,7 @@ const DashboardPage = () => {
                     selected={toDay}
                     onSelect={setToDay}
                     numberOfMonths={1}
+                    toDate={new Date(Date.now())}
                   />
                 </PopoverContent>
               </Popover>

@@ -1,3 +1,5 @@
+import { ArrowDown, ArrowUp } from 'lucide-react';
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 
@@ -24,8 +26,13 @@ const CardAnalytic = ({
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-bold">{total}</div>
-        <p className="text-xs text-muted-foreground">
-          +{percentage}% so với tháng trước
+        <p className="flex items-center justify-start gap-1 text-xs text-muted-foreground">
+          {percentage > 0 ? (
+            <ArrowUp className="inline size-3 text-success" strokeWidth={3} />
+          ) : (
+            <ArrowDown className="inline size-3 text-error" strokeWidth={3} />
+          )}
+          {Math.abs(percentage)}% so với tháng trước
         </p>
       </CardContent>
     </Card>

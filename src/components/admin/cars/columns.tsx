@@ -186,7 +186,7 @@ export const columns: ColumnDef<CarType>[] = [
       }
 
       return (
-        <div className="flex items-center">
+        <div className="flex items-center justify-center">
           <StatusCombobox
             status={status}
             statusInit={statusItem}

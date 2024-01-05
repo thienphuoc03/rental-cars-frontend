@@ -21,6 +21,19 @@ export default function CarsPage() {
 
   const filterCars = [{ status }, { fuel }];
 
+  const initVisibleColumns = [
+    'id',
+    'name',
+    'licensePlate',
+    'seats',
+    'fuel',
+    'pricePerDay',
+    'brand',
+    'createdAt',
+    'status',
+    'actions',
+  ];
+
   const getCars = async () => {
     setIsLoading(true);
     try {
@@ -65,6 +78,7 @@ export default function CarsPage() {
             data={cars}
             search="name"
             filters={filterCars}
+            initVisibleColumns={initVisibleColumns}
           />
         ) : (
           <TableSkeleton />

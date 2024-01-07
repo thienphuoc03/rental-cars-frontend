@@ -7,8 +7,6 @@
     "plugin:@typescript-eslint/recommended"
   ],
   "plugins": [
-    "import",
-    "unused-imports"
   ],
   "rules": {
     "react/no-unescaped-entities": "off",
@@ -16,26 +14,6 @@
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/ban-ts-ignore": "off",
     // sorting and group imports
-    "import/order": [
-      "error",
-      {
-        "groups": [
-          "builtin",
-          "external",
-          "internal",
-          [
-            "parent",
-            "sibling"
-          ],
-          "index"
-        ],
-        "newlines-between": "always",
-        "alphabetize": {
-          "order": "asc",
-          "caseInsensitive": true
-        }
-      }
-    ],
     "no-multiple-empty-lines": [
       "error",
       {

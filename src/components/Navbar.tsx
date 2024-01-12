@@ -16,7 +16,7 @@ const menuItems: { title: string; href: string }[] = [
 ];
 
 const Navbar = () => {
-  const [menu, setMenu] = useState<any>(menuItems);
+  const [menu, setMenu] = useState<any[]>(menuItems);
   const pathName = usePathname();
 
   const generateMenu = () => {
@@ -27,18 +27,20 @@ const Navbar = () => {
           ...menuItems,
           {
             title: 'Đăng ký chủ xe',
-            href: '/owner-registration',
+            href: '#explorer',
           },
         ]);
       }
     }
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    generateMenu();
+  }, []);
 
   return (
     <ul className="flex items-center justify-center gap-6 md:hidden">
-      {menuItems.map(({ title, href }, index) => (
+      {menu.map(({ title, href }, index) => (
         <li
           key={index}
           className={cn(

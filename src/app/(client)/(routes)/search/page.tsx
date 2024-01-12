@@ -72,7 +72,7 @@ const SearchPage = ({ searchParams }: { searchParams: any }) => {
 
   return (
     <div className="mt-2">
-      <header className="rounded-lg bg-white px-6 py-6 shadow-xl">
+      <header className="rounded-lg bg-white px-6 py-6 shadow-xl dark:bg-black">
         <div className="text-center">
           <div className="my-4 flex w-full items-center justify-center">
             <Popover>
@@ -81,13 +81,12 @@ const SearchPage = ({ searchParams }: { searchParams: any }) => {
                   id="date"
                   variant={'outline'}
                   className={cn(
-                    'flex items-center justify-center border-none text-left font-normal hover:bg-transparent' +
-                      ' border border-gray-300 focus:ring-transparent focus:ring-offset-0 active:scale-100',
+                    'flex items-center justify-center border-none text-left font-normal hover:bg-transparent dark:text-white border border-gray-300 focus:ring-transparent focus:ring-offset-0 active:scale-100',
                     !date && 'text-muted-foreground',
                   )}
                 >
-                  <span className="text-xl font-normal text-black">
-                    <span className="flex items-center justify-start text-base font-normal text-gray-500">
+                  <span className="text-xl font-normal text-black dark:text-white">
+                    <span className="flex items-center justify-start text-base font-normal text-gray-500 dark:text-white">
                       <CalendarIcon className="mr-2 h-4 w-4" />
                       Bắt đầu
                     </span>
@@ -100,8 +99,8 @@ const SearchPage = ({ searchParams }: { searchParams: any }) => {
 
                   <hr className="mx-10 my-4 h-3/5 w-[1px] bg-gray-200" />
 
-                  <span className="text-xl font-normal text-black">
-                    <span className="flex items-center justify-start text-base font-normal text-gray-500">
+                  <span className="text-xl font-normal text-black dark:text-white">
+                    <span className="flex items-center justify-start text-base font-normal text-gray-500 dark:text-white">
                       <CalendarIcon className="mr-2 h-4 w-4" />
                       kết thúc
                     </span>
@@ -118,7 +117,6 @@ const SearchPage = ({ searchParams }: { searchParams: any }) => {
                   <Calendar
                     initialFocus
                     mode="range"
-                    max={30}
                     defaultMonth={date?.from}
                     selected={date}
                     onSelect={setDate}
@@ -144,7 +142,7 @@ const SearchPage = ({ searchParams }: { searchParams: any }) => {
         </div>
 
         <div className="">
-          <FilterDialog />
+          {/* <FilterDialog /> */}
         </div>
       </header>
 
@@ -181,8 +179,8 @@ const SearchPage = ({ searchParams }: { searchParams: any }) => {
           }
           renderOnZeroPageCount={null}
           containerClassName="flex items-center justify-center gap-2"
-          pageClassName="rounded-full w-10 h-10 flex items-center justify-center hover:bg-slate-200/60 cursor-pointer"
-          activeClassName="bg-slate-200"
+          pageClassName="rounded-full w-10 h-10 flex items-center justify-center hover:bg-slate-200/60 cursor-pointer dark:bg-slate-200"
+          activeClassName="bg-slate-200 dark:bg-slate-800"
         />
       </div>
     </div>

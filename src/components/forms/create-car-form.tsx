@@ -1,37 +1,5 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
-import {
-  AirVent,
-  Baby,
-  Bluetooth,
-  BoomBox,
-  CarTaxiFront,
-  Check,
-  ChevronsUpDown,
-  CloudSun,
-  GalleryVerticalEnd,
-  GanttChart,
-  Gauge,
-  Key,
-  LifeBuoy,
-  LocateFixed,
-  Map,
-  Shell,
-  ShieldCheck,
-  ShieldMinus,
-  Usb,
-  Video,
-  View,
-} from 'lucide-react';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import { z } from 'zod';
-
 import { fuelOptions, transmissionOptions } from '@/components/type/types';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -69,6 +37,37 @@ import {
 import { cn } from '@/lib/utils';
 import { createCarSchema } from '@/schemas';
 import { API } from '@/services';
+import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
+import {
+  AirVent,
+  Baby,
+  Bluetooth,
+  BoomBox,
+  CarTaxiFront,
+  Check,
+  ChevronsUpDown,
+  CloudSun,
+  GalleryVerticalEnd,
+  GanttChart,
+  Gauge,
+  Key,
+  LifeBuoy,
+  LocateFixed,
+  Map,
+  Shell,
+  ShieldCheck,
+  ShieldMinus,
+  Usb,
+  Video,
+  View,
+} from 'lucide-react';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { z } from 'zod';
 
 export const featureOptions = [
   {
@@ -170,12 +169,26 @@ export function CreateCarForm({ slug }: { slug: string }) {
   const [carImages, setCarImages] = useState<any[]>([]);
   const [brandData, setBrandData] = useState<any>([]);
   const [features, setFeatures] = useState<any>([]);
+  const [province, setProvince] = useState<any>({});
 
   const router = useRouter();
 
   const form = useForm<z.infer<typeof createCarSchema>>({
     resolver: zodResolver(createCarSchema),
   });
+
+  const getProvince = async () => {
+    try {
+      const { data } = await axios.get(
+        'https://provinces.open-api.vn/api/p/48?depth=3',
+      );
+
+      setProvince(data);
+      form.setValue('province_name', data.name);
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
 
   const uploadImagesToCloud = async (files: any) => {
     try {
@@ -302,12 +315,14 @@ export function CreateCarForm({ slug }: { slug: string }) {
     setIsLoading(true);
     try {
       const imgArr = await uploadImagesToCloud(selectedImage);
+      const address = `${values.ward_name}, ${values.district_name}, ${values.province_name}`;
 
       if (slug === 'new') {
         values.images = imgArr;
 
         const res = await API.post(CREATE_CAR, {
           ...values,
+          address,
           pricePerDay: Number(values.pricePerDay),
         });
 
@@ -344,6 +359,7 @@ export function CreateCarForm({ slug }: { slug: string }) {
   useEffect(() => {
     getAllBrand();
     getFeatures();
+    getProvince();
 
     if (slug === 'new') {
       form.reset({
@@ -422,7 +438,7 @@ export function CreateCarForm({ slug }: { slug: string }) {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} disabled={slug !== 'new'} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -452,6 +468,7 @@ export function CreateCarForm({ slug }: { slug: string }) {
                             'w-[300px] justify-between',
                             !field.value && 'text-muted-foreground',
                           )}
+                          disabled={slug !== 'new'}
                         >
                           {field.value
                             ? brandData.find(
@@ -515,6 +532,7 @@ export function CreateCarForm({ slug }: { slug: string }) {
                             'w-[300px] justify-between',
                             !field.value && 'text-muted-foreground',
                           )}
+                          disabled={slug !== 'new'}
                         >
                           {form.watch('brandId')
                             ? field.value
@@ -592,6 +610,7 @@ export function CreateCarForm({ slug }: { slug: string }) {
                             'w-[300px] justify-between',
                             !field.value && 'text-muted-foreground',
                           )}
+                          disabled={slug !== 'new'}
                         >
                           {field.value}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -651,6 +670,7 @@ export function CreateCarForm({ slug }: { slug: string }) {
                             'w-[300px] justify-between',
                             !field.value && 'text-muted-foreground',
                           )}
+                          disabled={slug !== 'new'}
                         >
                           {field.value}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -713,6 +733,7 @@ export function CreateCarForm({ slug }: { slug: string }) {
                             'w-[300px] justify-between',
                             !field.value && 'text-muted-foreground',
                           )}
+                          disabled={slug !== 'new'}
                         >
                           {field.value
                             ? transmissionOptions.find(
@@ -774,6 +795,7 @@ export function CreateCarForm({ slug }: { slug: string }) {
                             'w-[300px] justify-between',
                             !field.value && 'text-muted-foreground',
                           )}
+                          disabled={slug !== 'new'}
                         >
                           {field.value
                             ? fuelOptions.find(
@@ -851,7 +873,6 @@ export function CreateCarForm({ slug }: { slug: string }) {
                     <FormLabel className="text-xl font-bold">
                       Tính năng
                     </FormLabel>
-                    <FormDescription></FormDescription>
                   </div>
                   <div className="grid w-full grid-cols-3 gap-3 lg:grid-cols-2">
                     {features.map((item: any) => (
@@ -909,6 +930,192 @@ export function CreateCarForm({ slug }: { slug: string }) {
                   </div>
 
                   <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+        </div>
+
+        {/* Tinh thanh */}
+        <div className="flex flex-col items-start justify-between gap-4">
+          <h2 className="text-xl font-bold">Địa chỉ xe</h2>
+
+          <div className="flex w-full items-center justify-between gap-6">
+            <FormField
+              control={form.control}
+              name="province_name"
+              render={({ field }) => (
+                <FormItem className="flex w-full flex-col">
+                  <FormLabel>Tỉnh thành</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            'w-full justify-between',
+                            !field.value && 'text-muted-foreground',
+                          )}
+                          disabled={true}
+                        >
+                          {Object.keys(province).length !== 0
+                            ? province.name
+                            : 'Tỉnh thành'}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                  </Popover>
+                  <div className="h-4">
+                    <FormMessage className="text-xs" />
+                  </div>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="district_name"
+              render={({ field }) => (
+                <FormItem className="flex w-full flex-col">
+                  <FormLabel>Quận/Huyện</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            'w-full justify-between',
+                            !field.value && 'text-muted-foreground',
+                          )}
+                        >
+                          {field.value
+                            ? province.districts.find(
+                                (district: any) =>
+                                  district.name === field.value,
+                              ).name
+                            : 'Chọn quận/huyện'}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="p-0">
+                      <Command>
+                        <CommandInput placeholder="Tìm..." />
+                        <ScrollArea className="max-h-72 rounded-md">
+                          <CommandEmpty>Không tìm thấy</CommandEmpty>
+                          <CommandGroup>
+                            {province.districts &&
+                              province.districts.map((district: any) => (
+                                <CommandItem
+                                  value={district.name}
+                                  key={district.code}
+                                  onSelect={() => {
+                                    form.setValue(
+                                      'district_name',
+                                      district.name,
+                                    );
+                                  }}
+                                >
+                                  <Check
+                                    className={cn(
+                                      'mr-2 h-4 w-4',
+                                      district.name === field.value
+                                        ? 'opacity-100'
+                                        : 'opacity-0',
+                                    )}
+                                  />
+                                  {district.name}
+                                </CommandItem>
+                              ))}
+                          </CommandGroup>
+                        </ScrollArea>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                  <div className="h-4">
+                    <FormMessage className="text-xs" />
+                  </div>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="ward_name"
+              render={({ field }) => (
+                <FormItem className="flex w-full flex-col">
+                  <FormLabel>Phường/Xã</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            'w-full justify-between',
+                            !field.value && 'text-muted-foreground',
+                          )}
+                        >
+                          {form.watch('district_name')
+                            ? field.value
+                              ? province.districts
+                                  .find(
+                                    (district: any) =>
+                                      district.name ===
+                                      form.getValues('district_name'),
+                                  )
+                                  .wards.find(
+                                    (ward: any) => ward.name === field.value,
+                                  )?.name
+                              : 'Chọn phường/xã'
+                            : 'Chọn quận/huyện trước'}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="p-0">
+                      <Command>
+                        <CommandInput placeholder="Tìm..." />
+                        <ScrollArea className="max-h-72 rounded-md">
+                          <CommandEmpty>Không tìm thấy</CommandEmpty>
+                          <CommandGroup>
+                            {form.getValues('district_name') &&
+                              province.districts
+                                .find(
+                                  (district: any) =>
+                                    district.name ===
+                                    form.getValues('district_name'),
+                                )
+                                .wards.map((ward: any) => (
+                                  <CommandItem
+                                    value={ward.name}
+                                    key={ward.code}
+                                    onSelect={() => {
+                                      form.setValue('ward_name', ward.name);
+                                    }}
+                                  >
+                                    <Check
+                                      className={cn(
+                                        'mr-2 h-4 w-4',
+                                        ward.name === field.value
+                                          ? 'opacity-100'
+                                          : 'opacity-0',
+                                      )}
+                                    />
+                                    {ward.name}
+                                  </CommandItem>
+                                ))}
+                          </CommandGroup>
+                        </ScrollArea>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                  <div className="h-4">
+                    <FormMessage className="text-xs" />
+                  </div>
                 </FormItem>
               )}
             />

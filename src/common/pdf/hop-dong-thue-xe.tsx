@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { GET_ORDER_DETAIL_BY_ID } from '@/lib/api-constants';
 import { formatCurrency, formatDateToDMY, numberToText } from '@/lib/utils';
 import { API } from '@/services';
+import { ColorEnum } from '@/types/enums';
 
 const HopDongThueXe = () => {
   const pdfRef = useRef<any>();
@@ -248,7 +249,7 @@ const HopDongThueXe = () => {
                 <span className="flex justify-between gap-2">
                   <p>Biển số: &ensp;{orderDetail?.car?.licensePlates}</p>
                   <p>Số chỗ ngồi: &ensp;{orderDetail?.car?.seats}</p>
-                  <p>Màu sơn: &ensp; {orderDetail?.car?.color}</p>
+                  <p>Màu sơn: &ensp; {ColorEnum[orderDetail?.car?.color]}</p>
                 </span>
                 <span className="block">
                   Số máy: .................................. Số khung:

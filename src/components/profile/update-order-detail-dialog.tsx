@@ -1,9 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { toast } from 'sonner';
-
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -20,6 +16,9 @@ import { UPDATE_ORDER_DETAIL_STATUS_BY_ID } from '@/lib/api-constants';
 import { cn } from '@/lib/utils';
 import { API } from '@/services';
 import { setDependence } from '@/stores/reducers/depReducer';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { toast } from 'sonner';
 
 interface UpdateOrderDetailDialogProps {
   title: string;
@@ -66,6 +65,20 @@ const UpdateOrderDetailDialog = ({
           ...body,
           paymentStatus: 'PAID',
           serviceFee,
+        };
+      }
+
+      if (orderDetailStatus === 'RECEIVED') {
+        body = {
+          ...body,
+          carStatus: 'RENTING',
+        };
+      }
+
+      if (orderDetailStatus === 'COMPLETED') {
+        body = {
+          ...body,
+          carStatus: 'AVAILABLE',
         };
       }
 

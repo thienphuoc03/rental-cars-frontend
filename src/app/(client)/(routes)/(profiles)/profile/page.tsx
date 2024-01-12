@@ -12,6 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { GET_USER_BY_USERNAME } from '@/lib/api-constants';
 import { formatDateToDMY } from '@/lib/utils';
 import { API } from '@/services';
+import { GenderEnum } from '@/types/enums';
 
 const ProfilePage = () => {
   const [user, setUser] = useState<any>({});
@@ -96,7 +97,7 @@ const ProfilePage = () => {
             </div>
             <div className="flex items-center justify-between">
               <span className="text-base text-gray-700">Giới tính</span>
-              <span className="text-base font-medium">{user?.gender}</span>
+              <span className="text-base font-medium">{GenderEnum[user?.gender]}</span>
             </div>
             <div className="flex items-center justify-between">
               <span className="text-base text-gray-700">Số điện thoại</span>

@@ -10,6 +10,7 @@ export const UPDATE_USER = 'users';
 export const UPLOAD_AVATAR = 'users/avatar/upload';
 export const CREATE_USER = 'users';
 export const DELETE_USER = 'users';
+export const UPDATE_ROLE_OWNER = 'users/register/role/owner';
 
 // CARS
 export const GET_NEWEST_CARS = 'cars/newest/cars';

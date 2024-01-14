@@ -10,13 +10,15 @@ import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Skeleton } from './ui/skeleton';
 
 const Username = ({ className }: { className?: ClassValue }) => {
-  const [username, setUsername] = useState<string>(
+  const [username, setUsername] = useState<string>('nguoidung');
+  const [avatarUrl, setAvatarUrl] = useState<string>(
     'https://github.com/shadcn.png',
   );
-  const [avatarUrl, setAvatarUrl] = useState<string>('thienphuoc');
 
   const getUserByUsername = async () => {
     const userInfo: any = JSON.parse(localStorage.getItem('user') || '{}');
+
+    console.log('userInfo', userInfo);
 
     const { data } = await API.get(
       GET_USER_BY_USERNAME + `/${userInfo?.username}`,

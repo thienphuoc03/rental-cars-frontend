@@ -1,24 +1,9 @@
 'use client';
 
+import { GET_USER_TYPE_ANALYTICS } from '@/lib/api-constants';
+import { API } from '@/services';
+import { useEffect, useState } from 'react';
 import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
-
-const data = [
-  {
-    name: 'Admin',
-    color: '#FFBB28',
-    value: 2,
-  },
-  {
-    name: 'Car Owner',
-    color: '#0088FE',
-    value: 60,
-  },
-  {
-    name: 'Traveler',
-    color: '#00C49F',
-    value: 38,
-  },
-];
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({
@@ -56,6 +41,20 @@ const renderCustomizedLabel = ({
 };
 
 const UserStatistics = () => {
+  const [data, setData] = useState<any>([]);
+
+  const getUserTypeAnalytics = async () => {
+    const res = await API.get(GET_USER_TYPE_ANALYTICS);
+
+    if (res.status === 200) {
+      setData(res.data);
+    }
+  };
+
+  useEffect(() => {
+    getUserTypeAnalytics();
+  }, []);
+
   return (
     <>
       <ResponsiveContainer width="100%" height={250}>
@@ -71,7 +70,7 @@ const UserStatistics = () => {
             label={renderCustomizedLabel}
             labelLine={false}
           >
-            {data.map((entry, index) => (
+            {data.map((entry: any, index: number) => (
               <Cell key={`cell-${index}`} fill={entry.color} className="" />
             ))}
           </Pie>
@@ -79,13 +78,13 @@ const UserStatistics = () => {
       </ResponsiveContainer>
 
       <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl p-2">
-        {data.map((entry, index) => (
+        {data.map((entry: any, index: number) => (
           <span key={index}>
             <span
               className="mr-1 inline-block h-2 w-2 rounded-full"
               style={{ backgroundColor: entry.color }}
             />
-            {entry.name}: {entry.value} người
+            {entry.name}({entry.value})
           </span>
         ))}
       </div>

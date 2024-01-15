@@ -11,6 +11,8 @@ export const UPLOAD_AVATAR = 'users/avatar/upload';
 export const CREATE_USER = 'users';
 export const DELETE_USER = 'users';
 export const UPDATE_ROLE_OWNER = 'users/register/role/owner';
+export const GET_ALL_OWNER_REGISTRATION = 'users/register/role/owner';
+export const UPDATE_REQUEST_OWNER_REGISTRATION = 'users/register/role/owner';
 
 // CARS
 export const GET_NEWEST_CARS = 'cars/newest/cars';

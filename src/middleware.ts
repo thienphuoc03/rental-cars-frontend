@@ -4,7 +4,6 @@ import { NextResponse } from 'next/server';
 const protectedRoutes = [
   '/profile',
   '/mycars',
-  '/myfavs',
   '/payment/success',
   '/payment/cancel',
   '/myorders',

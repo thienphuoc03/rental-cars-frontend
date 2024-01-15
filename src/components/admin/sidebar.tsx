@@ -6,6 +6,8 @@ import {
   LayoutDashboard,
   LogOut,
   Users,
+  ScanBarcode,
+  Caravan,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -37,6 +39,19 @@ const menuAdmin = [
     icon: <BaggageClaim className="h-4 w-4" />,
     title: 'Đơn hàng',
     href: '/admin/orders',
+  },
+];
+
+const menuRegistration = [
+  {
+    icon: <Caravan className="h-4 w-4" />,
+    title: 'Đăng ký xe',
+    href: '/admin/car-registration',
+  },
+  {
+    icon: <ScanBarcode className="h-4 w-4" />,
+    title: 'Đăng ký chủ xe',
+    href: '/admin/owner-registration',
   },
 ];
 
@@ -74,28 +89,55 @@ export function Sidebar({ className }: { className?: string }) {
 
         <div className="h-full px-3 py-2">
           <div className="flex h-full flex-col items-start justify-between">
-            <div className="w-full">
-              <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight lg:hidden">
-                Dashboard
-              </h2>
-              <div className="space-y-1 rounded">
-                {menuAdmin.map((item) => (
-                  <Link
-                    href={item.href}
-                    key={item.href}
-                    className={cn(
-                      'flex items-center justify-start gap-2 rounded px-4 py-3 transition-colors duration-200' +
-                        ' hover:bg-primary/5 active:scale-95 dark:hover:bg-primary/20',
-                      pathname.startsWith(item.href) &&
-                        'bg-primary/20 text-blue-600 hover:bg-primary/40 dark:hover:bg-primary/50',
-                    )}
-                  >
-                    {item.icon}
-                    <span className="text-sm font-medium lg:hidden">
-                      {item.title}
-                    </span>
-                  </Link>
-                ))}
+            <div>
+              <div className="w-full">
+                <h2 className="mb-2 px-6 text-lg font-semibold tracking-tight lg:hidden">
+                  Dashboard
+                </h2>
+                <div className="space-y-1 rounded">
+                  {menuAdmin.map((item) => (
+                    <Link
+                      href={item.href}
+                      key={item.href}
+                      className={cn(
+                        'flex items-center justify-start gap-2 rounded px-4 py-3 transition-colors duration-200' +
+                          ' hover:bg-primary/5 active:scale-95 dark:hover:bg-primary/20',
+                        pathname.startsWith(item.href) &&
+                          'bg-primary/20 text-blue-600 hover:bg-primary/40 dark:hover:bg-primary/50',
+                      )}
+                    >
+                      {item.icon}
+                      <span className="text-sm font-medium lg:hidden">
+                        {item.title}
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-6 w-full">
+                <h2 className="mb-2 px-6 text-lg font-semibold tracking-tight lg:hidden">
+                  Yêu cầu
+                </h2>
+                <div className="space-y-1 rounded">
+                  {menuRegistration.map((item) => (
+                    <Link
+                      href={item.href}
+                      key={item.href}
+                      className={cn(
+                        'flex items-center justify-start gap-2 rounded px-4 py-3 transition-colors duration-200' +
+                          ' hover:bg-primary/5 active:scale-95 dark:hover:bg-primary/20',
+                        pathname.startsWith(item.href) &&
+                          'bg-primary/20 text-blue-600 hover:bg-primary/40 dark:hover:bg-primary/50',
+                      )}
+                    >
+                      {item.icon}
+                      <span className="text-sm font-medium lg:hidden">
+                        {item.title}
+                      </span>
+                    </Link>
+                  ))}
+                </div>
               </div>
             </div>
 

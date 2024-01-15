@@ -18,8 +18,6 @@ const Username = ({ className }: { className?: ClassValue }) => {
   const getUserByUsername = async () => {
     const userInfo: any = JSON.parse(localStorage.getItem('user') || '{}');
 
-    console.log('userInfo', userInfo);
-
     const { data } = await API.get(
       GET_USER_BY_USERNAME + `/${userInfo?.username}`,
     );

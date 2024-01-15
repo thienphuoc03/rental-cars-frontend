@@ -28,11 +28,6 @@ const ProfileMenu: { icon: ReactElement; href: string; label: string }[] = [
     label: 'Tài khoản của tôi',
   },
   {
-    icon: <Heart size={24} />,
-    href: '/myfavs',
-    label: 'Xe yêu thích',
-  },
-  {
     icon: <Map size={24} />,
     href: '/mytrips',
     label: 'Lịch sử thuê xe',

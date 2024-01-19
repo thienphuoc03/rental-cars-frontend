@@ -160,7 +160,7 @@ const FilterDialog = () => {
                   >
                     {value
                       ? sortList.find((framework) => framework.value === value)
-                          ?.label
+                        ?.label
                       : sortList[2].label}
                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                   </Button>

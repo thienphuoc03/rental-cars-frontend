@@ -3,7 +3,7 @@
 import { addDays, format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { DateRange } from 'react-day-picker';
 
 import { cn } from '@/lib/utils';
@@ -25,8 +25,11 @@ const SearchBox = () => {
 
     if (!date?.from || !date?.to) return;
 
+    const from = format(date.from, 'yyyy-MM-dd');
+    const to = format(date.to, 'yyyy-MM-dd');
+
     // link to search page
-    router.push(`/search?startDate=${date.from}&endDate=${date.to}`, {
+    router.push(`/search?startDate=${from}&endDate=${to}`, {
       scroll: false,
     });
 

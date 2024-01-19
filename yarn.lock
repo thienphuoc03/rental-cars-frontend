@@ -1791,6 +1791,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-star-ratings@npm:^2":
+  version: 2.3.3
+  resolution: "@types/react-star-ratings@npm:2.3.3"
+  dependencies:
+    "@types/react": "npm:*"
+  checksum: 40da5aad019bbe61521a9bbe16c8944026a7ed5be7826b0bd3be50901a282abdedaebf3fc20327347ecf86fd663a4063fd66a2ab0e34ad6f054c67eac7e01b4e
+  languageName: node
+  linkType: hard
+
 "@types/react@npm:*, @types/react@npm:^18":
   version: 18.2.31
   resolution: "@types/react@npm:18.2.31"
@@ -2570,6 +2579,13 @@ __metadata:
   dependencies:
     clsx: "npm:2.0.0"
   checksum: 06646e82953e577fb8834100d763f1e5ecb808b8a1fba6244e94b20603865b134ff2296e30432449793baaeb02282cce617afba6981afe18b6846f1f8e9485ca
+  languageName: node
+  linkType: hard
+
+"classnames@npm:^2.2.1":
+  version: 2.5.1
+  resolution: "classnames@npm:2.5.1"
+  checksum: 58eb394e8817021b153bb6e7d782cfb667e4ab390cb2e9dac2fc7c6b979d1cc2b2a733093955fc5c94aa79ef5c8c89f11ab77780894509be6afbb91dddd79d15
   languageName: node
   linkType: hard
 
@@ -5580,7 +5596,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15, prop-types@npm:^15.6.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15, prop-types@npm:^15.6.0, prop-types@npm:^15.6.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -5826,6 +5842,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-star-ratings@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "react-star-ratings@npm:2.3.0"
+  dependencies:
+    classnames: "npm:^2.2.1"
+    prop-types: "npm:^15.6.0"
+    react: "npm:^16.1.0"
+  checksum: c9d8dc6d63eb87ded4acaa8f213b2c006e09f5079747e5f9c11d6644836df6fca283c33a5b0ccdc1b36261044fe2abfd0097d839de514669d538156d2a130af8
+  languageName: node
+  linkType: hard
+
 "react-style-singleton@npm:^2.2.1":
   version: 2.2.1
   resolution: "react-style-singleton@npm:2.2.1"
@@ -5855,6 +5882,17 @@ __metadata:
     react: ">=15.0.0"
     react-dom: ">=15.0.0"
   checksum: 1c26e2f7807547d7ebb9c317b8b63c0edaa7542bf2734309c9036484af4825cebb7e32e0ecdd94d7fbffa3c65666530bde9a84f673d438acf9a4d49e0aaed180
+  languageName: node
+  linkType: hard
+
+"react@npm:^16.1.0":
+  version: 16.14.0
+  resolution: "react@npm:16.14.0"
+  dependencies:
+    loose-envify: "npm:^1.1.0"
+    object-assign: "npm:^4.1.1"
+    prop-types: "npm:^15.6.2"
+  checksum: ee04c82f5ecb70fe15a48d8cfc3fb20ce2f7e65277d4adcb56a0ac2b82c54550d4c65eabce0d5dc0cc90d053831b9586d72ee515b11cdf0c5436c7f95aafdcda
   languageName: node
   linkType: hard
 
@@ -6015,6 +6053,7 @@ __metadata:
     "@types/node": "npm:^20"
     "@types/react": "npm:^18"
     "@types/react-dom": "npm:^18"
+    "@types/react-star-ratings": "npm:^2"
     "@typescript-eslint/eslint-plugin": "npm:^6.9.0"
     autoprefixer: "npm:^10"
     axios: "npm:^1.6.1"
@@ -6047,6 +6086,7 @@ __metadata:
     react-hook-form: "npm:^7.47.0"
     react-paginate: "npm:^8.2.0"
     react-redux: "npm:^8.1.3"
+    react-star-ratings: "npm:^2.3.0"
     recharts: "npm:^2.10.3"
     sass: "npm:^1.69.4"
     sharp: "npm:^0.32.6"

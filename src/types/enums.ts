@@ -47,3 +47,40 @@ export const FeatureNameEnum: any = {
   KID_SEAT: 'Ghế trẻ em',
   MAP: 'Bản đồ',
 };
+
+export const OrderDetailStatusEnum: any = {
+  PENDING: 'Đang chờ',
+  CONFIRMED: 'Đã xác nhận',
+  CANCELED: 'Đã hủy',
+  RECEIVED: 'Đã nhận xe',
+  COMPLETED: 'Đã hoàn thành',
+};
+
+export const OrderStatusEnum: any = {
+  PENDING: 'Đang chờ',
+  CONFIRMED: 'Đã xác nhận',
+  CANCELED: 'Đã hủy',
+  COMPLETED: 'Đã hoàn thành',
+};
+
+export const PaymentStatusEnum: any = {
+  PENDING: 'Đang chờ',
+  DEPOSIT: 'Đặt cọc',
+  PAID: 'Đã thanh toán',
+  REFUND: 'Đã hoàn tiền',
+};
+
+export const ColorEnum: any = {
+  BLACK: 'Đen',
+  WHITE: 'Trắng',
+  RED: 'Đỏ',
+  BLUE: 'Xanh',
+  YELLOW: 'Vàng',
+  ORANGE: 'Cam',
+  GREEN: 'Xanh lá',
+  PURPLE: 'Tím',
+  PINK: 'Hồng',
+  BROWN: 'Nâu',
+  GREY: 'Xám',
+  SILVER: 'Bạc',
+};

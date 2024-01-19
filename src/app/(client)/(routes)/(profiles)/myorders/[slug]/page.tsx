@@ -146,16 +146,17 @@ const OrderDetailPage = () => {
                   <>
                     <UpdateOrderDetailDialog
                       title="Xác nhận"
-                      orderDetailId={orderDetail.id}
+                      orderDetailId={orderDetail?.id}
                       orderDetailStatus={'CONFIRMED'}
-                      carId={orderDetail.carId}
+                      carId={orderDetail?.carId}
+                      totalAmount={orderDetail?.totalAmount}
                       className="bg-info"
                     />
                     <UpdateOrderDetailDialog
                       title="Hủy"
-                      orderDetailId={orderDetail.id}
+                      orderDetailId={orderDetail?.id}
                       orderDetailStatus="CANCELED"
-                      carId={orderDetail.carId}
+                      carId={orderDetail?.carId}
                       className="bg-error hover:bg-error/80"
                     />
                   </>
@@ -163,16 +164,16 @@ const OrderDetailPage = () => {
                   <>
                     <UpdateOrderDetailDialog
                       title="Đã nhận xe"
-                      orderDetailId={orderDetail.id}
+                      orderDetailId={orderDetail?.id}
                       orderDetailStatus="RECEIVED"
-                      carId={orderDetail.carId}
+                      carId={orderDetail?.carId}
                       className="bg-success hover:bg-success/80"
                     />
                     <UpdateOrderDetailDialog
                       title="Hủy"
-                      orderDetailId={orderDetail.id}
+                      orderDetailId={orderDetail?.id}
                       orderDetailStatus="CANCELED"
-                      carId={orderDetail.carId}
+                      carId={orderDetail?.carId}
                       className="bg-error hover:bg-error/80"
                     />
                   </>
@@ -180,9 +181,9 @@ const OrderDetailPage = () => {
                   <>
                     <UpdateOrderDetailDialog
                       title="Hoàn thành"
-                      orderDetailId={orderDetail.id}
+                      orderDetailId={orderDetail?.id}
                       orderDetailStatus="COMPLETED"
-                      carId={orderDetail.carId}
+                      carId={orderDetail?.carId}
                       className="bg-success hover:bg-success/80"
                     />
                   </>

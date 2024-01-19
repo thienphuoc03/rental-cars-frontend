@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { DateRange } from 'react-day-picker';
 import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
+import moment from 'moment';
 
 import HoverCardCustom from '@/components/cards/hover-card-custom';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -27,10 +28,16 @@ import {
   GET_CAR_BY_SLUG,
   GET_DISABLE_DATE_BY_CAR_ID,
 } from '@/lib/api-constants';
-import { countDays, formatCurrency, formatDateToDMY } from '@/lib/utils';
+import {
+  countDays,
+  formatCurrency,
+  formatDateTimeToAgo,
+  formatDateToDMY,
+} from '@/lib/utils';
 import { API } from '@/services';
 import { addItem } from '@/stores/reducers/cartReducer';
 import { FeatureNameEnum, FuelEnum, TransmissionEnum } from '@/types/enums';
+import StarRatings from 'react-star-ratings';
 
 const menuItems = [
   {
@@ -489,26 +496,34 @@ const CarPage = ({ params }: { params: { slug: string } }) => {
                         key={index}
                       >
                         <div className="flex items-center justify-start gap-3">
-                          <Avatar className="h-20 w-20">
+                          <Avatar className="h-16 w-16">
                             <AvatarImage
-                              src={review.user.avatarUrl}
+                              src={review.customer.avatarUrl}
                               alt="avatar"
                             />
                             <AvatarFallback>Avatar</AvatarFallback>
                           </Avatar>
 
                           <div className="flex flex-col items-start justify-center">
-                            <h4 className="text-2xl font-bold">
-                              {review.user.name}
+                            <h4 className="text-lg font-bold">
+                              {review.customer.name}
                             </h4>
-                            <span className="flex items-center justify-center gap-1">
-                              <StarRating rating={review?.rating} />
-                            </span>
+
+                            <div>
+                              <span className="mb-2 flex items-center justify-center gap-1">
+                                <StarRatings
+                                  rating={review.rating}
+                                  starRatedColor="yellow"
+                                  starDimension="15px"
+                                />
+                              </span>
+                              <span>{review.content}</span>
+                            </div>
                           </div>
                         </div>
 
                         <div className="">
-                          {formatDateToDMY(review?.createdAt)}
+                          {formatDateTimeToAgo(review?.createdAt)}
                         </div>
                       </div>
                     ))}

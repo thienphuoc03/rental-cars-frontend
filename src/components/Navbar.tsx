@@ -16,29 +16,38 @@ const menuItems: { title: string; href: string }[] = [
 ];
 
 const Navbar = () => {
-  const [menu, setMenu] = useState<any>(menuItems);
+  const [menu, setMenu] = useState<any[]>(menuItems);
   const pathName = usePathname();
 
   const generateMenu = () => {
     const userInfo: any = JSON.parse(localStorage.getItem('user') || '{}');
-    if (userInfo) {
-      if (userInfo.role && userInfo?.role === 'TRAVELER') {
-        setMenu([
-          ...menuItems,
-          {
-            title: 'Đăng ký chủ xe',
-            href: '/owner-registration',
-          },
-        ]);
-      }
+
+    if (userInfo.role && userInfo?.role === 'TRAVELER') {
+      setMenu([
+        ...menuItems,
+        {
+          title: 'Đăng ký chủ xe',
+          href: '#explorer',
+        },
+      ]);
+    } else if (userInfo.role && userInfo?.role === 'CAROWNER') {
+      setMenu([
+        ...menuItems,
+        {
+          title: 'Quản lý xe',
+          href: '/mycars',
+        },
+      ]);
     }
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    generateMenu();
+  }, []);
 
   return (
     <ul className="flex items-center justify-center gap-6 md:hidden">
-      {menuItems.map(({ title, href }, index) => (
+      {menu.map(({ title, href }, index) => (
         <li
           key={index}
           className={cn(

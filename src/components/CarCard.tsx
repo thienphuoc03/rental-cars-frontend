@@ -3,8 +3,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-import { formatNumberToCurrency } from '@/lib/utils';
+import { formatDateToDMY, formatNumberToCurrency } from '@/lib/utils';
 import { FuelEnum, TransmissionEnum } from '@/types/enums';
+
+import TooltipCustom from './ui/tooltip-custom';
 
 interface CarCardProps {
   slug: string;
@@ -16,6 +18,7 @@ interface CarCardProps {
   pricePerDay: number;
   trips: number;
   rating: number;
+  orderDetails: any[];
 }
 
 const CarCard = ({
@@ -27,6 +30,7 @@ const CarCard = ({
   pricePerDay,
   trips,
   rating,
+  orderDetails,
 }: CarCardProps) => {
   return (
     <Link
@@ -39,10 +43,28 @@ const CarCard = ({
 
       <div className="text-start">
         {/* feature car */}
-        <div className="mb-2 flex items-center justify-start">
+        <div className="mb-2 flex items-center justify-start gap-4">
           <span className="rounded-full bg-primary/10 px-2 py-1 text-xs text-[#262626] dark:bg-primary dark:text-white">
             {FuelEnum[fuel]}
           </span>
+
+          {orderDetails.length > 0 && (
+            <TooltipCustom
+              content={orderDetails.map((orderDetail, index) => (
+                <div key={index} className="flex items-center justify-between">
+                  <span className="text-xs text-gray-500">
+                    {formatDateToDMY(orderDetail.startDate)} -{' '}
+                    {formatDateToDMY(orderDetail.endDate)}
+                  </span>
+                </div>
+              ))}
+              className="z-[29]"
+            >
+              <span className="rounded-full bg-success/10 px-2 py-1 text-xs text-[#262626] dark:bg-success dark:text-white">
+                Lịch đã đặt
+              </span>
+            </TooltipCustom>
+          )}
         </div>
 
         <h3 className="text-base font-bold capitalize">{name}</h3>

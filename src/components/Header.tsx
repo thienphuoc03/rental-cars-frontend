@@ -46,7 +46,7 @@ const Header = () => {
               <div className="flex items-center justify-between gap-3">
                 <RentalCart />
 
-                <Notification />
+                {/* <Notification /> */}
 
                 <Username />
               </div>

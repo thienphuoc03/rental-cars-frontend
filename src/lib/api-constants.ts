@@ -10,6 +10,9 @@ export const UPDATE_USER = 'users';
 export const UPLOAD_AVATAR = 'users/avatar/upload';
 export const CREATE_USER = 'users';
 export const DELETE_USER = 'users';
+export const UPDATE_ROLE_OWNER = 'users/register/role/owner';
+export const GET_ALL_OWNER_REGISTRATION = 'users/register/role/owner';
+export const UPDATE_REQUEST_OWNER_REGISTRATION = 'users/register/role/owner';
 
 // CARS
 export const GET_NEWEST_CARS = 'cars/newest/cars';
@@ -47,6 +50,7 @@ export const GET_DISABLE_DATE_BY_CAR_ID = 'order-detail/disable-date/car';
 // ANALYTICS
 export const GET_ANALYTICS = 'analytics';
 export const GET_REVENUE_ANALYTICS = 'analytics/revenue';
+export const GET_USER_TYPE_ANALYTICS = 'analytics/user-type';
 
 // BRANDS
 export const GET_BRANDS_AND_MODELS = 'car-brands/and/models';
@@ -56,3 +60,7 @@ export const GET_ALL_MODELS = 'car-brands';
 
 // FEATURES
 export const GET_ALL_FEATURES = 'features';
+
+// REVIEWS
+export const CREATE_REVIEW = 'reviews';
+export const GET_REVIEW_BY_CAR_ID = 'reviews/car';

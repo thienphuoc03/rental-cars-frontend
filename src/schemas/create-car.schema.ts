@@ -13,6 +13,9 @@ const createCarSchema = z.object({
   description: z.string(),
   features: z.array(z.number()),
   pricePerDay: z.number(),
+  province_name: z.string(),
+  district_name: z.string(),
+  ward_name: z.string(),
 });
 
 export default createCarSchema;

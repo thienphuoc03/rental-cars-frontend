@@ -11,7 +11,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
-import RevenueStatistics from '@/app/(admin)/admin/(routes)/dashboard/revenue-statistics';
+import RevenueStatistics from '@/components/admin/dashboard/revenue-statistics';
 import CardAnalytic from '@/components/admin/cards/card-analytic';
 import { columns } from '@/components/admin/cars/columns';
 import UserStatistics from '@/components/admin/dashboard/user-statistics';
@@ -133,6 +133,7 @@ const DashboardPage = () => {
                     selected={fromDay}
                     onSelect={setFromDay}
                     numberOfMonths={1}
+                    toDate={new Date(Date.now())}
                   />
                 </PopoverContent>
               </Popover>
@@ -163,6 +164,7 @@ const DashboardPage = () => {
                     selected={toDay}
                     onSelect={setToDay}
                     numberOfMonths={1}
+                    toDate={new Date(Date.now())}
                   />
                 </PopoverContent>
               </Popover>

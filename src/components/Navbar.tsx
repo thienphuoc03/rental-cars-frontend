@@ -21,16 +21,23 @@ const Navbar = () => {
 
   const generateMenu = () => {
     const userInfo: any = JSON.parse(localStorage.getItem('user') || '{}');
-    if (userInfo) {
-      if (userInfo.role && userInfo?.role === 'TRAVELER') {
-        setMenu([
-          ...menuItems,
-          {
-            title: 'Đăng ký chủ xe',
-            href: '#explorer',
-          },
-        ]);
-      }
+
+    if (userInfo.role && userInfo?.role === 'TRAVELER') {
+      setMenu([
+        ...menuItems,
+        {
+          title: 'Đăng ký chủ xe',
+          href: '#explorer',
+        },
+      ]);
+    } else if (userInfo.role && userInfo?.role === 'CAROWNER') {
+      setMenu([
+        ...menuItems,
+        {
+          title: 'Quản lý xe',
+          href: '/mycars',
+        },
+      ]);
     }
   };
 

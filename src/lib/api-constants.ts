@@ -60,3 +60,7 @@ export const GET_ALL_MODELS = 'car-brands';
 
 // FEATURES
 export const GET_ALL_FEATURES = 'features';
+
+// REVIEWS
+export const CREATE_REVIEW = 'reviews';
+export const GET_REVIEW_BY_CAR_ID = 'reviews/car';

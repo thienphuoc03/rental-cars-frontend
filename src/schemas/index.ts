@@ -4,6 +4,7 @@ import SearchSchema from './searchSchema';
 import signInSchema from './signInSchema';
 import signUpSchema from './signUpSchema';
 import OwnerRegistrationSchema from './owner-registration.schema';
+import ReviewSchema from './review.schema';
 
 export {
   SearchSchema,
@@ -12,4 +13,5 @@ export {
   editProfileSchema,
   createCarSchema,
   OwnerRegistrationSchema,
+  ReviewSchema,
 };

@@ -185,3 +185,26 @@ export const numberToText = (number: number) => {
 
   return result.trim();
 };
+
+export const formatDateTimeToAgo = (date: Date) => {
+  const dateValue = new Date(date);
+
+  const diff = Math.floor((new Date().getTime() - dateValue.getTime()) / 1000);
+
+  const day = Math.floor(diff / 86400);
+  if (day > 0) {
+    return `${day} ngày trước`;
+  }
+
+  const hour = Math.floor(diff / 3600);
+  if (hour > 0) {
+    return `${hour} giờ trước`;
+  }
+
+  const minute = Math.floor(diff / 60);
+  if (minute > 0) {
+    return `${minute} phút trước`;
+  }
+
+  return `${diff} giây trước`;
+};

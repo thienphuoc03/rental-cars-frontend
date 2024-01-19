@@ -5,28 +5,21 @@ import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
-import { columns } from '@/app/(client)/(routes)/(profiles)/myorders/columns';
-import { paymentStatus } from '@/app/(client)/(routes)/(profiles)/mytrips/data';
-import { DataTable } from '@/components/admin/tables/data-table';
 import { Button } from '@/components/ui/button';
-import { GET_ORDER_BY_USER_ID } from '@/lib/api-constants';
+import {
+  GET_ORDER_BY_USER_ID,
+  GET_REVIEW_BY_CAR_ID,
+  UPDATE_ORDER_DETAIL_STATUS_BY_ID,
+} from '@/lib/api-constants';
 import { cn, formatCurrency, formatDateToDMY } from '@/lib/utils';
 import { API } from '@/services';
 import { OrderDetailStatusEnum } from '@/types/enums';
-
-const initVisibleColumns = [
-  'id',
-  'orderId',
-  'carId',
-  'startDate',
-  'endDate',
-  'totalAmount',
-  'orderDetailStatus',
-  'paymentStatus',
-];
+import BackButton from '@/components/back-button';
+import ReviewDialog from '@/components/review-dialog';
 
 const OrderPage = () => {
   const [order, setOrder] = useState<any>();
+  const [review, setReview] = useState<any>();
   const pathname = usePathname();
 
   const getOrderById = async () => {
@@ -45,6 +38,33 @@ const OrderPage = () => {
     }
   };
 
+  const getReviewByCarId = async (carId: number) => {
+    try {
+      const { data } = await API.get(GET_REVIEW_BY_CAR_ID + `/${carId}`);
+
+      if (data) {
+        setReview(data);
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
+
+  const handleUpdateOrder = async (id: string, status: string) => {
+    try {
+      const res = await API.patch(UPDATE_ORDER_DETAIL_STATUS_BY_ID + `/${id}`, {
+        orderDetailStatus: status,
+      });
+
+      if (res.status === 200) {
+        toast.success('Cập nhật trạng thái đơn hàng thành công');
+        getOrderById();
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
+
   useEffect(() => {
     getOrderById();
   }, []);
@@ -53,7 +73,10 @@ const OrderPage = () => {
     <div className="w-full rounded-xl bg-white p-6">
       <div className="mb-10">
         <header className="flex items-center justify-between">
-          <h3 className="text-2xl font-bold">Thông tin đơn hàng</h3>
+          <div className="flex items-center justify-center gap-2">
+            <BackButton />
+            <h3 className="text-2xl font-bold">Thông tin đơn hàng</h3>
+          </div>
 
           <Button>Tạo hợp đồng</Button>
         </header>
@@ -183,9 +206,9 @@ const OrderPage = () => {
                       <div className="flex flex-col gap-2">
                         {orderDetail?.orderDetailStatus === 'PENDING' && (
                           <Button
-                            onClick={() => {
-                              toast.success('Đã hủy đơn hàng');
-                            }}
+                            onClick={() =>
+                              handleUpdateOrder(orderDetail?.id, 'CANCELED')
+                            }
                             className="bg-error hover:bg-error/70"
                           >
                             Hủy đơn hàng
@@ -193,9 +216,9 @@ const OrderPage = () => {
                         )}
                         {orderDetail?.orderDetailStatus === 'CONFIRMED' && (
                           <Button
-                            onClick={() => {
-                              toast.success('Đã nhận xe');
-                            }}
+                            onClick={() =>
+                              handleUpdateOrder(orderDetail?.id, 'RECEIVED')
+                            }
                             className="bg-info hover:bg-info/70"
                           >
                             Nhận xe
@@ -203,23 +226,19 @@ const OrderPage = () => {
                         )}
                         {orderDetail?.orderDetailStatus === 'RECEIVED' && (
                           <Button
-                            onClick={() => {
-                              toast.success('Đã trả xe');
-                            }}
+                            onClick={() =>
+                              handleUpdateOrder(orderDetail?.id, 'COMPLETED')
+                            }
                             className="bg-success hover:bg-success/70"
                           >
                             Trả xe
                           </Button>
                         )}
                         {orderDetail?.orderDetailStatus === 'COMPLETED' && (
-                          <Button
-                            onClick={() => {
-                              toast.success('Đã đánh giá');
-                            }}
-                            className="bg-success hover:bg-success/70"
-                          >
-                            Đánh giá
-                          </Button>
+                          <ReviewDialog
+                            carId={orderDetail?.carId}
+                            className="bg-success text-white hover:bg-success/70 hover:text-white"
+                          />
                         )}
                       </div>
                     }
@@ -227,16 +246,6 @@ const OrderPage = () => {
                 </div>
               ))}
           </div>
-        </div>
-
-        <div className="mt-6">
-          {order?.orderDetails?.length && (
-            <DataTable
-              columns={columns}
-              data={order?.orderDetails}
-              initVisibleColumns={initVisibleColumns}
-            />
-          )}
         </div>
       </div>
     </div>

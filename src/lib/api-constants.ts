@@ -6,13 +6,14 @@ export const AUTH_SIGNUP = 'auth/signup';
 export const GET_ALL_USERS = 'users';
 export const GET_USER_BY_USERNAME = 'users/username';
 export const GET_USER_BY_ID = 'users';
-export const UPDATE_USER = 'users';
+export const GET_ALL_OWNER_REGISTRATION = 'users/register/role/owner';
 export const UPLOAD_AVATAR = 'users/avatar/upload';
 export const CREATE_USER = 'users';
 export const DELETE_USER = 'users';
 export const UPDATE_ROLE_OWNER = 'users/register/role/owner';
-export const GET_ALL_OWNER_REGISTRATION = 'users/register/role/owner';
+export const UPDATE_USER = 'users';
 export const UPDATE_REQUEST_OWNER_REGISTRATION = 'users/register/role/owner';
+export const UPDATE_PASSWORD = 'users/password/update';
 
 // CARS
 export const GET_NEWEST_CARS = 'cars/newest/cars';

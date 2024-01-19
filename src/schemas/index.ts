@@ -5,6 +5,7 @@ import signInSchema from './signInSchema';
 import signUpSchema from './signUpSchema';
 import OwnerRegistrationSchema from './owner-registration.schema';
 import ReviewSchema from './review.schema';
+import ResetPasswordSchema from './reset-password.schema';
 
 export {
   SearchSchema,
@@ -14,4 +15,5 @@ export {
   createCarSchema,
   OwnerRegistrationSchema,
   ReviewSchema,
+  ResetPasswordSchema,
 };

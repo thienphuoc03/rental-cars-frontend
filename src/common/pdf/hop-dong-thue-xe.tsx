@@ -164,7 +164,7 @@ const HopDongThueXe = () => {
               BÊN B (THUÊ XE):
             </h2>
             <h3 className="text-[17px] font-bold">&#9830; Đại diện:</h3>
-            <div className="flex flex-col justify-start *:flex *:w-full *:w-full *:justify-between">
+            <div className="flex flex-col justify-start *:flex *:w-full *:justify-between">
               <span className="">
                 <p>
                   {' '}

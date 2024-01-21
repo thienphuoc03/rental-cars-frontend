@@ -236,7 +236,7 @@ const OrderPage = () => {
                         )}
                         {orderDetail?.orderDetailStatus === 'COMPLETED' && (
                           <ReviewDialog
-                            carId={orderDetail?.carId}
+                            orderDetailId={orderDetail?.id}
                             className="bg-success text-white hover:bg-success/70 hover:text-white"
                           />
                         )}

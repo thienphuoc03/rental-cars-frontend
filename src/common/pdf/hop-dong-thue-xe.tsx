@@ -383,7 +383,7 @@ const HopDongThueXe = () => {
                       xe (hoặc trả phí rửa xe là 100.000đ cho bên A)
                     </li>
                     <li>
-                      Nếu có phát sinh thêm hợp đồng thuê xe thì phải báo cho
+                      Nếu có phát sinh thêm hợp đồng thuê xe thì phải báo cho{' '}
                       <strong>Rental Cars</strong> , bên A trước và phải được
                       bên A đồng ý. Trường hợp bên B thông báo cho bên A về việc
                       kéo dài thêm thời gian và thời gian kéo dài vượt quá 05

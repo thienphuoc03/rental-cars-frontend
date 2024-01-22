@@ -210,7 +210,7 @@ export const columns: ColumnDef<CarType>[] = [
         <div className="flex items-center justify-center">
           <span
             className={cn(
-              'rounded-full px-4 py-1 text-white',
+              'rounded-full px-1 py-1 text-center text-white',
               statusItem.key === 'AVAILABLE'
                 ? 'bg-success/60'
                 : statusItem.key === 'UNAVAILABLE'

@@ -180,7 +180,7 @@ const CarPage = ({ params }: { params: { slug: string } }) => {
   return (
     <div className="mb-4">
       {/*stick menu*/}
-      <nav className="sticky top-[84px] z-30 mb-14 w-full rounded-lg border border-gray-200 bg-white shadow">
+      <nav className="sticky top-[84px] z-[20] mb-14 w-full rounded-lg border border-gray-200 bg-white shadow">
         <div className="flex items-center justify-start pl-8">
           {menuItems.map((item, index) => (
             <a
@@ -490,43 +490,48 @@ const CarPage = ({ params }: { params: { slug: string } }) => {
 
                   {/* review */}
                   <div className="mt-4">
-                    {car?.reviews?.data.map((review: any, index: number) => (
-                      <div
-                        className="mt-4 flex items-center justify-between rounded-lg border border-gray-300 px-8 py-6"
-                        key={index}
-                      >
-                        <div className="flex items-center justify-start gap-3">
-                          <Avatar className="h-16 w-16">
-                            <AvatarImage
-                              src={review.customer.avatarUrl}
-                              alt="avatar"
-                            />
-                            <AvatarFallback>Avatar</AvatarFallback>
-                          </Avatar>
+                    {car?.reviews?.data &&
+                      car?.reviews?.data.map((review: any, index: number) => (
+                        <>
+                          {review && (
+                            <div
+                              className="mt-4 flex items-center justify-between rounded-lg border border-gray-300 px-8 py-6"
+                              key={index}
+                            >
+                              <div className="flex items-center justify-start gap-3">
+                                <Avatar className="h-16 w-16">
+                                  <AvatarImage
+                                    src={review.customer.avatarUrl}
+                                    alt="avatar"
+                                  />
+                                  <AvatarFallback>Avatar</AvatarFallback>
+                                </Avatar>
 
-                          <div className="flex flex-col items-start justify-center">
-                            <h4 className="text-lg font-bold">
-                              {review.customer.name}
-                            </h4>
+                                <div className="flex flex-col items-start justify-center">
+                                  <h4 className="text-lg font-bold">
+                                    {review.customer.name}
+                                  </h4>
 
-                            <div>
-                              <span className="mb-2 flex items-center justify-center gap-1">
-                                <StarRatings
-                                  rating={review.rating}
-                                  starRatedColor="yellow"
-                                  starDimension="15px"
-                                />
-                              </span>
-                              <span>{review.content}</span>
+                                  <div>
+                                    <span className="mb-2 flex items-center justify-center gap-1">
+                                      <StarRatings
+                                        rating={review.rating}
+                                        starRatedColor="yellow"
+                                        starDimension="15px"
+                                      />
+                                    </span>
+                                    <span>{review.content}</span>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div className="">
+                                {formatDateTimeToAgo(review?.createdAt)}
+                              </div>
                             </div>
-                          </div>
-                        </div>
-
-                        <div className="">
-                          {formatDateTimeToAgo(review?.createdAt)}
-                        </div>
-                      </div>
-                    ))}
+                          )}
+                        </>
+                      ))}
                   </div>
                 </div>
               )}

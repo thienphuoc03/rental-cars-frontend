@@ -13,11 +13,11 @@ import { cn } from '@/lib/utils';
 import ReviewForm from './forms/review-form';
 
 interface ReviewDialogProps {
-  carId: number;
+  orderDetailId: number;
   className?: string;
 }
 
-const ReviewDialog = ({ carId, className }: ReviewDialogProps) => {
+const ReviewDialog = ({ orderDetailId, className }: ReviewDialogProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -33,7 +33,7 @@ const ReviewDialog = ({ carId, className }: ReviewDialogProps) => {
 
         {/* content */}
         <div className="">
-          <ReviewForm carId={carId} />
+          <ReviewForm orderDetailId={orderDetailId} />
         </div>
       </DialogContent>
     </Dialog>

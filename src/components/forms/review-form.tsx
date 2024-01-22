@@ -19,7 +19,7 @@ import StarRatings from 'react-star-ratings';
 import { Textarea } from '../ui/textarea';
 import { CREATE_REVIEW } from '@/lib/api-constants';
 
-const ReviewForm = ({ carId }: { carId: number }) => {
+const ReviewForm = ({ orderDetailId }: { orderDetailId: number }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof ReviewSchema>>({
@@ -31,7 +31,7 @@ const ReviewForm = ({ carId }: { carId: number }) => {
     try {
       const body = {
         ...values,
-        carId: Number(carId),
+        orderDetailId: Number(orderDetailId),
       };
 
       const { data } = await API.post(CREATE_REVIEW, body);

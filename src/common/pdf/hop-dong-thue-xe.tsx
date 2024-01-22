@@ -164,7 +164,7 @@ const HopDongThueXe = () => {
               BÊN B (THUÊ XE):
             </h2>
             <h3 className="text-[17px] font-bold">&#9830; Đại diện:</h3>
-            <div className="flex flex-col justify-start *:flex *:w-full *:w-full *:justify-between">
+            <div className="flex flex-col justify-start *:flex *:w-full *:justify-between">
               <span className="">
                 <p>
                   {' '}
@@ -335,7 +335,7 @@ const HopDongThueXe = () => {
                     </li>
                   </ul>
 
-                  <span className="mt-3">
+                  <span className="mb-32 mt-3">
                     Bên B đã thanh toán trước <strong>30%</strong> giá trị hợp
                     đồng sau khi kết nối thành công với bên A thông qua ứng dụng
                     cho thuê xe{' '}
@@ -383,7 +383,7 @@ const HopDongThueXe = () => {
                       xe (hoặc trả phí rửa xe là 100.000đ cho bên A)
                     </li>
                     <li>
-                      Nếu có phát sinh thêm hợp đồng thuê xe thì phải báo cho
+                      Nếu có phát sinh thêm hợp đồng thuê xe thì phải báo cho{' '}
                       <strong>Rental Cars</strong> , bên A trước và phải được
                       bên A đồng ý. Trường hợp bên B thông báo cho bên A về việc
                       kéo dài thêm thời gian và thời gian kéo dài vượt quá 05
@@ -511,7 +511,7 @@ const HopDongThueXe = () => {
                       Yêu cầu bên A đổi xe nếu xe không đúng như thỏa thuận hoặc
                       xe hư hỏng không đảm bảo cho quá trình thuê.
                     </li>
-                    <li>
+                    <li className="mb-44">
                       Nếu xe hư hỏng trong quá trình thuê mà không phải lỗi do
                       bên B thì bên B liên hệ với bên A và có quyền yêu cầu bên
                       A thanh toán phần chi phí sửa chữa hợp lý sau khi đã thỏa
@@ -664,7 +664,9 @@ const HopDongThueXe = () => {
                 </div>
 
                 <div className="*:block">
-                  <h4 className="font-bold italic">4.3 Quyền và nghĩa vụ:</h4>
+                  <h4 className="mt-44 font-bold italic">
+                    4.3 Quyền và nghĩa vụ:
+                  </h4>
                   <ul className="ml-6 *:list-disc *:text-justify">
                     <li>
                       Trường hợp chuyến đi được hỗ trợ bảo hiểm chuyến do{' '}

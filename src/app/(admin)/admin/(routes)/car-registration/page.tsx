@@ -26,7 +26,7 @@ const initVisibleColumns = [
 ];
 
 const CarRegistrationPage = () => {
-  const [registers, setRegisters] = useState();
+  const [registers, setRegisters] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const getAllRegisters = async () => {
@@ -37,6 +37,10 @@ const CarRegistrationPage = () => {
       );
 
       if (!data) return;
+
+      if (data.length > 0) {
+        toast.warning(`Có ${data.length} xe đang chờ duyệt`);
+      }
 
       setRegisters(data);
       setIsLoading(false);

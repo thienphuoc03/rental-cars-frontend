@@ -41,6 +41,17 @@ const MyordersPage = () => {
 
       if (res.status === 200) {
         setOrders(res.data);
+
+        let countStatus = 0;
+        res.data.map((order: any) => {
+          if (order.orderDetailStatus === 'PENDING') {
+            countStatus++;
+          }
+        });
+
+        if (countStatus > 0) {
+          toast.warning(`Có ${countStatus} đơn hàng đang chờ duyệt`);
+        }
       }
 
       setIsLoading(false);

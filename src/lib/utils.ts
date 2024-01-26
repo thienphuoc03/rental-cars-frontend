@@ -208,3 +208,8 @@ export const formatDateTimeToAgo = (date: Date) => {
 
   return `${diff} giây trước`;
 };
+
+// function removes all spaces in the string and converts it to lower case
+export const slugify = (str: string) => {
+  return str.replace(/\s+/g, '').toLowerCase();
+};

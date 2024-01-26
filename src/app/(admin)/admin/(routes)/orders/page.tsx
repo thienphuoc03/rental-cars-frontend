@@ -37,6 +37,12 @@ const OrderPage = () => {
 
       if (res.status === 200) {
         setOrder(res.data.data);
+
+        res.data.data.map((order: any) => {
+          if (order.orderDetailStatus === 'PENDING') {
+            toast.warning(`Có ${res.data.data.length} đơn hàng đang chờ duyệt`);
+          }
+        });
       }
 
       setIsLoading(false);

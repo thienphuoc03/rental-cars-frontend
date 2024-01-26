@@ -22,6 +22,10 @@ const OwnerRegistrationPage = () => {
 
       if (!data) return;
 
+      if (data.length > 0) {
+        toast.warning(`Có ${data.length} chủ xe đang chờ duyệt`);
+      }
+
       setRegisters(data);
       setIsLoading(false);
     } catch (error: any) {

@@ -20,6 +20,12 @@ import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { ScrollArea } from './ui/scroll-area';
 import { Slider } from './ui/slider';
 
+interface FilterDialogProps {
+  date: any;
+  setCarList: any;
+  className?: string;
+}
+
 const sortList: { value: string; label: string }[] = [
   {
     value: 'price-asc',
@@ -110,7 +116,7 @@ const featuresList: { value: string; label: string }[] = [
   },
 ];
 
-const FilterDialog = () => {
+const FilterDialog = ({ date, setCarList, className }: FilterDialogProps) => {
   const [open, setOpen] = useState<boolean>(false);
   const [value, setValue] = useState<string>('');
   const [price, setPrice] = useState<[number, number]>([300, 1000]);
@@ -134,7 +140,11 @@ const FilterDialog = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm" className="hover:shadow-2xl">
+        <Button
+          variant="outline"
+          size="sm"
+          className={cn('hover:shadow-2xl', className)}
+        >
           <SlidersHorizontal size={16} className="mr-1" />
           Bộ lọc
         </Button>
@@ -160,7 +170,7 @@ const FilterDialog = () => {
                   >
                     {value
                       ? sortList.find((framework) => framework.value === value)
-                        ?.label
+                          ?.label
                       : sortList[2].label}
                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                   </Button>

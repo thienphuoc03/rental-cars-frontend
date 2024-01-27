@@ -7,11 +7,8 @@ import {
   status,
   transmissions,
 } from '@/components/admin/cars/common/data';
-import { DeleteCarDialog } from '@/components/admin/cars/delete-car-dialog';
-import StatusCombobox from '@/components/admin/cars/status-combobox';
 import { CarType } from '@/components/admin/schemas';
 import { DataTableColumnHeader } from '@/components/admin/tables/data-table-column-header';
-import { DataTableRowActions } from '@/components/admin/tables/data-table-row-action';
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn, formatDateToDMY, formatNumberToCurrency } from '@/lib/utils';
 import ConfirmCarRegistrationAlertDialog from './confirm-car-registration-alert-dialog';

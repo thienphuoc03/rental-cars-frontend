@@ -12,6 +12,7 @@ import { GET_ORDER_DETAIL_BY_ID } from '@/lib/api-constants';
 import { formatCurrency, formatDateToDMY, numberToText } from '@/lib/utils';
 import { API } from '@/services';
 import { ColorEnum } from '@/types/enums';
+import BackButton from '@/components/back-button';
 
 const HopDongThueXe = () => {
   const pdfRef = useRef<any>();
@@ -83,7 +84,8 @@ const HopDongThueXe = () => {
 
   return (
     <>
-      <div className="mb-4 text-right">
+      <div className="mb-4 flex items-center justify-between gap-2">
+        <BackButton />
         <Button onClick={handleDownloadPDF} isLoading={isDownloading}>
           Tải xuống
         </Button>

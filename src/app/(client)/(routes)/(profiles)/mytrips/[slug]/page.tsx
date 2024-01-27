@@ -7,8 +7,7 @@ import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 import {
-  GET_ORDER_BY_USER_ID,
-  GET_REVIEW_BY_CAR_ID,
+  GET_ORDER_BY_ID,
   UPDATE_ORDER_DETAIL_STATUS_BY_ID,
 } from '@/lib/api-constants';
 import { cn, formatCurrency, formatDateToDMY } from '@/lib/utils';
@@ -19,32 +18,17 @@ import ReviewDialog from '@/components/review-dialog';
 
 const OrderPage = () => {
   const [order, setOrder] = useState<any>();
-  const [review, setReview] = useState<any>();
   const pathname = usePathname();
 
   const getOrderById = async () => {
     try {
-      const res = await API.get(
-        GET_ORDER_BY_USER_ID + `/${pathname.split('/')[2]}`,
-      );
+      const res = await API.get(GET_ORDER_BY_ID + `/${pathname.split('/')[2]}`);
 
       if (res.status === 200) {
         setOrder(res.data);
       }
 
       return;
-    } catch (error: any) {
-      toast.error(error.message);
-    }
-  };
-
-  const getReviewByCarId = async (carId: number) => {
-    try {
-      const { data } = await API.get(GET_REVIEW_BY_CAR_ID + `/${carId}`);
-
-      if (data) {
-        setReview(data);
-      }
     } catch (error: any) {
       toast.error(error.message);
     }
@@ -201,20 +185,20 @@ const OrderPage = () => {
                   <div className="h-[70px] w-[1px] bg-gray-200" />
 
                   <div className="">
-                    <h5 className="font-semibold">Hành động:</h5>
-                    {
-                      <div className="flex flex-col gap-2">
-                        {orderDetail?.orderDetailStatus === 'PENDING' && (
-                          <Button
-                            onClick={() =>
-                              handleUpdateOrder(orderDetail?.id, 'CANCELED')
-                            }
-                            className="bg-error hover:bg-error/70"
-                          >
-                            Hủy đơn hàng
-                          </Button>
-                        )}
-                        {orderDetail?.orderDetailStatus === 'CONFIRMED' && (
+                    <h5 className="font-semibold">Hành động</h5>
+
+                    <div className="flex flex-col gap-2">
+                      {orderDetail?.orderDetailStatus === 'PENDING' && (
+                        <Button
+                          onClick={() =>
+                            handleUpdateOrder(orderDetail?.id, 'CANCELED')
+                          }
+                          className="bg-error hover:bg-error/70"
+                        >
+                          Hủy đơn hàng
+                        </Button>
+                      )}
+                      {/* {orderDetail?.orderDetailStatus === 'CONFIRMED' && (
                           <Button
                             onClick={() =>
                               handleUpdateOrder(orderDetail?.id, 'RECEIVED')
@@ -233,15 +217,19 @@ const OrderPage = () => {
                           >
                             Trả xe
                           </Button>
-                        )}
-                        {orderDetail?.orderDetailStatus === 'COMPLETED' && (
-                          <ReviewDialog
-                            orderDetailId={orderDetail?.id}
-                            className="bg-success text-white hover:bg-success/70 hover:text-white"
-                          />
-                        )}
-                      </div>
-                    }
+                        )} */}
+                      {!orderDetail?.review?.id && (
+                        <>
+                          {orderDetail?.orderDetailStatus === 'COMPLETED' && (
+                            <ReviewDialog
+                              orderDetailId={orderDetail?.id}
+                              getOrderById={getOrderById}
+                              className="bg-success text-white hover:bg-success/70 hover:text-white"
+                            />
+                          )}
+                        </>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}

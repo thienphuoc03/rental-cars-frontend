@@ -16,6 +16,7 @@ import { countDays, formatCurrency, formatDateToDMY } from '@/lib/utils';
 import { API } from '@/services';
 import { useAppSelector } from '@/stores/hooks';
 import { selectDep } from '@/stores/reducers/depReducer';
+import BackButton from '@/components/back-button';
 
 const OrderDetailPage = () => {
   const [orderDetail, setOrderDetail] = useState<any>();
@@ -48,7 +49,10 @@ const OrderDetailPage = () => {
     <div className="w-full rounded-xl bg-white p-6">
       <div className="mb-10">
         <header className="flex items-center justify-between">
-          <h3 className="text-2xl font-bold">Thông tin đơn hàng</h3>
+          <div className="flex items-center justify-center gap-2">
+            <BackButton />
+            <h3 className="text-2xl font-bold">Thông tin đơn hàng</h3>
+          </div>
 
           {orderDetail &&
           (orderDetail.orderDetailStatus === 'CONFIRMED' ||

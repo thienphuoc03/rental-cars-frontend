@@ -15,7 +15,7 @@ import { columns } from '../../../../../components/admin/car-registration/column
 const initVisibleColumns = [
   'id',
   'name',
-  'licensePlate',
+  'licensePlates',
   'seats',
   'fuel',
   'pricePerDay',

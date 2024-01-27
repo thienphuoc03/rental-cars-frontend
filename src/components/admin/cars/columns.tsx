@@ -14,6 +14,7 @@ import { DataTableColumnHeader } from '@/components/admin/tables/data-table-colu
 import { DataTableRowActions } from '@/components/admin/tables/data-table-row-action';
 import { Checkbox } from '@/components/ui/checkbox';
 import { formatDateToDMY, formatNumberToCurrency } from '@/lib/utils';
+import Image from 'next/image';
 
 export const columns: ColumnDef<CarType>[] = [
   {
@@ -48,6 +49,25 @@ export const columns: ColumnDef<CarType>[] = [
     cell: ({ row }) => <div className="">{row.getValue('id')}</div>,
     enableSorting: true,
     enableHiding: true,
+  },
+  {
+    accessorKey: 'CarImage',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Hình ảnh" />
+    ),
+    cell: ({ row }) => {
+      const image: string[] = row.getValue('CarImage');
+
+      return (
+        <div className="bg-slate-50">
+          {row.getValue('CarImage') ? (
+            <Image src={image[0]} alt={image[0]} width={60} height={60} />
+          ) : (
+            ''
+          )}
+        </div>
+      );
+    },
   },
   {
     accessorKey: 'name',

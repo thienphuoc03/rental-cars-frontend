@@ -19,8 +19,9 @@ const filterCars = [{ status }, { fuel }];
 
 const initVisibleColumns = [
   'id',
+  'CarImage',
   'name',
-  'licensePlate',
+  'licensePlates',
   'seats',
   'fuel',
   'pricePerDay',

@@ -32,6 +32,7 @@ import {
   GET_ALL_FEATURES,
   GET_BRANDS_AND_MODELS,
   GET_CAR_BY_ID,
+  UPDATE_CAR,
   UPDATE_USER,
 } from '@/lib/api-constants';
 import { cn } from '@/lib/utils';
@@ -169,7 +170,8 @@ export function CreateCarForm({ slug }: { slug: string }) {
   const [carImages, setCarImages] = useState<any[]>([]);
   const [brandData, setBrandData] = useState<any>([]);
   const [features, setFeatures] = useState<any>([]);
-  const [province, setProvince] = useState<any>({});
+  const [img, setImg] = useState<any>([]);
+  // const [province, setProvince] = useState<any>({});
 
   const router = useRouter();
 
@@ -177,18 +179,18 @@ export function CreateCarForm({ slug }: { slug: string }) {
     resolver: zodResolver(createCarSchema),
   });
 
-  const getProvince = async () => {
-    try {
-      const { data } = await axios.get(
-        'https://provinces.open-api.vn/api/p/48?depth=3',
-      );
+  // const getProvince = async () => {
+  //   try {
+  //     const { data } = await axios.get(
+  //       'https://provinces.open-api.vn/api/p/48?depth=3',
+  //     );
 
-      setProvince(data);
-      form.setValue('province_name', data.name);
-    } catch (error: any) {
-      toast.error(error.message);
-    }
-  };
+  //     setProvince(data);
+  //     form.setValue('province_name', data.name);
+  //   } catch (error: any) {
+  //     toast.error(error.message);
+  //   }
+  // };
 
   const uploadImagesToCloud = async (files: any) => {
     try {
@@ -197,7 +199,7 @@ export function CreateCarForm({ slug }: { slug: string }) {
 
       const imagesArr: any[] = [];
 
-      const uploadPromises = files.map(async (file: any) => {
+      files.map(async (file: any) => {
         const formData = new FormData();
         formData.append('file', file);
         formData.append('cloud_name', cloudName as string);
@@ -284,7 +286,7 @@ export function CreateCarForm({ slug }: { slug: string }) {
     }
   };
 
-  const handleUploadImage = (e: any) => {
+  const handleUploadImage = async (e: any) => {
     const files = e.target.files;
     const filesArray = Array.from(files);
 
@@ -308,46 +310,49 @@ export function CreateCarForm({ slug }: { slug: string }) {
 
     setSelectedImage(filesArray);
 
+    const arr = await uploadImagesToCloud(selectedImage);
+
+    setImg(arr);
+
     return imageArr;
   };
+
+  console.log({ img });
 
   async function onSubmit(values: z.infer<typeof createCarSchema>) {
     setIsLoading(true);
     try {
-      const imgArr = await uploadImagesToCloud(selectedImage);
-      const address = `${values.ward_name}, ${values.district_name}, ${values.province_name}`;
+      const imgArr: string[] = await uploadImagesToCloud(selectedImage);
+      // const address = `${values.ward_name}, ${values.district_name}, ${values.province_name}`;
+      console.log({ img });
 
       if (slug === 'new') {
-        values.images = imgArr;
+        values.images = undefined;
 
         const res = await API.post(CREATE_CAR, {
           ...values,
-          address,
+          images: img,
           pricePerDay: Number(values.pricePerDay),
         });
 
         if (res.status === 201) {
           toast.success('Thêm xe thành công!');
-          setIsLoading(false);
-          router.push('/mycars');
+          router.back();
         } else {
           toast.error('Thêm xe thất bại!');
-          setIsLoading(false);
         }
       } else {
-        const res = await API.put(UPDATE_USER, values);
+        const { data } = await API.patch(`${UPDATE_CAR}/${slug}`, values);
 
-        if (res.status === 200) {
+        if (data) {
           toast.success('Cập nhật xe thành công!');
           setIsLoading(false);
-          router.push('/mycars');
+          router.back();
         } else {
           toast.error('Cập nhật xe thất bại!');
           setIsLoading(false);
         }
       }
-
-      setIsLoading(false);
     } catch (error: any) {
       setIsLoading(false);
       toast.error(error?.message);
@@ -359,7 +364,6 @@ export function CreateCarForm({ slug }: { slug: string }) {
   useEffect(() => {
     getAllBrand();
     getFeatures();
-    getProvince();
 
     if (slug === 'new') {
       form.reset({
@@ -937,7 +941,7 @@ export function CreateCarForm({ slug }: { slug: string }) {
         </div>
 
         {/* Tinh thanh */}
-        <div className="flex flex-col items-start justify-between gap-4">
+        {/* <div className="flex flex-col items-start justify-between gap-4">
           <h2 className="text-xl font-bold">Địa chỉ xe</h2>
 
           <div className="flex w-full items-center justify-between gap-6">
@@ -1120,7 +1124,7 @@ export function CreateCarForm({ slug }: { slug: string }) {
               )}
             />
           </div>
-        </div>
+        </div> */}
 
         <div className="flex flex-col items-start justify-between gap-2">
           <FormField

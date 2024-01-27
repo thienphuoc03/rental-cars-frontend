@@ -21,12 +21,13 @@ export const GET_CAR_BY_SLUG = 'cars/slug';
 export const SEARCH_CARS = 'cars/search/cars';
 export const GET_ALL_CARS = 'cars';
 export const GET_ALL_MY_CAR = 'cars/user/my-cars';
-export const UPDATE_CAR_STATUS = 'cars/status';
-export const DELETE_CAR = 'cars';
 export const GET_CAR_BY_ID = 'cars';
+export const GET_ALL_CAR_IS_RENTING = 'cars/status/renting';
+export const GET_ALL_CAR_REGISTRATION = 'cars/status/get-all';
+export const DELETE_CAR = 'cars';
+export const UPDATE_CAR_STATUS = 'cars/status';
 export const CREATE_CAR = 'cars';
 export const UPDATE_CAR = 'cars';
-export const GET_ALL_CAR_IS_RENTING = 'cars/status/renting';
 
 // STRIPE
 export const CHECKOUT = 'stripe/checkout';

@@ -17,7 +17,7 @@ const SearchBox = () => {
   const router = useRouter();
   const [date, setDate] = useState<DateRange | undefined>({
     from: addDays(new Date(Date.now()), 1),
-    to: addDays(new Date(Date.now()), 2),
+    to: addDays(new Date(Date.now()), 1),
   });
 
   const submit = () => {

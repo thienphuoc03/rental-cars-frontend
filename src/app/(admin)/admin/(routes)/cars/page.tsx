@@ -13,26 +13,29 @@ import { GET_ALL_CARS } from '@/lib/api-constants';
 import { API } from '@/services';
 import { useAppSelector } from '@/stores/hooks';
 import { selectDep } from '@/stores/reducers/depReducer';
+import { usePathname } from 'next/navigation';
+
+const filterCars = [{ status }, { fuel }];
+
+const initVisibleColumns = [
+  'id',
+  'name',
+  'licensePlate',
+  'seats',
+  'fuel',
+  'pricePerDay',
+  'brand',
+  'createdAt',
+  'status',
+  'actions',
+];
 
 export default function CarsPage() {
   const dep = useAppSelector(selectDep);
   const [cars, setCars] = useState();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const filterCars = [{ status }, { fuel }];
-
-  const initVisibleColumns = [
-    'id',
-    'name',
-    'licensePlate',
-    'seats',
-    'fuel',
-    'pricePerDay',
-    'brand',
-    'createdAt',
-    'status',
-    'actions',
-  ];
+  const pathname = usePathname();
 
   const getCars = async () => {
     setIsLoading(true);
@@ -62,7 +65,7 @@ export default function CarsPage() {
         <h2 className="text-2xl font-bold">Quản lý xe</h2>
 
         <Link
-          href="/admin/car"
+          href={`${pathname}/new`}
           className="flex items-center justify-between gap-2 rounded border border-gray-100 bg-primary px-4 py-1 text-white hover:bg-primary/90 active:scale-95"
         >
           <PlusCircle className="h-4 w-4" />

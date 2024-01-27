@@ -3,10 +3,10 @@
 import { ChevronLeftIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
-import { CreateUserForm } from '@/components/admin/forms/create-user.form';
+import { CreateCarForm } from '@/components/forms/create-car-form';
 import { Button } from '@/components/ui/button';
 
-export default function AddUserPage({ params }: { params: { slug: string } }) {
+export default function AddCarPage({ params }: { params: { slug: string } }) {
   const router = useRouter();
 
   return (
@@ -21,13 +21,13 @@ export default function AddUserPage({ params }: { params: { slug: string } }) {
           <ChevronLeftIcon className="h-5 w-5" />
         </Button>
         <h2 className="inline text-2xl font-bold">
-          {params?.slug === 'new' ? 'Thêm' : 'Cập nhật'} người dùng
+          {params.slug === 'new' ? 'Đăng ký' : 'Cập nhật'} xe
         </h2>
       </div>
 
       <div className="flex items-center justify-center">
         <div className="w-4/5">
-          <CreateUserForm slug={params?.slug} />
+          <CreateCarForm slug={params?.slug} />
         </div>
       </div>
     </div>

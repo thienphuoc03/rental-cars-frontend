@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-import { formatDateToDMY, formatNumberToCurrency } from '@/lib/utils';
+import { cn, formatDateToDMY, formatNumberToCurrency } from '@/lib/utils';
 import { FuelEnum, TransmissionEnum } from '@/types/enums';
 
 import TooltipCustom from './ui/tooltip-custom';
@@ -18,6 +18,7 @@ interface CarCardProps {
   pricePerDay: number;
   trips: number;
   rating: number;
+  status: string;
   orderDetails: any[];
 }
 
@@ -30,6 +31,7 @@ const CarCard = ({
   pricePerDay,
   trips,
   rating,
+  status,
   orderDetails,
 }: CarCardProps) => {
   return (
@@ -51,7 +53,15 @@ const CarCard = ({
           {orderDetails.length > 0 && (
             <TooltipCustom
               content={orderDetails.map((orderDetail, index) => (
-                <div key={index} className="flex items-center justify-between">
+                <div
+                  key={index}
+                  className={cn(
+                    'my-1 flex items-center justify-between rounded-full p-1',
+                    orderDetail?.orderDetailStatus === 'RECEIVED'
+                      ? 'bg-yellow-500/10'
+                      : '',
+                  )}
+                >
                   <span className="text-xs text-gray-500">
                     {formatDateToDMY(orderDetail.startDate)} -{' '}
                     {formatDateToDMY(orderDetail.endDate)}
@@ -60,8 +70,15 @@ const CarCard = ({
               ))}
               className="z-[29]"
             >
-              <span className="rounded-full bg-success/10 px-2 py-1 text-xs text-[#262626] dark:bg-success dark:text-white">
-                Lịch đã đặt
+              <span
+                className={cn(
+                  'rounded-full px-2 py-1 text-xs text-[#262626]  dark:text-white',
+                  status === 'RENTING'
+                    ? 'bg-yellow-500/10 dark:bg-yellow-500'
+                    : 'bg-success/10 dark:bg-success',
+                )}
+              >
+                {status === 'RENTING' ? 'Đang cho thuê' : 'Lịch đã đặt'}
               </span>
             </TooltipCustom>
           )}

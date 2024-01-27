@@ -2,7 +2,12 @@
 
 import { PopoverClose } from '@radix-ui/react-popover';
 import { addDays, format } from 'date-fns';
-import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
+import {
+  ArrowRight,
+  CalendarIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
@@ -31,6 +36,7 @@ const SearchPage = ({ searchParams }: { searchParams: any }) => {
     from: new Date(searchParams.startDate),
     to: new Date(searchParams.endDate),
   });
+  const [filter, setFilter] = useState<any>();
 
   const getCarList = async () => {
     try {
@@ -39,6 +45,7 @@ const SearchPage = ({ searchParams }: { searchParams: any }) => {
 
       const response = await API.get(
         SEARCH_CARS + `?startDate=${startDate}&endDate=${endDate}&page=${page}`,
+        filter,
       );
 
       if (!response) {
@@ -72,24 +79,20 @@ const SearchPage = ({ searchParams }: { searchParams: any }) => {
 
   return (
     <div className="mt-2">
-      <header className="rounded-lg bg-white px-6 py-6 shadow-xl dark:bg-black">
+      <header className="rounded-lg bg-white py-6 dark:bg-black">
         <div className="text-center">
-          <div className="my-4 flex w-full items-center justify-center">
+          <div className="my-2 flex w-full items-center justify-between">
             <Popover>
               <PopoverTrigger asChild>
                 <Button
                   id="date"
-                  variant={'outline'}
+                  variant="outline"
                   className={cn(
-                    'flex items-center justify-center border-none text-left font-normal hover:bg-transparent dark:text-white border border-gray-300 focus:ring-transparent focus:ring-offset-0 active:scale-100',
+                    'flex items-center justify-center border border-gray-300 text-left font-normal hover:bg-transparent focus:ring-transparent focus:ring-offset-0 active:scale-100 dark:text-white',
                     !date && 'text-muted-foreground',
                   )}
                 >
-                  <span className="text-xl font-normal text-black dark:text-white">
-                    <span className="flex items-center justify-start text-base font-normal text-gray-500 dark:text-white">
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      Bắt đầu
-                    </span>
+                  <span className="text-base font-normal text-black dark:text-white">
                     {date?.from ? (
                       format(date.from, 'dd/MM/yyyy')
                     ) : (
@@ -97,13 +100,11 @@ const SearchPage = ({ searchParams }: { searchParams: any }) => {
                     )}
                   </span>
 
-                  <hr className="mx-10 my-4 h-3/5 w-[1px] bg-gray-200" />
+                  <span>
+                    <ArrowRight className="mx-3 size-4 text-gray-500" />
+                  </span>
 
-                  <span className="text-xl font-normal text-black dark:text-white">
-                    <span className="flex items-center justify-start text-base font-normal text-gray-500 dark:text-white">
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      kết thúc
-                    </span>
+                  <span className="text-base font-normal text-black dark:text-white">
                     {date?.to ? (
                       format(date.to, 'dd/MM/yyyy')
                     ) : (
@@ -138,12 +139,12 @@ const SearchPage = ({ searchParams }: { searchParams: any }) => {
                 </div>
               </PopoverContent>
             </Popover>
+
+            <FilterDialog date={date} setCarList={setCarList} />
           </div>
         </div>
 
-        <div className="">
-          {/* <FilterDialog /> */}
-        </div>
+        <div className="">{/* <FilterDialog /> */}</div>
       </header>
 
       <div className="mt-6 grid grid-cols-4 gap-6">

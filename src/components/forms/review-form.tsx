@@ -2,11 +2,9 @@
 
 import { Button } from '@/components/ui/button';
 import { ReviewSchema } from '@/schemas';
-import { API } from '@/services';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 import { z } from 'zod';
 import {
   Form,
@@ -17,35 +15,21 @@ import {
 } from '../ui/form';
 import StarRatings from 'react-star-ratings';
 import { Textarea } from '../ui/textarea';
-import { CREATE_REVIEW } from '@/lib/api-constants';
 
-const ReviewForm = ({ orderDetailId }: { orderDetailId: number }) => {
+const ReviewForm = ({
+  orderDetailId,
+  setIsOpen,
+  onSubmit,
+}: {
+  orderDetailId: number;
+  setIsOpen: any;
+  onSubmit: (values: z.infer<typeof ReviewSchema>) => Promise<void>;
+}) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof ReviewSchema>>({
     resolver: zodResolver(ReviewSchema),
   });
-
-  async function onSubmit(values: z.infer<typeof ReviewSchema>) {
-    setIsLoading(true);
-    try {
-      const body = {
-        ...values,
-        orderDetailId: Number(orderDetailId),
-      };
-
-      const { data } = await API.post(CREATE_REVIEW, body);
-
-      if (data) {
-        toast.success('Đánh giá thành công');
-        form.reset();
-      }
-    } catch (error: any) {
-      toast.error(error?.message);
-    } finally {
-      setIsLoading(false);
-    }
-  }
 
   return (
     <Form {...form}>

@@ -61,7 +61,9 @@ const ProfilePage = () => {
               width={24}
               height={24}
             />
-            <p className="text-2xl font-bold text-primary">0</p>
+            <p className="text-2xl font-bold text-primary">
+              {user?.trips || 0}
+            </p>
             <p>chuyến</p>
           </span>
         </header>
@@ -97,7 +99,9 @@ const ProfilePage = () => {
             </div>
             <div className="flex items-center justify-between">
               <span className="text-base text-gray-700">Giới tính</span>
-              <span className="text-base font-medium">{GenderEnum[user?.gender]}</span>
+              <span className="text-base font-medium">
+                {GenderEnum[user?.gender]}
+              </span>
             </div>
             <div className="flex items-center justify-between">
               <span className="text-base text-gray-700">Số điện thoại</span>

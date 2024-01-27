@@ -36,33 +36,36 @@ const SearchPage = ({ searchParams }: { searchParams: any }) => {
     from: new Date(searchParams.startDate),
     to: new Date(searchParams.endDate),
   });
-  const [filter, setFilter] = useState<any>();
+  const [filter, setFilter] = useState<any>({
+    sortPrice: 'asc',
+    priceRange: [300, 3000],
+    seats: [2, 10],
+    brandId: undefined,
+    modelId: undefined,
+  });
 
-  const getCarList = async () => {
+  const getCarList = async (filter: any) => {
     try {
       const startDate = formatDateToISO(formatDateToDMY(date.from as Date));
       const endDate = formatDateToISO(formatDateToDMY(date.to as Date));
 
-      const response = await API.get(
-        SEARCH_CARS + `?startDate=${startDate}&endDate=${endDate}&page=${page}`,
+      const { data } = await API.get(
+        `${SEARCH_CARS}?startDate=${startDate}&endDate=${endDate}&page=${page}`,
         filter,
       );
 
-      if (!response) {
+      if (!data) {
         toast.error('Có lỗi xảy ra, vui lòng thử lại sau');
         return;
       }
 
       router.replace(
         `/search?startDate=${startDate}&endDate=${endDate}&page=${page}`,
-        {
-          scroll: false,
-        },
       );
 
-      setPage(response.data.meta._page);
-      setTotalPage(response.data.meta.totalPages);
-      setCarList(response.data);
+      setPage(data.meta._page);
+      setTotalPage(data.meta.totalPages);
+      setCarList(data);
     } catch (error: any) {
       toast.error(error.message);
     }
@@ -70,11 +73,11 @@ const SearchPage = ({ searchParams }: { searchParams: any }) => {
 
   const handlePageClick = async (event: any) => {
     setPage(event.selected + 1);
-    await getCarList();
+    await getCarList(filter);
   };
 
   useEffect(() => {
-    getCarList();
+    getCarList(filter);
   }, [page]);
 
   return (
@@ -140,7 +143,7 @@ const SearchPage = ({ searchParams }: { searchParams: any }) => {
               </PopoverContent>
             </Popover>
 
-            <FilterDialog date={date} setCarList={setCarList} />
+            <FilterDialog getCarList={getCarList} />
           </div>
         </div>
 

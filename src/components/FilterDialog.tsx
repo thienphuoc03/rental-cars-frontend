@@ -1,12 +1,18 @@
 'use client';
 
 import { Check, ChevronsUpDown, SlidersHorizontal } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { cn } from '@/lib/utils';
+import { cn, formatDateToDMY, formatDateToISO } from '@/lib/utils';
 
 import { Button } from './ui/button';
-import { Command, CommandEmpty, CommandGroup, CommandItem } from './ui/command';
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from './ui/command';
 import {
   Dialog,
   DialogContent,
@@ -19,126 +25,85 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { ScrollArea } from './ui/scroll-area';
 import { Slider } from './ui/slider';
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from './ui/form';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { FilterSchema } from '@/schemas';
+import { toast } from 'sonner';
+import { API } from '@/services';
+import { GET_BRANDS_AND_MODELS } from '@/lib/api-constants';
 
 interface FilterDialogProps {
-  date: any;
-  setCarList: any;
   className?: string;
+  getCarList: any;
 }
 
 const sortList: { value: string; label: string }[] = [
   {
-    value: 'price-asc',
+    value: 'asc',
     label: 'Giá từ thấp đến cao',
   },
   {
-    value: 'price-desc',
+    value: 'desc',
     label: 'Giá từ cao đến thấp',
   },
-  {
-    value: 'rating-desc',
-    label: 'Đáng giá tốt',
-  },
 ];
 
-const featuresList: { value: string; label: string }[] = [
-  {
-    value: 'AIR_CONDITIONING',
-    label: 'Điều hòa',
-  },
-  {
-    value: 'RADIO',
-    label: 'Radio',
-  },
-  {
-    value: 'USB',
-    label: 'usb',
-  },
-  {
-    value: 'BLUETOOTH',
-    label: 'Bluetooth',
-  },
-  {
-    value: 'GPS',
-    label: 'GPS',
-  },
-  {
-    value: 'PARKING_SENSOR',
-    label: 'Cảm biến lùi',
-  },
-  {
-    value: 'CAMERA',
-    label: 'Camera',
-  },
-  {
-    value: 'SUNROOF',
-    label: 'Cửa sổ trời',
-  },
-  {
-    value: 'KEYLESS',
-    label: 'Khóa không cần chìa khóa',
-  },
-  {
-    value: 'ALARM',
-    label: 'Chống trộm',
-  },
-  {
-    value: 'AIRBAG',
-    label: 'Túi khí',
-  },
-  {
-    value: 'AUTO_BRAKE',
-    label: 'Phanh tự động',
-  },
-  {
-    value: 'AUTO_WIPER',
-    label: 'Gạt mưa tự động',
-  },
-  {
-    value: 'LANE_KEEPING',
-    label: 'Giữ làn đường',
-  },
-  {
-    value: 'BLIND_SPOT',
-    label: 'Cảnh báo điểm mù',
-  },
-  {
-    value: 'REAR_TRAFFIC',
-    label: 'Cảnh báo phía sau',
-  },
-  {
-    value: 'TIRE_PRESSURE',
-    label: 'Cảnh báo áp suất lốp',
-  },
-  {
-    value: 'KID_SEAT',
-    label: 'Ghế trẻ em',
-  },
-];
+const FilterDialog = ({ className, getCarList }: FilterDialogProps) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [brandData, setBrandData] = useState<any>();
 
-const FilterDialog = ({ date, setCarList, className }: FilterDialogProps) => {
-  const [open, setOpen] = useState<boolean>(false);
-  const [value, setValue] = useState<string>('');
-  const [price, setPrice] = useState<[number, number]>([300, 1000]);
-  const [seats, setSeats] = useState<[number, number]>([4, 10]);
-  const [yearOfManufacture, setYearOfManufacture] = useState<[number, number]>([
-    2005, 2023,
-  ]);
+  const form = useForm<z.infer<typeof FilterSchema>>({
+    resolver: zodResolver(FilterSchema),
+  });
 
-  const handlePriceChange = (values: any) => {
-    setPrice(values);
+  const getAllBrand = async () => {
+    try {
+      const res = await API.get(GET_BRANDS_AND_MODELS);
+      if (res.status === 200) {
+        setBrandData(res.data);
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+    }
   };
 
-  const handleSeatsChange = (values: any) => {
-    setSeats(values);
-  };
+  async function onSubmit(values: z.infer<typeof FilterSchema>) {
+    setIsLoading(true);
+    try {
+      values.sortPrice = values.sortPrice || 'asc';
+      values.priceRange = values.priceRange || [300, 3000];
+      values.seats = values.seats || [2, 10];
+      values.brandId = values.brandId || undefined;
+      values.modelId = values.modelId || undefined;
 
-  const handleYearOfManufactureChange = (values: any) => {
-    setYearOfManufacture(values);
-  };
+      await getCarList(values);
+
+      // const response = await API.get(SEARCH_CARS, body);
+    } catch (error: any) {
+      toast.error(error?.error, { description: error?.message });
+    } finally {
+      setIsLoading(false);
+      setIsOpen(false);
+    }
+  }
+
+  useEffect(() => {
+    getAllBrand();
+  }, []);
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button
           variant="outline"
@@ -155,149 +120,304 @@ const FilterDialog = ({ date, setCarList, className }: FilterDialogProps) => {
           <DialogDescription></DialogDescription>
         </DialogHeader>
         <div className="h-[1px] w-full bg-gray-200" />
-        <ScrollArea className="h-96 w-full rounded-md border-none px-4 py-2">
-          <div className="flex flex-col items-start justify-start gap-6 px-1">
-            {/* sort filter */}
-            <div className="w-full">
-              <h4 className="mb-3 text-base font-semibold">Sắp xếp</h4>
-              <Popover open={open} onOpenChange={setOpen}>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    role="combobox"
-                    aria-expanded={open}
-                    className="w-full justify-between"
-                  >
-                    {value
-                      ? sortList.find((framework) => framework.value === value)
-                          ?.label
-                      : sortList[2].label}
-                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-full p-0">
-                  <Command className="w-full">
-                    <CommandEmpty></CommandEmpty>
-                    <CommandGroup className="w-full">
-                      {sortList.map((framework) => (
-                        <CommandItem
-                          key={framework.value}
-                          value={framework.value}
-                          onSelect={(currentValue) => {
-                            setValue(
-                              currentValue === value ? '' : currentValue,
-                            );
-                            setOpen(false);
+
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <ScrollArea className=" w-full rounded-md border-none px-4 py-2">
+              <div className="flex flex-col gap-4">
+                <FormField
+                  control={form.control}
+                  name="sortPrice"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="font-bold">Sắp xếp</FormLabel>
+                      <FormControl>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="outline"
+                              className="w-full justify-between"
+                            >
+                              {field.value
+                                ? sortList.find(
+                                    (sort) => sort.value === field.value,
+                                  )?.label
+                                : sortList[1].label}
+                              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-full p-0">
+                            <Command className="w-full">
+                              <CommandEmpty></CommandEmpty>
+                              <CommandGroup className="w-full">
+                                {sortList.map((sort) => (
+                                  <CommandItem
+                                    key={sort.value}
+                                    value={sort.value}
+                                    className="w-full"
+                                    onSelect={() => {
+                                      form.setValue('sortPrice', sort.value);
+                                    }}
+                                  >
+                                    <Check
+                                      className={cn(
+                                        'mr-2 h-4 w-4',
+                                        field.value === sort.value
+                                          ? 'opacity-100'
+                                          : 'opacity-0',
+                                      )}
+                                    />
+                                    {sort.label}
+                                  </CommandItem>
+                                ))}
+                              </CommandGroup>
+                            </Command>
+                          </PopoverContent>
+                        </Popover>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="priceRange"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="font-bold">Mức giá</FormLabel>
+                      <FormControl>
+                        <Slider
+                          defaultValue={[300, 3000]}
+                          value={field.value}
+                          min={300}
+                          max={3000}
+                          step={50}
+                          className={cn('my-6 w-full')}
+                          onValueChange={(value: number[]) => {
+                            form.setValue('priceRange', value);
                           }}
-                        >
-                          <Check
-                            className={cn(
-                              'mr-2 h-4 w-4',
-                              value === framework.value
-                                ? 'opacity-100'
-                                : 'opacity-0',
-                            )}
-                          />
-                          {framework.label}
-                        </CommandItem>
-                      ))}
-                    </CommandGroup>
-                  </Command>
-                </PopoverContent>
-              </Popover>
-            </div>
+                        />
+                      </FormControl>
+                      <div className="flex items-center justify-between">
+                        <div className="rounded-md border border-solid border-gray-200 p-2 px-20 text-center">
+                          <h6 className="text-xs text-gray-500">
+                            Giá thấp nhất
+                          </h6>
+                          <p className="text-sm font-semibold">
+                            {field.value ? field.value[0] : 300}K
+                          </p>
+                        </div>
 
-            {/* price */}
-            <div className="w-full">
-              <h4 className="mb-3 text-base font-semibold">Mức giá</h4>
-              <Slider
-                defaultValue={[price[0], price[1]]}
-                min={300}
-                max={3000}
-                step={50}
-                className={cn('my-6 w-full')}
-                onValueChange={handlePriceChange}
-              />
-              <div className="flex items-center justify-between">
-                <div className="rounded-md border border-solid border-gray-200 p-2 px-20 text-center">
-                  <h6 className="text-xs text-gray-500">Giá thấp nhất</h6>
-                  <p className="text-sm font-semibold">{price[0]}K</p>
-                </div>
+                        <div className="h-[1px] w-4 bg-gray-500" />
 
-                <div className="h-[1px] w-4 bg-gray-500" />
+                        <div className="rounded-md border border-solid border-gray-200 p-2 px-20 text-center">
+                          <h6 className="text-xs text-gray-500">
+                            Giá cao nhất
+                          </h6>
+                          <p className="text-sm font-semibold">
+                            {field.value ? field.value[1] : 3000}K
+                          </p>
+                        </div>
+                      </div>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-                <div className="rounded-md border border-solid border-gray-200 p-2 px-20 text-center">
-                  <h6 className="text-xs text-gray-500">Giá cao nhất</h6>
-                  <p className="text-sm font-semibold">{price[1]}K</p>
+                <FormField
+                  control={form.control}
+                  name="seats"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="font-bold">Số chỗ</FormLabel>
+                      <FormControl>
+                        <Slider
+                          defaultValue={[2, 10]}
+                          value={field.value}
+                          min={2}
+                          max={10}
+                          step={1}
+                          className={cn('my-6 w-full')}
+                          onValueChange={(value: number[]) => {
+                            form.setValue('seats', value);
+                          }}
+                        />
+                      </FormControl>
+                      <div className="flex items-center justify-between">
+                        <div className="rounded-md border border-solid border-gray-200 p-2 px-20 text-center">
+                          <h6 className="text-xs text-gray-500">Từ</h6>
+                          <p className="text-sm font-semibold">
+                            {field.value ? field.value[0] : 2}
+                          </p>
+                        </div>
+
+                        <div className="h-[1px] w-4 bg-gray-500" />
+
+                        <div className="rounded-md border border-solid border-gray-200 p-2 px-20 text-center">
+                          <h6 className="text-xs text-gray-500">Đến</h6>
+                          <p className="text-sm font-semibold">
+                            {field.value ? field.value[1] : 10}
+                          </p>
+                        </div>
+                      </div>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <div className="flex flex-wrap justify-between gap-8">
+                  <FormField
+                    control={form.control}
+                    name="brandId"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col">
+                        <FormLabel>Hãng xe</FormLabel>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <FormControl>
+                              <Button
+                                variant="outline"
+                                role="combobox"
+                                className={cn(
+                                  'w-[250px] justify-between',
+                                  !field.value && 'text-muted-foreground',
+                                )}
+                              >
+                                {field.value
+                                  ? brandData.find(
+                                      (brand: any) => brand.id === field.value,
+                                    ).name
+                                  : 'Chọn hãng xe'}
+                                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                              </Button>
+                            </FormControl>
+                          </PopoverTrigger>
+                          <PopoverContent className="h-[300px] overflow-y-auto p-0">
+                            <Command>
+                              <CommandInput placeholder="Tìm..." />
+                              <ScrollArea className="max-h-72 rounded-md">
+                                <CommandEmpty>Không tìm thấy</CommandEmpty>
+                                <CommandGroup>
+                                  {brandData.map((brand: any) => (
+                                    <CommandItem
+                                      value={brand.id}
+                                      key={brand.id}
+                                      onSelect={() => {
+                                        form.setValue('brandId', brand.id);
+                                        form.setValue('modelId', 0);
+                                      }}
+                                    >
+                                      <Check
+                                        className={cn(
+                                          'mr-2 h-4 w-4',
+                                          brand.id === field.value
+                                            ? 'opacity-100'
+                                            : 'opacity-0',
+                                        )}
+                                      />
+                                      {brand.name}
+                                    </CommandItem>
+                                  ))}
+                                </CommandGroup>
+                              </ScrollArea>
+                            </Command>
+                          </PopoverContent>
+                        </Popover>
+                        <FormDescription></FormDescription>
+                        <FormMessage className="text-xs" />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="modelId"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col">
+                        <FormLabel>Mẫu xe</FormLabel>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <FormControl>
+                              <Button
+                                variant="outline"
+                                role="combobox"
+                                className={cn(
+                                  'w-[250px] justify-between',
+                                  !field.value && 'text-muted-foreground',
+                                )}
+                              >
+                                {form.watch('brandId')
+                                  ? field.value
+                                    ? brandData
+                                        .find(
+                                          (brand: any) =>
+                                            brand.id ===
+                                            Number(form.getValues('brandId')),
+                                        )
+                                        .models.find(
+                                          (model: any) =>
+                                            model.id === field.value,
+                                        )?.name
+                                    : 'Chọn mẫu xe'
+                                  : 'Chọn hãng xe trước'}
+                                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                              </Button>
+                            </FormControl>
+                          </PopoverTrigger>
+                          <PopoverContent className="p-0">
+                            <Command>
+                              <CommandInput placeholder="Tìm..." />
+                              <ScrollArea className="max-h-72 rounded-md">
+                                <CommandEmpty>Không tìm thấy</CommandEmpty>
+                                <CommandGroup>
+                                  {form.getValues('brandId') &&
+                                    brandData
+                                      .find(
+                                        (brand: any) =>
+                                          brand.id ===
+                                          Number(form.getValues('brandId')),
+                                      )
+                                      .models.map((model: any) => (
+                                        <CommandItem
+                                          value={model.id}
+                                          key={model.id}
+                                          onSelect={() => {
+                                            form.setValue('modelId', model.id);
+                                          }}
+                                        >
+                                          <Check
+                                            className={cn(
+                                              'mr-2 h-4 w-4',
+                                              model.id === field.value
+                                                ? 'opacity-100'
+                                                : 'opacity-0',
+                                            )}
+                                          />
+                                          {model.name}
+                                        </CommandItem>
+                                      ))}
+                                </CommandGroup>
+                              </ScrollArea>
+                            </Command>
+                          </PopoverContent>
+                        </Popover>
+                        <FormDescription></FormDescription>
+                        <FormMessage className="text-xs" />
+                      </FormItem>
+                    )}
+                  />
                 </div>
               </div>
-            </div>
+            </ScrollArea>
 
-            {/* seats */}
-            <div className="w-full">
-              <h4 className="mb-3 text-base font-semibold">Số chỗ</h4>
-              <Slider
-                defaultValue={[seats[0], seats[1]]}
-                min={4}
-                max={10}
-                step={1}
-                className={cn('my-6 w-full')}
-                onValueChange={handleSeatsChange}
-              />
-              <div className="flex items-center justify-between">
-                <div className="rounded-md border border-solid border-gray-200 p-2 px-20 text-center">
-                  <h6 className="text-xs text-gray-500">Tối thiểu</h6>
-                  <p className="text-sm font-semibold">{seats[0]} ghế</p>
-                </div>
+            <Button type="submit" isLoading={isLoading} className="w-full">
+              Cập nhật
+            </Button>
+          </form>
+        </Form>
 
-                <div className="h-[1px] w-4 bg-gray-500" />
-
-                <div className="rounded-md border border-solid border-gray-200 p-2 px-20 text-center">
-                  <h6 className="text-xs text-gray-500">Tối đa</h6>
-                  <p className="text-sm font-semibold">{seats[1]} ghế</p>
-                </div>
-              </div>
-            </div>
-
-            {/* year of manufacture */}
-            <div className="w-full">
-              <h4 className="mb-3 text-base font-semibold">Năm sản xuất</h4>
-              <Slider
-                defaultValue={[yearOfManufacture[0], yearOfManufacture[1]]}
-                min={2005}
-                max={2023}
-                step={1}
-                className={cn('my-6 w-full')}
-                onValueChange={handleYearOfManufactureChange}
-              />
-              <div className="flex items-center justify-between">
-                <div className="rounded-md border border-solid border-gray-200 p-2 px-20 text-center">
-                  <h6 className="text-xs text-gray-500">Tối thiểu</h6>
-                  <p className="text-sm font-semibold">
-                    {yearOfManufacture[0]}
-                  </p>
-                </div>
-
-                <div className="h-[1px] w-4 bg-gray-500" />
-
-                <div className="rounded-md border border-solid border-gray-200 p-2 px-20 text-center">
-                  <h6 className="text-xs text-gray-500">Tối đa</h6>
-                  <p className="text-sm font-semibold">
-                    {yearOfManufacture[1]}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* features car */}
-            <div className="w-full">
-              <h4 className="mb-3 text-base font-semibold">Tính năng</h4>
-            </div>
-          </div>
-        </ScrollArea>
-        <DialogFooter>
-          <Button type="submit">Áp dụng</Button>
-        </DialogFooter>
+        <DialogFooter></DialogFooter>
       </DialogContent>
     </Dialog>
   );

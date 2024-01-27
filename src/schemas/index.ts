@@ -6,6 +6,7 @@ import signUpSchema from './signUpSchema';
 import OwnerRegistrationSchema from './owner-registration.schema';
 import ReviewSchema from './review.schema';
 import ResetPasswordSchema from './reset-password.schema';
+import FilterSchema from './filter.schema';
 
 export {
   SearchSchema,
@@ -16,4 +17,5 @@ export {
   OwnerRegistrationSchema,
   ReviewSchema,
   ResetPasswordSchema,
+  FilterSchema,
 };

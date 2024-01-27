@@ -59,7 +59,7 @@ const UpdateOrderDetailDialog = ({
       }
 
       if (orderDetailStatus === 'CONFIRMED' && totalAmount) {
-        const serviceFee = totalAmount * 0.5;
+        const serviceFee = totalAmount * 0.05;
 
         body = {
           ...body,

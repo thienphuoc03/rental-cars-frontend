@@ -61,8 +61,6 @@ const OrderPage = () => {
             <BackButton />
             <h3 className="text-2xl font-bold">Thông tin đơn hàng</h3>
           </div>
-
-          <Button>Tạo hợp đồng</Button>
         </header>
       </div>
 

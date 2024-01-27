@@ -26,8 +26,6 @@ const Mytrips = () => {
     'id',
     'deposits',
     'totalAmount',
-    'orderStatus',
-    'paymentStatus',
     'createdAt',
     'actions',
   ];

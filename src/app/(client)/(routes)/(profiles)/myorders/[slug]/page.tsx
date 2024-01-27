@@ -12,11 +12,13 @@ import {
 import UpdateOrderDetailDialog from '@/components/profile/update-order-detail-dialog';
 import { Button } from '@/components/ui/button';
 import { GET_ORDER_DETAIL_BY_ID } from '@/lib/api-constants';
-import { countDays, formatCurrency, formatDateToDMY } from '@/lib/utils';
+import { cn, countDays, formatCurrency, formatDateToDMY } from '@/lib/utils';
 import { API } from '@/services';
 import { useAppSelector } from '@/stores/hooks';
 import { selectDep } from '@/stores/reducers/depReducer';
 import BackButton from '@/components/back-button';
+import { ColorEnum } from '@/types/enums';
+import { Mail, Phone, User } from 'lucide-react';
 
 const OrderDetailPage = () => {
   const [orderDetail, setOrderDetail] = useState<any>();
@@ -66,7 +68,7 @@ const OrderDetailPage = () => {
       </div>
 
       {orderDetail && (
-        <div className="w-full">
+        <div className="w-full rounded-lg border border-gray-200 p-8">
           <div className="flex flex-col items-start justify-between gap-4">
             <div className="flex items-center justify-center gap-3">
               <h4 className="text-base font-semibold">Mã chi tiết đơn hàng:</h4>
@@ -76,11 +78,12 @@ const OrderDetailPage = () => {
               <h4 className="text-base font-semibold">Mã đơn hàng:</h4>
               <span>{orderDetail?.orderId}</span>
             </div>
+
             <div className="flex items-center justify-center gap-3">
               <h4 className="text-base font-semibold">Giá thuê/ngày:</h4>
               <span>{formatCurrency(orderDetail?.pricePerDay)}</span>
             </div>
-            <div className="grid w-full grid-cols-3">
+            <div className="grid w-full grid-cols-3 gap-3 xl:grid-cols-2">
               <div className="col-span-1">
                 <h4 className="mr-4 inline text-base font-semibold">
                   Ngày bắt đầu:
@@ -105,15 +108,18 @@ const OrderDetailPage = () => {
                 </span>
               </div>
             </div>
-            <div className="flex items-center justify-center gap-3">
-              <h4 className="text-base font-semibold">Tổng tiền:</h4>
-              <span>{formatCurrency(orderDetail?.totalAmount)}</span>
+            <div className="grid w-full grid-cols-3 gap-3 xl:grid-cols-2">
+              <div className="col-span-1 flex gap-3">
+                <h4 className="text-base font-semibold">Tổng tiền:</h4>
+                <span>{formatCurrency(orderDetail?.totalAmount)}</span>
+              </div>
+              <div className="col-span-1 flex gap-3">
+                <h4 className="text-base font-semibold">Đặt cọc:</h4>
+                <span>{formatCurrency(orderDetail?.deposits)}</span>
+              </div>
             </div>
-            <div className="flex items-center justify-center gap-3">
-              <h4 className="text-base font-semibold">Đặt cọc:</h4>
-              <span>{formatCurrency(orderDetail?.deposits)}</span>
-            </div>
-            <div className="grid w-full grid-cols-3">
+
+            <div className="grid w-full grid-cols-3 gap-3 xl:grid-cols-2">
               <div className="col-span-1">
                 <h4 className="mr-4 inline text-base font-semibold">
                   Trạng thái đơn:
@@ -202,9 +208,96 @@ const OrderDetailPage = () => {
               <h4 className="text-base font-semibold">Ngày tạo đơn:</h4>
               <span>{formatDateToDMY(orderDetail?.createdAt)}</span>
             </div>
+
+            <div className="flex items-center justify-center gap-3">
+              <div className="text-base font-semibold">
+                Phí dịch vụ{' '}
+                <p className="inline text-base font-normal">
+                  (thu 5% phí dịch vụ website)
+                </p>
+                :
+              </div>
+              <span>{formatCurrency(orderDetail?.serviceFee)}</span>
+            </div>
           </div>
 
-          <div className="mt-10 flex flex-col items-start justify-between gap-3">
+          <div className="my-10 h-[1px] w-full bg-gray-200" />
+
+          <div className="flex flex-col items-start justify-between gap-3">
+            <h4 className="text-xl font-bold underline">
+              Thông tin người thuê
+            </h4>
+            <div className="flex w-full items-start justify-between gap-3">
+              <div className="flex items-center gap-4">
+                <Image
+                  src={orderDetail?.traveler?.avatarUrl}
+                  alt={orderDetail?.traveler?.username}
+                  height={100}
+                  width={100}
+                  className="rounded-full"
+                />
+
+                <div className="*:flex *:items-center *:gap-3">
+                  <div>
+                    <User className="size-5" />
+                    <span>
+                      {orderDetail?.traveler?.name ||
+                        orderDetail?.traveler?.username}
+                    </span>
+                  </div>
+                  <div className="my-2">
+                    <Mail className="size-5" />
+                    <span>{orderDetail?.traveler?.email}</span>
+                  </div>
+                  <div>
+                    <Phone className="size-5" />
+                    <span>{orderDetail?.traveler?.phone}</span>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col gap-3">
+                <div>
+                  <h4 className="mr-3 inline text-base font-semibold">
+                    Số chuyến thành công:
+                  </h4>
+                  <span>{orderDetail?.traveler?.successTrips}</span>
+                </div>
+                <div>
+                  <h4 className="mr-3 inline text-base font-semibold">
+                    Số chuyến thất bại:
+                  </h4>
+                  <span>{orderDetail?.traveler?.cancelTrips}</span>
+                </div>
+                <div>
+                  <h4 className="mr-3 inline text-base font-semibold">
+                    Tỷ lệ hoàn thành chuyến:
+                  </h4>
+                  <span
+                    className={cn(
+                      '',
+                      (orderDetail?.traveler?.successTrips /
+                        (orderDetail?.traveler?.successTrips +
+                          orderDetail?.traveler?.cancelTrips)) *
+                        100 <
+                        50
+                        ? 'text-warning'
+                        : 'text-success',
+                    )}
+                  >
+                    {(orderDetail?.traveler?.successTrips /
+                      (orderDetail?.traveler?.successTrips +
+                        orderDetail?.traveler?.cancelTrips)) *
+                      100}
+                    %
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="my-10 h-[1px] w-full bg-gray-200" />
+
+          <div className="flex flex-col items-start justify-between gap-3">
             <h4 className="text-xl font-bold underline">Thông tin xe</h4>
             <div className="flex flex-col items-start justify-between gap-3">
               <div className="">
@@ -243,7 +336,7 @@ const OrderDetailPage = () => {
               </div>
               <div className="flex items-center justify-center gap-3">
                 <h4 className="text-base font-semibold">Màu sắc:</h4>
-                <span>{orderDetail?.car?.color}</span>
+                <span>{ColorEnum[orderDetail?.car?.color]}</span>
               </div>
             </div>
           </div>
